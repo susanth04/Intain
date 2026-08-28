@@ -115,12 +115,16 @@ def ml_anomaly_score(df: pd.DataFrame, cfg: dict) -> tuple:
     return pd.Series(norm_scores, index=df.index), ifo, scaler, feat_cols
 
 
-def top_drivers(row: pd.Series, feat_cols: list, global_mean: pd.Series) -> str:
-    """Return top 3 features whose deviation from mean is largest."""
-    devs = {c: abs(row.get(c, global_mean[c]) - global_mean[c]) for c in feat_cols
-            if c in row.index}
+def top_drivers(row: pd.Series, feat_cols: list, global_mean: pd.Series, global_std: pd.Series) -> str:
+    """Return top 3 features whose deviation from mean is largest (z-score)."""
+    devs = {}
+    for c in feat_cols:
+        if c in row.index:
+            std = global_std[c] if global_std[c] > 1e-6 else 1e-6
+            z = abs(row.get(c, global_mean[c]) - global_mean[c]) / std
+            devs[c] = z
     sorted_devs = sorted(devs.items(), key=lambda x: x[1], reverse=True)
-    return "; ".join([f"{c}(dev={v:.2f})" for c, v in sorted_devs[:3]])
+    return "; ".join([f"{c}(z={v:.2f})" for c, v in sorted_devs[:3]])
 
 
 def run(panel: pd.DataFrame, df_train: pd.DataFrame, cfg: dict) -> pd.DataFrame:
@@ -170,13 +174,15 @@ def run(panel: pd.DataFrame, df_train: pd.DataFrame, cfg: dict) -> pd.DataFrame:
     panel["predicted_exception_type"] = panel.apply(_exc_type, axis=1)
 
     # Top drivers for each record
-    global_mean = panel[[c for c in feat_cols if c in panel.columns]].mean()
     print("[anomaly] Computing top drivers (may take a moment) …")
-    sample_idx  = panel[panel["exception_flag"] == 1].index
+    global_mean = panel[feat_cols].mean()
+    global_std  = panel[feat_cols].std()
+    
+    panel_flags = panel[panel["exception_flag"] == 1]
     panel["top_drivers"] = ""
-    for idx in sample_idx:
-        panel.at[idx, "top_drivers"] = top_drivers(
-            panel.loc[idx], feat_cols, global_mean)
+    if len(panel_flags) > 0:
+        drivers = panel_flags.apply(lambda r: top_drivers(r, feat_cols, global_mean, global_std), axis=1)
+        panel.loc[panel["exception_flag"] == 1, "top_drivers"] = drivers
 
     # Save models
     joblib.dump(ifo,    models_dir / "isolation_forest.pkl")

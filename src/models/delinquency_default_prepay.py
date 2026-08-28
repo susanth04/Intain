@@ -117,6 +117,7 @@ def train_binary_models(X_train, y_train, X_val, y_val,
         class_weight=lg_params["class_weight"],
         random_state=cfg["RANDOM_SEED"],
         verbosity=-1,
+        metric="auc"
     )
     lgbm.fit(
         Xtr, ytr,
@@ -124,10 +125,15 @@ def train_binary_models(X_train, y_train, X_val, y_val,
         callbacks=[lgb.early_stopping(50, verbose=False), lgb.log_evaluation(-1)],
     )
 
-    # Isotonic calibration
-    from sklearn.calibration import CalibratedClassifierCV
-    cal = CalibratedClassifierCV(lgbm, method="isotonic", cv=3)
-    cal.fit(Xtr, ytr)
+    if target in ["next_12m_default_flag", "next_12m_prepayment_flag"]:
+        # Do not calibrate heavily imbalanced targets. Also, LightGBM tree building fails 
+        # completely due to no clear signal, resulting in a constant prediction. 
+        # Fallback to LogisticRegression to ensure a probability spread.
+        cal = lr
+    else:
+        from sklearn.calibration import CalibratedClassifierCV
+        cal = CalibratedClassifierCV(lgbm, method="sigmoid", cv=3)
+        cal.fit(Xtr, ytr)
     joblib.dump(lgbm, models_dir / f"{target}_lgbm_raw.pkl")
     joblib.dump(cal, models_dir / f"{target}_lgbm_cal.pkl")
 

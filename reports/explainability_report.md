@@ -1,6 +1,6 @@
 # Explainability Report
 
-Generated on 2026-08-28 02:08
+Generated on 2026-08-29 03:01
 
 
 ## next_3m_delinquency_flag
@@ -9,16 +9,16 @@ Generated on 2026-08-28 02:08
 
 | Feature                  |   Mean_|SHAP| |
 |:-------------------------|--------------:|
-| days_past_due            |       0.24067 |
-| dti_band_enc             |       0.23763 |
-| credit_score_band_enc    |       0.23631 |
-| ltv_band_enc             |       0.20601 |
-| status_roll3_max         |       0.11597 |
-| month_index              |       0.10373 |
-| interest_rate            |       0.05756 |
-| balance_utilisation      |       0.03848 |
-| days_past_due_roll3_mean |       0.03332 |
-| current_status_enc       |       0.03175 |
+| days_past_due            |       0.20326 |
+| dti_band_enc             |       0.19164 |
+| credit_score_band_enc    |       0.18834 |
+| ltv_band_enc             |       0.16071 |
+| month_index              |       0.03576 |
+| days_past_due_roll3_mean |       0.03476 |
+| status_roll3_max         |       0.03351 |
+| interest_rate            |       0.03064 |
+| balance_utilisation      |       0.03005 |
+| current_status_enc       |       0.02688 |
 
 ![SHAP Summary](plots/shap_summary_next_3m_delinquency_flag.png)
 
@@ -31,26 +31,26 @@ Generated on 2026-08-28 02:08
 
 ### FP/FN Analysis — next_3m_delinquency_flag
 
-- **False Positives**: 310 (7.2% of predictions)
-- **False Negatives**: 1,056 (24.4% of predictions)
+- **False Positives**: 647 (15.0% of predictions)
+- **False Negatives**: 717 (16.6% of predictions)
 
 **False Positives characteristics:**
-  - `credit_score_band` mode: Fair
+  - `credit_score_band` mode: Good
   - `ltv_band` mode: 75-90
-  - `days_past_due` mean: 24.34
-  - `loan_age_months` mean: 9.80
+  - `days_past_due` mean: 12.61
+  - `loan_age_months` mean: 28.24
 
 **False Negatives characteristics:**
   - `credit_score_band` mode: Good
   - `ltv_band` mode: 60-75
-  - `days_past_due` mean: 7.22
-  - `loan_age_months` mean: 11.07
+  - `days_past_due` mean: 13.25
+  - `loan_age_months` mean: 27.19
 
 ### Prediction Uncertainty
 
-Mean prediction entropy: **0.6056** (higher = more uncertain)
+Mean prediction entropy: **0.6276** (higher = more uncertain)
 
-Fraction of records with entropy > 0.5: **0.888**
+Fraction of records with entropy > 0.5: **0.927**
 
 
 ## next_6m_delinquency_flag
@@ -59,16 +59,16 @@ Fraction of records with entropy > 0.5: **0.888**
 
 | Feature               |   Mean_|SHAP| |
 |:----------------------|--------------:|
-| credit_score_band_enc |       0.28122 |
-| dti_band_enc          |       0.25493 |
-| ltv_band_enc          |       0.22041 |
-| days_past_due         |       0.11964 |
-| balance_utilisation   |       0.11943 |
-| month_index           |       0.10925 |
-| status_roll3_max      |       0.09493 |
-| interest_rate         |       0.06269 |
-| current_status_enc    |       0.03665 |
-| loan_age_months       |       0.02918 |
+| dti_band_enc          |       0.35301 |
+| credit_score_band_enc |       0.3167  |
+| ltv_band_enc          |       0.27271 |
+| month_index           |       0.21078 |
+| balance_utilisation   |       0.20424 |
+| interest_rate         |       0.11181 |
+| status_roll3_max      |       0.10241 |
+| days_past_due         |       0.09341 |
+| current_status_enc    |       0.07997 |
+| loan_age_months       |       0.07692 |
 
 ![SHAP Summary](plots/shap_summary_next_6m_delinquency_flag.png)
 
@@ -81,26 +81,26 @@ Fraction of records with entropy > 0.5: **0.888**
 
 ### FP/FN Analysis — next_6m_delinquency_flag
 
-- **False Positives**: 724 (16.8% of predictions)
-- **False Negatives**: 709 (16.4% of predictions)
+- **False Positives**: 1,840 (42.6% of predictions)
+- **False Negatives**: 331 (7.7% of predictions)
 
 **False Positives characteristics:**
   - `credit_score_band` mode: Good
   - `ltv_band` mode: 60-75
-  - `days_past_due` mean: 10.75
-  - `loan_age_months` mean: 10.16
+  - `days_past_due` mean: 7.26
+  - `loan_age_months` mean: 28.20
 
 **False Negatives characteristics:**
-  - `credit_score_band` mode: Excellent
+  - `credit_score_band` mode: Good
   - `ltv_band` mode: 60-75
-  - `days_past_due` mean: 6.23
-  - `loan_age_months` mean: 12.93
+  - `days_past_due` mean: 15.09
+  - `loan_age_months` mean: 27.13
 
 ### Prediction Uncertainty
 
-Mean prediction entropy: **0.6335** (higher = more uncertain)
+Mean prediction entropy: **0.6527** (higher = more uncertain)
 
-Fraction of records with entropy > 0.5: **0.959**
+Fraction of records with entropy > 0.5: **0.983**
 
 
 ## next_12m_default_flag
@@ -109,80 +109,60 @@ Fraction of records with entropy > 0.5: **0.959**
 
 | Feature               |   Mean_|SHAP| |
 |:----------------------|--------------:|
-| balance_utilisation   |       0.76471 |
-| remaining_term_months |       0.38032 |
-| month_index           |       0.3619  |
-| interest_rate         |       0.10554 |
-| days_past_due         |       0.10096 |
-| loan_age_months       |       0.0902  |
-| current_balance_lag3  |       0.07938 |
-| original_balance      |       0.07389 |
-| current_balance       |       0.07312 |
-| ltv_band_enc          |       0.06298 |
+| month_index           |       0.01482 |
+| days_past_due         |       0.00441 |
+| rate_spread           |       0.00169 |
+| ltv_band_enc          |       0.00141 |
+| original_balance      |       0.00099 |
+| credit_score_band_enc |       0.00061 |
+| loan_purpose_enc      |       0.00053 |
+| current_balance       |       0.0004  |
+| servicer_name_enc     |       0.00032 |
+| document_status_enc   |       0.00031 |
 
 ![SHAP Summary](plots/shap_summary_next_12m_default_flag.png)
-
-![Local SHAP TP](plots/shap_local_next_12m_default_flag_TP.png)
-
-![Local SHAP FN](plots/shap_local_next_12m_default_flag_FN.png)
 
 
 ### FP/FN Analysis — next_12m_default_flag
 
 - **False Positives**: 0 (0.0% of predictions)
-- **False Negatives**: 19 (0.4% of predictions)
-
-**False Negatives characteristics:**
-  - `credit_score_band` mode: Good
-  - `ltv_band` mode: 75-90
-  - `days_past_due` mean: 37.63
-  - `loan_age_months` mean: 1.84
+- **False Negatives**: 0 (0.0% of predictions)
 
 ### Prediction Uncertainty
 
-Mean prediction entropy: **0.0189** (higher = more uncertain)
+Mean prediction entropy: **-0.0000** (higher = more uncertain)
 
-Fraction of records with entropy > 0.5: **0.001**
+Fraction of records with entropy > 0.5: **0.000**
 
 
 ## next_12m_prepayment_flag
 
 ### Global Feature Importance (mean |SHAP|)
 
-| Feature                    |   Mean_|SHAP| |
-|:---------------------------|--------------:|
-| month_index                |       1.77036 |
-| remaining_term_months      |       0.61738 |
-| loan_age_months            |       0.60818 |
-| original_balance           |       0.28888 |
-| current_balance            |       0.24827 |
-| interest_rate              |       0.23672 |
-| property_type_enc          |       0.19125 |
-| state_enc                  |       0.16086 |
-| rate_spread                |       0.14923 |
-| current_balance_roll3_mean |       0.13789 |
+| Feature               |   Mean_|SHAP| |
+|:----------------------|--------------:|
+| month_index           |       0.02693 |
+| status_roll3_max      |       0.004   |
+| rate_spread           |       0.00112 |
+| current_balance       |       0.00041 |
+| dti_band_enc          |       0.00036 |
+| original_balance      |       0.00034 |
+| ltv_band_enc          |       0.00025 |
+| current_balance_lag1  |       0.00023 |
+| document_status_enc   |       0.00023 |
+| credit_score_band_enc |       0.00022 |
 
 ![SHAP Summary](plots/shap_summary_next_12m_prepayment_flag.png)
-
-![Local SHAP TP](plots/shap_local_next_12m_prepayment_flag_TP.png)
-
-![Local SHAP FN](plots/shap_local_next_12m_prepayment_flag_FN.png)
 
 
 ### FP/FN Analysis — next_12m_prepayment_flag
 
 - **False Positives**: 0 (0.0% of predictions)
-- **False Negatives**: 52 (1.2% of predictions)
-
-**False Negatives characteristics:**
-  - `credit_score_band` mode: Good
-  - `ltv_band` mode: 75-90
-  - `days_past_due` mean: 0.67
-  - `loan_age_months` mean: 1.69
+- **False Negatives**: 0 (0.0% of predictions)
 
 ### Prediction Uncertainty
 
-Mean prediction entropy: **0.0469** (higher = more uncertain)
+Mean prediction entropy: **-0.0000** (higher = more uncertain)
 
 Fraction of records with entropy > 0.5: **0.000**
 

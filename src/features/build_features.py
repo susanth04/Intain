@@ -190,11 +190,12 @@ def build_features(df_train: pd.DataFrame,
     full = add_lag_features(full)
     full = add_engineered_features(full)
 
-    n_tr  = len(df_train)
-    n_val = len(df_val)
-    df_train_ = full.iloc[:n_tr].copy()
-    df_val_   = full.iloc[n_tr:n_tr+n_val].copy()
-    df_test_  = full.iloc[n_tr+n_val:].copy()
+    train_cut = cfg["SPLIT"]["TRAIN_CUTOFF"]
+    val_cut   = cfg["SPLIT"]["VAL_CUTOFF"]
+
+    df_train_ = full[full["month_index"] <= train_cut].copy()
+    df_val_   = full[(full["month_index"] > train_cut) & (full["month_index"] <= val_cut)].copy()
+    df_test_  = full[full["month_index"] > val_cut].copy()
 
     print("  [features] Encoding categoricals …")
     df_train_, df_val_, df_test_, _ = encode_categoricals(df_train_, df_val_, df_test_, proc_dir)

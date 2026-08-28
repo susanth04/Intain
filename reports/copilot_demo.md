@@ -1,6 +1,6 @@
 # LLM Reviewer Copilot — Demo Outputs
 
-Generated on 2026-08-28 02:08
+Generated on 2026-08-29 03:02
 
 > All outputs labeled: ⚠ AI-generated recommendation — not a decision.
 
@@ -11,12 +11,12 @@ Generated on 2026-08-28 02:08
 ⚠ AI-generated recommendation — not a decision. Human review required.
 
 [Offline stub] Based on retrieved context:
-[Source: data_dictionary | ID: dd_29 | sim=0.420]
+[Source: data_dictionary | ID: dd_29 | sim=0.436]
 | current_status | categorical | Current/30DPD/60DPD/90DPD/Default/Prepaid/Closed |
 
 ---
 
-[Source: data_dictionary | ID: dd_49 | sim=0.383]
+[Source: data_dictionary | ID: dd_49 | sim=0.398]
 | current_status | categorical | Status per servicer (may conflict with primary) |
 
 Automated analysis indicates this record may require review based on the statistical model outputs and rule-violation scores. A human analyst should confirm the finding before taking action.
@@ -26,12 +26,12 @@ Automated analysis indicates this record may require review based on the statist
 ⚠ AI-generated recommendation — not a decision. Human review required.
 
 [Offline stub] Based on retrieved context:
-[Source: data_dictionary | ID: dd_49 | sim=0.380]
+[Source: data_dictionary | ID: dd_49 | sim=0.397]
 | current_status | categorical | Status per servicer (may conflict with primary) |
 
 ---
 
-[Source: data_dictionary | ID: dd_30 | sim=0.345]
+[Source: data_dictionary | ID: dd_30 | sim=0.360]
 | days_past_due | integer | Days past due (0 if current) |
 
 Automated analysis indicates this record may require review based on the statistical model outputs and rule-violation scores. A human analyst should confirm the finding before taking action.
@@ -41,12 +41,12 @@ Automated analysis indicates this record may require review based on the statist
 ⚠ AI-generated recommendation — not a decision. Human review required.
 
 [Offline stub] Based on retrieved context:
-[Source: data_dictionary | ID: dd_49 | sim=0.390]
+[Source: data_dictionary | ID: dd_49 | sim=0.421]
 | current_status | categorical | Status per servicer (may conflict with primary) |
 
 ---
 
-[Source: data_dictionary | ID: dd_30 | sim=0.332]
+[Source: data_dictionary | ID: dd_30 | sim=0.340]
 | days_past_due | integer | Days past due (0 if current) |
 
 Automated analysis indicates this record may require review based on the statistical model outputs and rule-violation scores. A human analyst should confirm the finding before taking action.
@@ -56,12 +56,12 @@ Automated analysis indicates this record may require review based on the statist
 ⚠ AI-generated recommendation — not a decision. Human review required.
 
 [Offline stub] Based on retrieved context:
-[Source: data_dictionary | ID: dd_29 | sim=0.418]
+[Source: data_dictionary | ID: dd_29 | sim=0.431]
 | current_status | categorical | Current/30DPD/60DPD/90DPD/Default/Prepaid/Closed |
 
 ---
 
-[Source: data_dictionary | ID: dd_49 | sim=0.381]
+[Source: data_dictionary | ID: dd_49 | sim=0.393]
 | current_status | categorical | Status per servicer (may conflict with primary) |
 
 Automated analysis indicates this record may require review based on the statistical model outputs and rule-violation scores. A human analyst should confirm the finding before taking action.
@@ -71,12 +71,12 @@ Automated analysis indicates this record may require review based on the statist
 ⚠ AI-generated recommendation — not a decision. Human review required.
 
 [Offline stub] Based on retrieved context:
-[Source: data_dictionary | ID: dd_49 | sim=0.391]
+[Source: data_dictionary | ID: dd_49 | sim=0.407]
 | current_status | categorical | Status per servicer (may conflict with primary) |
 
 ---
 
-[Source: data_dictionary | ID: dd_30 | sim=0.333]
+[Source: data_dictionary | ID: dd_30 | sim=0.328]
 | days_past_due | integer | Days past due (0 if current) |
 
 Automated analysis indicates this record may require review based on the statistical model outputs and rule-violation scores. A human analyst should confirm the finding before taking action.
@@ -93,8 +93,8 @@ Automated analysis indicates this record may require review based on the statist
 
 Total flagged records: **3,582** (threshold: anomaly_score ≥ 0.3308)
 
-| loan_id   |   month_index |   anomaly_score | exception_type          | plain_language_reason                                                            | top_drivers                                                                                        |
-|:----------|--------------:|----------------:|:----------------------
+| loan_id   |   month_index |   anomaly_score | exception_type          | plain_language_reason                                                            | top_drivers                                                                           |
+|:----------|--------------:|----------------:|:------------------------|:---------
 
 Automated analysis indicates this record may require review based on the statistical model outputs and rule-violation scores. A human analyst should confirm the finding before taking action.
 
@@ -103,13 +103,13 @@ Automated analysis indicates this record may require review based on the statist
 ⚠ AI-generated recommendation — not a decision. Human review required.
 
 [Offline stub] Based on retrieved context:
-[Source: anomaly | ID: anomaly_examples | sim=0.978]
+[Source: anomaly | ID: anomaly_examples | sim=0.980]
 # Anomaly & Exception Examples (Reviewer-Ready)
 
 Total flagged records: **3,582** (threshold: anomaly_score ≥ 0.3308)
 
-| loan_id   |   month_index |   anomaly_score | exception_type          | plain_language_reason                                                            | top_drivers                                                                                        |
-|:----------|--------------:|----------------:|:----------------------
+| loan_id   |   month_index |   anomaly_score | exception_type          | plain_language_reason                                                            | top_drivers                                                                           |
+|:----------|--------------:|----------------:|:------------------------|:---------
 
 Automated analysis indicates this record may require review based on the statistical model outputs and rule-violation scores. A human analyst should confirm the finding before taking action.
 
@@ -118,13 +118,13 @@ Automated analysis indicates this record may require review based on the statist
 ⚠ AI-generated recommendation — not a decision. Human review required.
 
 [Offline stub] Based on retrieved context:
-[Source: anomaly | ID: anomaly_examples | sim=0.983]
+[Source: anomaly | ID: anomaly_examples | sim=0.981]
 # Anomaly & Exception Examples (Reviewer-Ready)
 
 Total flagged records: **3,582** (threshold: anomaly_score ≥ 0.3308)
 
-| loan_id   |   month_index |   anomaly_score | exception_type          | plain_language_reason                                                            | top_drivers                                                                                        |
-|:----------|--------------:|----------------:|:----------------------
+| loan_id   |   month_index |   anomaly_score | exception_type          | plain_language_reason                                                            | top_drivers                                                                           |
+|:----------|--------------:|----------------:|:------------------------|:---------
 
 Automated analysis indicates this record may require review based on the statistical model outputs and rule-violation scores. A human analyst should confirm the finding before taking action.
 
@@ -135,12 +135,12 @@ Automated analysis indicates this record may require review based on the statist
 ⚠ AI-generated recommendation — not a decision. Human review required.
 
 [Offline stub] Based on retrieved context:
-[Source: data_dictionary | ID: dd_58 | sim=0.684]
+[Source: data_dictionary | ID: dd_58 | sim=0.665]
 | default_hazard_multiplier | float | Multiplier on base default hazard rate |
 
 ---
 
-[Source: data_dictionary | ID: dd_59 | sim=0.673]
+[Source: data_dictionary | ID: dd_59 | sim=0.654]
 | prepay_propensity_mult | float | Multiplier on base prepayment propensity |
 
 Automated analysis indicates this record may require review based on the statistical model outputs and rule-violation scores. A human analyst should confirm the finding before taking action.
@@ -150,12 +150,12 @@ Automated analysis indicates this record may require review based on the statist
 ⚠ AI-generated recommendation — not a decision. Human review required.
 
 [Offline stub] Based on retrieved context:
-[Source: data_dictionary | ID: dd_58 | sim=0.669]
+[Source: data_dictionary | ID: dd_58 | sim=0.650]
 | default_hazard_multiplier | float | Multiplier on base default hazard rate |
 
 ---
 
-[Source: data_dictionary | ID: dd_59 | sim=0.657]
+[Source: data_dictionary | ID: dd_59 | sim=0.638]
 | prepay_propensity_mult | float | Multiplier on base prepayment propensity |
 
 Automated analysis indicates this record may require review based on the statistical model outputs and rule-violation scores. A human analyst should confirm the finding before taking action.
@@ -165,12 +165,12 @@ Automated analysis indicates this record may require review based on the statist
 ⚠ AI-generated recommendation — not a decision. Human review required.
 
 [Offline stub] Based on retrieved context:
-[Source: data_dictionary | ID: dd_58 | sim=0.669]
+[Source: data_dictionary | ID: dd_58 | sim=0.650]
 | default_hazard_multiplier | float | Multiplier on base default hazard rate |
 
 ---
 
-[Source: data_dictionary | ID: dd_59 | sim=0.657]
+[Source: data_dictionary | ID: dd_59 | sim=0.638]
 | prepay_propensity_mult | float | Multiplier on base prepayment propensity |
 
 Automated analysis indicates this record may require review based on the statistical model outputs and rule-violation scores. A human analyst should confirm the finding before taking action.
@@ -195,7 +195,7 @@ Automated analysis indicates this record may require review based on the statist
 
 **LLM Output**: _Based on historical trends, the default rate will approximately double to around 10-15%. (AI-generated)_
 
-**Human Correction**: INCORRECT. The actual model-computed default rate under adverse_credit is 0.080. The LLM fabricated a plausible-sounding range rather than retrieving the computed figure.
+**Human Correction**: INCORRECT. The actual model-computed default rate under adverse_credit is 0.000. The LLM fabricated a plausible-sounding range rather than retrieving the computed figure.
 
 **Lesson Learned**: LLM ignored retrieved model output and generated a freeform estimate instead.
 

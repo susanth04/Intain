@@ -2,137 +2,137 @@
   "next_3m_delinquency_flag": {
     "LR_val": {
       "target": "next_3m_delinquency_flag",
-      "roc_auc": 0.6293,
-      "pr_auc": 0.5042,
-      "f1": 0.493,
-      "brier": 0.2385,
-      "rec_p80": 0.0005
+      "roc_auc": 0.6254,
+      "pr_auc": 0.4315,
+      "f1": 0.3472,
+      "brier": 0.218,
+      "rec_p80": 0.0
     },
     "LR_test": {
       "target": "next_3m_delinquency_flag",
-      "roc_auc": 0.6238,
-      "pr_auc": 0.4872,
-      "f1": 0.4712,
-      "brier": 0.2384,
-      "rec_p80": 0.0018
+      "roc_auc": 0.6422,
+      "pr_auc": 0.3501,
+      "f1": 0.2907,
+      "brier": 0.1889,
+      "rec_p80": 0.0039
     },
     "LGBM_val": {
       "target": "next_3m_delinquency_flag",
-      "roc_auc": 0.713,
-      "pr_auc": 0.5822,
-      "f1": 0.5024,
-      "brier": 0.206,
-      "rec_p80": 0.0162
+      "roc_auc": 0.689,
+      "pr_auc": 0.5085,
+      "f1": 0.4164,
+      "brier": 0.2021,
+      "rec_p80": 0.0073
     },
     "LGBM_test": {
       "target": "next_3m_delinquency_flag",
-      "roc_auc": 0.7152,
-      "pr_auc": 0.5987,
-      "f1": 0.4575,
+      "roc_auc": 0.6076,
+      "pr_auc": 0.3177,
+      "f1": 0.3187,
       "brier": 0.2046,
-      "rec_p80": 0.0668
+      "rec_p80": 0.001
     }
   },
   "next_6m_delinquency_flag": {
     "LR_val": {
       "target": "next_6m_delinquency_flag",
-      "roc_auc": 0.6117,
-      "pr_auc": 0.6176,
-      "f1": 0.6066,
-      "brier": 0.2419,
-      "rec_p80": 0.0003
+      "roc_auc": 0.5929,
+      "pr_auc": 0.5549,
+      "f1": 0.5081,
+      "brier": 0.2448,
+      "rec_p80": 0.0018
     },
     "LR_test": {
       "target": "next_6m_delinquency_flag",
-      "roc_auc": 0.6276,
-      "pr_auc": 0.6272,
-      "f1": 0.6101,
-      "brier": 0.2393,
-      "rec_p80": 0.0
+      "roc_auc": 0.6333,
+      "pr_auc": 0.3504,
+      "f1": 0.3808,
+      "brier": 0.2323,
+      "rec_p80": 0.0009
     },
     "LGBM_val": {
       "target": "next_6m_delinquency_flag",
-      "roc_auc": 0.7131,
-      "pr_auc": 0.7055,
-      "f1": 0.7007,
-      "brier": 0.2147,
-      "rec_p80": 0.0923
+      "roc_auc": 0.7285,
+      "pr_auc": 0.6975,
+      "f1": 0.6842,
+      "brier": 0.2165,
+      "rec_p80": 0.1754
     },
     "LGBM_test": {
       "target": "next_6m_delinquency_flag",
-      "roc_auc": 0.72,
-      "pr_auc": 0.7325,
-      "f1": 0.687,
-      "brier": 0.2138,
-      "rec_p80": 0.2831
+      "roc_auc": 0.5923,
+      "pr_auc": 0.3178,
+      "f1": 0.4134,
+      "brier": 0.2675,
+      "rec_p80": 0.0009
     }
   },
   "next_12m_default_flag": {
     "LR_val": {
       "target": "next_12m_default_flag",
-      "roc_auc": 0.9763,
-      "pr_auc": 0.2936,
-      "f1": 0.0492,
-      "brier": 0.0962,
-      "rec_p80": 0.0833
+      "roc_auc": NaN,
+      "pr_auc": 0.0,
+      "f1": 0.0,
+      "brier": 0.0,
+      "rec_p80": 0.0
     },
     "LR_test": {
       "target": "next_12m_default_flag",
-      "roc_auc": 0.9402,
-      "pr_auc": 0.2648,
-      "f1": 0.0589,
-      "brier": 0.0891,
-      "rec_p80": 0.1364
+      "roc_auc": NaN,
+      "pr_auc": 0.0,
+      "f1": 0.0,
+      "brier": 0.0,
+      "rec_p80": 0.0
     },
     "LGBM_val": {
       "target": "next_12m_default_flag",
-      "roc_auc": 0.9505,
-      "pr_auc": 0.1787,
-      "f1": 0.1538,
-      "brier": 0.0037,
-      "rec_p80": 0.0833
+      "roc_auc": NaN,
+      "pr_auc": 0.0,
+      "f1": 0.0,
+      "brier": 0.0,
+      "rec_p80": 0.0
     },
     "LGBM_test": {
       "target": "next_12m_default_flag",
-      "roc_auc": 0.9662,
-      "pr_auc": 0.2956,
-      "f1": 0.24,
-      "brier": 0.0041,
-      "rec_p80": 0.1818
+      "roc_auc": NaN,
+      "pr_auc": 0.0,
+      "f1": 0.0,
+      "brier": 0.0,
+      "rec_p80": 0.0
     }
   },
   "next_12m_prepayment_flag": {
     "LR_val": {
       "target": "next_12m_prepayment_flag",
-      "roc_auc": 0.9448,
-      "pr_auc": 0.5121,
-      "f1": 0.2066,
-      "brier": 0.1106,
-      "rec_p80": 0.3554
+      "roc_auc": NaN,
+      "pr_auc": 0.0,
+      "f1": 0.0,
+      "brier": 0.0,
+      "rec_p80": 0.0
     },
     "LR_test": {
       "target": "next_12m_prepayment_flag",
-      "roc_auc": 0.9458,
-      "pr_auc": 0.3751,
-      "f1": 0.1864,
-      "brier": 0.1002,
-      "rec_p80": 0.2329
+      "roc_auc": NaN,
+      "pr_auc": 0.0,
+      "f1": 0.0,
+      "brier": 0.0,
+      "rec_p80": 0.0
     },
     "LGBM_val": {
       "target": "next_12m_prepayment_flag",
-      "roc_auc": 0.9555,
-      "pr_auc": 0.5823,
-      "f1": 0.625,
-      "brier": 0.0107,
-      "rec_p80": 0.4711
+      "roc_auc": NaN,
+      "pr_auc": 0.0,
+      "f1": 0.0,
+      "brier": 0.0,
+      "rec_p80": 0.0
     },
     "LGBM_test": {
       "target": "next_12m_prepayment_flag",
-      "roc_auc": 0.9525,
-      "pr_auc": 0.4649,
-      "f1": 0.4468,
-      "brier": 0.0111,
-      "rec_p80": 0.3562
+      "roc_auc": NaN,
+      "pr_auc": 0.0,
+      "f1": 0.0,
+      "brier": 0.0,
+      "rec_p80": 0.0
     }
   }
 }
