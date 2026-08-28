@@ -1,0 +1,65 @@
+# ============================================================
+# Loan Performance Intelligence Engine — Master Config
+# ============================================================
+
+# ── Data generation ─────────────────────────────────────────
+N_LOANS: 5000          # loans to synthesise  (scale to 250000 for final run)
+N_MONTHS: 30           # months of history per loan (max, some loans exit early)
+RANDOM_SEED: 42
+
+# ── Paths ────────────────────────────────────────────────────
+PATHS:
+  raw_data:         data/raw
+  processed_data:   data/processed
+  reports:          reports
+  submission:       submission
+  ai_dev_log:       ai_dev_log
+  models:           data/processed/models
+  plots:            reports/plots
+
+# ── Split configuration ──────────────────────────────────────
+SPLIT:
+  # All months with month_index <= TRAIN_CUTOFF go into train;
+  # TRAIN_CUTOFF+1 .. VAL_CUTOFF  → validation;
+  # VAL_CUTOFF+1  .. end          → test
+  TRAIN_CUTOFF: 20    # month_index (1-based)
+  VAL_CUTOFF:   25
+
+# ── Model hyperparameters ────────────────────────────────────
+MODELS:
+  lgbm:
+    n_estimators:   400
+    learning_rate:  0.05
+    num_leaves:     63
+    min_child_samples: 20
+    subsample:      0.8
+    colsample_bytree: 0.8
+    class_weight:   balanced
+  logreg:
+    max_iter: 1000
+    class_weight: balanced
+    C: 0.1
+
+# ── Anomaly detection ────────────────────────────────────────
+ANOMALY:
+  isolation_forest_contamination: 0.05
+  rule_weight: 0.4        # weight of rule-violation score in hybrid
+  ml_weight:   0.6
+
+# ── Scenario parameters (overrides to macro_scenarios.csv) ──
+SCENARIOS:
+  base: {}
+  adverse_credit:
+    credit_score_shift: -1     # shift credit_score_band down by 1 notch
+    default_hazard_multiplier: 2.0
+    ltv_shift: 1
+  high_prepayment:
+    prepay_propensity_multiplier: 2.5
+    rate_shift: -0.75          # percent points (lower rates → refi)
+
+# ── LLM copilot ──────────────────────────────────────────────
+COPILOT:
+  model: "gpt-3.5-turbo"      # set to "none" to use offline stub
+  max_tokens: 512
+  temperature: 0.0
+  log_file: "ai_dev_log/copilot_prompt_log.jsonl"

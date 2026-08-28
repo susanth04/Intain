@@ -1,0 +1,10 @@
+{
+  "naive_hazard_rate": 0.00864,
+  "km_median_survival": {
+    "Excellent": null,
+    "Good": null,
+    "Fair": null,
+    "Poor": null
+  },
+  "cox_concordance": 0.5516
+}

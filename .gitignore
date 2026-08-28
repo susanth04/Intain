@@ -1,0 +1,44 @@
+# Environments
+.env
+.env.*
+.venv/
+venv/
+env/
+ENV/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Data and Models (Keep structure but ignore large files)
+data/raw/*.csv
+data/processed/*.csv
+data/processed/*.pkl
+data/processed/models/
+*.pkl
+*.model
+
+# IDEs and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

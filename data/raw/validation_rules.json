@@ -1,0 +1,46 @@
+{
+  "rules": [
+    {
+      "rule_id": "VR001",
+      "name": "balance_consistency",
+      "description": "current_balance must not exceed original_balance by more than 5% absent modification",
+      "sql_equivalent": "current_balance <= original_balance * 1.05 OR modification_flag = 1",
+      "severity": "error"
+    },
+    {
+      "rule_id": "VR002",
+      "name": "date_validity",
+      "description": "origination_month must be <= reporting_month",
+      "sql_equivalent": "origination_month <= reporting_month",
+      "severity": "error"
+    },
+    {
+      "rule_id": "VR003",
+      "name": "dpd_status_consistency",
+      "description": "days_past_due=0 implies current_status=Current or Prepaid or Closed",
+      "sql_equivalent": "NOT (days_past_due = 0 AND current_status NOT IN ('Current','Prepaid','Closed'))",
+      "severity": "warning"
+    },
+    {
+      "rule_id": "VR004",
+      "name": "terminal_state_immutability",
+      "description": "Loans in Default/Prepaid/Closed should not transition to other states",
+      "sql_equivalent": "LAG(current_status) NOT IN ('Default','Prepaid','Closed') OR current_status = LAG(current_status)",
+      "severity": "error"
+    },
+    {
+      "rule_id": "VR005",
+      "name": "document_completeness",
+      "description": "Defaulted loans must not have document_status=Incomplete",
+      "sql_equivalent": "NOT (default_flag = 1 AND document_status = 'Incomplete')",
+      "severity": "warning"
+    },
+    {
+      "rule_id": "VR006",
+      "name": "balance_monotonic",
+      "description": "current_balance should be non-increasing month-over-month absent modification",
+      "sql_equivalent": "current_balance <= LAG(current_balance) OR modification_flag = 1 OR month_index = 1",
+      "severity": "warning"
+    }
+  ]
+}
