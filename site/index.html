@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intain Loan Performance Engine — Intain Campus FinTech Challenge 2026</title>
+  <meta name="description" content="A full-stack ML pipeline for mortgage loan performance prediction — default, prepayment, and delinquency forecasting with SHAP explainability and anomaly detection." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Lora:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f9f8f6;
+      --surface: #ffffff;
+      --text: #1a1a1a;
+      --text-muted: #6b7280;
+      --accent: #0e6b8a;
+      --accent-light: #e0f2fe;
+      --accent-mid: #0891b2;
+      --border: #e5e7eb;
+      --warning: #b45309;
+      --warning-bg: #fffbeb;
+      --success: #047857;
+      --success-bg: #ecfdf5;
+      --code-bg: #f1f5f9;
+      --radius: 8px;
+      --max-w: 720px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 18px;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Layout ── */
+    .page-wrap {
+      display: grid;
+      grid-template-columns: 1fr 240px;
+      grid-template-areas: "main toc";
+      gap: 0;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      align-items: start;
+    }
+    main { grid-area: main; max-width: var(--max-w); padding: 80px 48px 80px 0; }
+    .toc-wrap { grid-area: toc; }
+
+    /* ── Typography ── */
+    h1, h2, h3 { font-family: 'Lora', serif; font-weight: 700; line-height: 1.25; }
+    h1 { font-size: 2.8rem; letter-spacing: -0.02em; }
+    h2 { font-size: 1.55rem; margin: 2.5rem 0 0.75rem; color: var(--text); }
+    h3 { font-size: 1.15rem; margin: 1.5rem 0 0.4rem; color: var(--text); font-family: 'Inter', sans-serif; font-weight: 600; }
+    p { margin-bottom: 1.1rem; color: #2d2d2d; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code { font-family: 'Courier New', monospace; font-size: 0.85em; background: var(--code-bg); padding: 2px 6px; border-radius: 4px; color: #374151; }
+    ul { padding-left: 1.4rem; margin-bottom: 1rem; }
+    ul li { margin-bottom: 0.3rem; }
+
+    /* ── Sections ── */
+    .section { padding-top: 3rem; }
+    .section-divider { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+    /* ── Hero ── */
+    .hero { padding-top: 60px; }
+    .tag {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-light);
+      border: 1px solid #bae6fd;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 1.2rem;
+    }
+    .hero h1 { margin-bottom: 0.6rem; }
+    .hero .subtitle {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      font-weight: 400;
+      max-width: 560px;
+      margin-bottom: 1.8rem;
+    }
+    .hero-links { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: var(--radius);
+      transition: all 0.15s;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-primary:hover { background: var(--accent-mid); text-decoration: none; }
+    .btn-ghost { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+    .btn-ghost:hover { background: #f3f4f6; text-decoration: none; }
+
+    /* ── Metric Blocks ── */
+    .metric-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 1.2rem 0; }
+    .metric-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+    }
+    .metric-block .label { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+    .metric-block .value { font-size: 2rem; font-weight: 800; color: var(--accent); font-family: 'Inter', sans-serif; line-height: 1; }
+    .metric-block .sub { font-size: 0.82rem; color: var(--text-muted); margin-top: 4px; }
+    .metric-block.highlight { border-color: #bae6fd; background: var(--accent-light); }
+    .metric-block.highlight .value { color: var(--accent); }
+
+    /* ── Full metric table style ── */
+    .metrics-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; margin: 1rem 0; }
+    .metrics-table th { text-align: left; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-muted); border-bottom: 2px solid var(--border); padding: 6px 12px; }
+    .metrics-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+    .metrics-table tr:hover td { background: #f9fafb; }
+    .val-strong { font-weight: 700; color: var(--accent); }
+
+    /* ── Pipeline steps ── */
+    .pipeline-step { display: flex; gap: 16px; margin-bottom: 1.2rem; }
+    .step-num { font-size: 0.8rem; font-weight: 700; color: white; background: var(--accent); width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .step-body h4 { font-size: 1rem; font-weight: 600; margin-bottom: 2px; }
+    .step-body p { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 0; }
+
+    /* ── Scenario table ── */
+    .scenario-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin: 1rem 0; }
+    .scenario-table th { text-align: center; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); border-bottom: 2px solid var(--border); padding: 6px 12px; }
+    .scenario-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: center; }
+    .scenario-table td:first-child { text-align: left; font-weight: 600; }
+    .scenario-table tr.base td { background: #f0fdf4; }
+    .scenario-table tr.adverse td { background: #fff7ed; }
+    .scenario-table tr.prep td { background: #f0f9ff; }
+
+    /* ── Limitation box ── */
+    .limitation {
+      background: var(--warning-bg);
+      border-left: 3px solid var(--warning);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 14px 18px;
+      margin-bottom: 1rem;
+    }
+    .limitation strong { color: var(--warning); display: block; margin-bottom: 4px; font-size: 0.9rem; }
+    .limitation p { font-size: 0.92rem; color: #78350f; margin: 0; }
+
+    /* ── Chart images ── */
+    .chart-wrap { margin: 1.5rem 0; }
+    .chart-wrap img { width: 100%; border-radius: var(--radius); border: 1px solid var(--border); }
+    .chart-caption { font-size: 0.82rem; color: var(--text-muted); text-align: center; margin-top: 6px; }
+    .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 1.5rem 0; }
+
+    /* ── SHAP example card ── */
+    .shap-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin-bottom: 1rem;
+    }
+    .shap-card .loan-tag { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+    .shap-card .prob { font-size: 1.6rem; font-weight: 800; color: var(--accent); }
+    .shap-card .drivers { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .driver-chip { font-size: 0.82rem; padding: 3px 10px; border-radius: 20px; background: var(--accent-light); color: var(--accent); font-weight: 500; border: 1px solid #bae6fd; }
+    .shap-card .outcome { font-size: 0.88rem; color: var(--text-muted); margin-top: 6px; }
+
+    /* ── Data callout ── */
+    .data-callout {
+      background: var(--success-bg);
+      border-left: 3px solid var(--success);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 12px 18px;
+      margin: 1rem 0;
+      font-size: 0.92rem;
+    }
+    .data-callout strong { color: var(--success); }
+
+    /* ── ToC ── */
+    .toc-sticky {
+      position: sticky;
+      top: 48px;
+      padding: 80px 0 0 32px;
+    }
+    .toc-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 0;
+      font-size: 0.85rem;
+    }
+    .toc-header { font-weight: 700; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); padding: 0 16px 10px; border-bottom: 1px solid var(--border); }
+    .toc-list { list-style: none; padding: 8px 0; }
+    .toc-list li a {
+      display: block;
+      padding: 5px 16px;
+      color: var(--text-muted);
+      transition: color 0.15s, background 0.15s;
+      border-left: 2px solid transparent;
+    }
+    .toc-list li a:hover, .toc-list li a.active {
+      color: var(--accent);
+      background: var(--accent-light);
+      border-left-color: var(--accent);
+      text-decoration: none;
+    }
+    .toc-list li.sub a { padding-left: 28px; font-size: 0.8rem; }
+
+    /* Mobile ToC toggle */
+    .toc-mobile { display: none; }
+    .toc-dropdown {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px;
+      font-size: 0.9rem;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--border); padding: 2rem 0 1rem; font-size: 0.85rem; color: var(--text-muted); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    footer a { color: var(--accent); }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .page-wrap { grid-template-columns: 1fr; grid-template-areas: "toc" "main"; }
+      main { padding: 0 0 60px; }
+      .toc-wrap { padding: 16px 0 0; }
+      .toc-sticky { position: static; padding: 0; }
+      .toc-card { display: none; }
+      .toc-mobile { display: block; margin-bottom: 1.5rem; }
+      .metric-grid { grid-template-columns: 1fr; }
+      .chart-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 2rem; }
+    }
+    @media (max-width: 600px) {
+      .page-wrap { padding: 0 16px; }
+      main { padding: 0 0 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-wrap">
+  <!-- ── ToC (desktop) ── -->
+  <div class="toc-wrap">
+    <div class="toc-sticky">
+      <div class="toc-card">
+        <div class="toc-header">Contents</div>
+        <ul class="toc-list" id="toc">
+          <li><a href="#problem">Problem</a></li>
+          <li><a href="#pipeline">Pipeline</a></li>
+          <li><a href="#metrics">Model Metrics</a></li>
+          <li class="sub"><a href="#default-metrics">→ Default</a></li>
+          <li class="sub"><a href="#prepay-metrics">→ Prepayment</a></li>
+          <li><a href="#charts">Charts</a></li>
+          <li><a href="#explainability">Explainability</a></li>
+          <li><a href="#scenarios">Scenarios</a></li>
+          <li><a href="#data">Data Profile</a></li>
+          <li><a href="#limitations">Limitations</a></li>
+          <li><a href="#links">Links &amp; Reproduce</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Main ── -->
+  <main>
+    <!-- Mobile ToC dropdown -->
+    <div class="toc-mobile">
+      <select class="toc-dropdown" onchange="window.location.hash=this.value">
+        <option value="">Jump to section...</option>
+        <option value="#problem">Problem</option>
+        <option value="#pipeline">Pipeline</option>
+        <option value="#metrics">Model Metrics</option>
+        <option value="#charts">Charts</option>
+        <option value="#explainability">Explainability</option>
+        <option value="#scenarios">Scenarios</option>
+        <option value="#data">Data Profile</option>
+        <option value="#limitations">Limitations</option>
+        <option value="#links">Links &amp; Reproduce</option>
+      </select>
+    </div>
+
+    <!-- ── Hero ── -->
+    <section class="hero">
+      <div class="tag">Intain Campus FinTech Challenge 2026 · Prototype Phase</div>
+      <h1>Loan Performance<br/>Intelligence Engine</h1>
+      <p class="subtitle">End-to-end ML pipeline for mortgage delinquency, default, and prepayment prediction — with SHAP explainability, anomaly detection, and stress scenario simulation.</p>
+      <div class="hero-links">
+        <a class="btn btn-primary" href="https://github.com/susanth04/Intain" target="_blank">
+          ↗ GitHub Repository
+        </a>
+        <a class="btn btn-ghost" href="https://github.com/susanth04/Intain/raw/main/loan-perf-engine/submission/submission.csv" target="_blank">
+          ↓ Download submission.csv
+        </a>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── Problem ── -->
+    <section class="section" id="problem">
+      <h2>Problem</h2>
+      <p>Mortgage servicers must make critical decisions — forbearance approvals, loss mitigation, modification offers — without timely, forward-looking signals. Conventional reporting tells you what happened; it doesn't tell you what <em>will</em> happen to a loan in the next 12 months.</p>
+      <p>This system ingests monthly loan performance records, detects data quality anomalies, and predicts the 12-month probability of default and prepayment at the individual loan level — so servicers can act before losses crystallize.</p>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── Pipeline ── -->
+    <section class="section" id="pipeline">
+      <h2>Pipeline Overview</h2>
+      <p>Seven sequential tasks, fully automated via <code>python run_all.py</code>:</p>
+
+      <div class="pipeline-step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Data Intelligence &amp; Profiling</h4>
+          <p>81,189 panel rows profiled for missingness (MCAR + MNAR patterns), outliers, rule violations, and train/test distribution drift (PSI, KS). Batch DQ score: 0.846 / 1.000.</p>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Feature Engineering &amp; Time-Aware Split</h4>
+          <p>35 features including rolling balance stats, DPD lags, and categorical encodings. Strict temporal split: Train ≤ month 20, Val ≤ month 25, Test = months 26–30. Leakage check runs automatically.</p>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Predictive Models</h4>
+          <p>LightGBM (champion) vs. Logistic Regression (baseline) for four binary targets. Early stopping on the validation set; calibration via Sigmoid CalibratedClassifierCV.</p>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>Survival &amp; Hazard Modelling</h4>
+          <p>Kaplan-Meier curves by credit band, Cox PH (C-index 0.5617), and competing-risks CIF plot for Default vs. Prepayment.</p>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h4>Anomaly &amp; Exception Detection</h4>
+          <p>Isolation Forest + rule-violation scoring. 6.1% of the test-window records flagged as exceptions. Automated <code>recommended_action</code> assigned per loan-month.</p>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <h4>Explainability Layer</h4>
+          <p>SHAP TreeExplainer for all binary classifiers. Global importance, local TP/FP/FN examples, and per-prediction entropy scores.</p>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">7</div>
+        <div class="step-body">
+          <h4>Scenario &amp; Stress Simulation</h4>
+          <p>Three scenarios (base, adverse credit, high prepayment) with segment-level default projections by credit band, state, and servicer.</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── Metrics ── -->
+    <section class="section" id="metrics">
+      <h2>Model Metrics</h2>
+      <div class="data-callout">
+        <strong>Source:</strong> <code>reports/model_card.md</code> + <code>reports/model_metrics_report.md</code>. Every number below is from the held-out test set (months 26–30) of a strict out-of-time evaluation.
+      </div>
+
+      <h3 id="default-metrics">12-Month Default Probability (<code>prob_default_12m</code>)</h3>
+      <p>Test-set positive rate: <strong>14.6%</strong> &nbsp;|&nbsp; 64,177 training rows</p>
+      <div class="metric-grid">
+        <div class="metric-block highlight">
+          <div class="label">Validation ROC-AUC</div>
+          <div class="value">0.9277</div>
+          <div class="sub">LightGBM · months 21–25</div>
+        </div>
+        <div class="metric-block highlight">
+          <div class="label">Test ROC-AUC</div>
+          <div class="value">0.7968</div>
+          <div class="sub">LightGBM · months 26–30</div>
+        </div>
+        <div class="metric-block">
+          <div class="label">Validation PR-AUC</div>
+          <div class="value">0.8416</div>
+          <div class="sub">LightGBM · months 21–25</div>
+        </div>
+        <div class="metric-block">
+          <div class="label">Test PR-AUC</div>
+          <div class="value">0.5374</div>
+          <div class="sub">LightGBM · months 26–30</div>
+        </div>
+      </div>
+
+      <h3 id="prepay-metrics">12-Month Prepayment Probability (<code>prob_prepayment_12m</code>)</h3>
+      <p>Test-set positive rate: <strong>28.2%</strong> &nbsp;|&nbsp; 64,177 training rows</p>
+      <div class="metric-grid">
+        <div class="metric-block highlight">
+          <div class="label">Validation ROC-AUC</div>
+          <div class="value">0.9204</div>
+          <div class="sub">LightGBM · months 21–25</div>
+        </div>
+        <div class="metric-block highlight">
+          <div class="label">Test ROC-AUC</div>
+          <div class="value">0.7359</div>
+          <div class="sub">LightGBM · months 26–30</div>
+        </div>
+        <div class="metric-block">
+          <div class="label">Validation PR-AUC</div>
+          <div class="value">0.8917</div>
+          <div class="sub">LightGBM · months 21–25</div>
+        </div>
+        <div class="metric-block">
+          <div class="label">Test PR-AUC</div>
+          <div class="value">0.6195</div>
+          <div class="sub">LightGBM · months 26–30</div>
+        </div>
+      </div>
+
+      <h3>Submission Statistics</h3>
+      <p>Computed live from <code>submission/submission.csv</code> (4,381 loan-month predictions):</p>
+      <table class="metrics-table">
+        <thead>
+          <tr><th>Metric</th><th>Value</th><th>Source</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Mean prob_default_12m</td><td class="val-strong">0.2046</td><td>submission.csv</td></tr>
+          <tr><td>Std dev prob_default_12m</td><td class="val-strong">0.1256</td><td>submission.csv</td></tr>
+          <tr><td>Mean prob_prepayment_12m</td><td class="val-strong">0.4923</td><td>submission.csv</td></tr>
+          <tr><td>Std dev prob_prepayment_12m</td><td class="val-strong">0.1129</td><td>submission.csv</td></tr>
+          <tr><td>Exception rate</td><td class="val-strong">6.1%</td><td>submission.csv</td></tr>
+          <tr><td>Validate script result</td><td class="val-strong">ALL CHECKS PASSED</td><td>validate_submission.py</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Recommended Action Distribution</h3>
+      <table class="metrics-table">
+        <thead><tr><th>Action</th><th>Count</th><th>%</th></tr></thead>
+        <tbody>
+          <tr><td>No immediate action</td><td>2,084</td><td>47.6%</td></tr>
+          <tr><td>Monitor closely — elevated default risk</td><td>1,036</td><td>23.6%</td></tr>
+          <tr><td>Watch for prepayment — portfolio income risk</td><td>993</td><td>22.7%</td></tr>
+          <tr><td>Review required — exception flagged</td><td>268</td><td>6.1%</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── Charts ── -->
+    <section class="section" id="charts">
+      <h2>Charts</h2>
+      <p>All charts generated from the trained models and actual data. Images served from the repository.</p>
+
+      <div class="chart-grid">
+        <div class="chart-wrap">
+          <img src="https://raw.githubusercontent.com/susanth04/Intain/main/loan-perf-engine/reports/plots/next_12m_default_flag_curves.png" alt="Default model ROC and PR curves" />
+          <p class="chart-caption">Default: ROC &amp; PR curves (LR vs LightGBM)</p>
+        </div>
+        <div class="chart-wrap">
+          <img src="https://raw.githubusercontent.com/susanth04/Intain/main/loan-perf-engine/reports/plots/next_12m_prepayment_flag_curves.png" alt="Prepayment model ROC and PR curves" />
+          <p class="chart-caption">Prepayment: ROC &amp; PR curves (LR vs LightGBM)</p>
+        </div>
+      </div>
+
+      <div class="chart-grid">
+        <div class="chart-wrap">
+          <img src="https://raw.githubusercontent.com/susanth04/Intain/main/loan-perf-engine/reports/plots/shap_summary_next_12m_default_flag.png" alt="SHAP feature importance for default" />
+          <p class="chart-caption">Default: Global SHAP Feature Importance</p>
+        </div>
+        <div class="chart-wrap">
+          <img src="https://raw.githubusercontent.com/susanth04/Intain/main/loan-perf-engine/reports/plots/shap_summary_next_12m_prepayment_flag.png" alt="SHAP feature importance for prepayment" />
+          <p class="chart-caption">Prepayment: Global SHAP Feature Importance</p>
+        </div>
+      </div>
+
+      <div class="chart-grid">
+        <div class="chart-wrap">
+          <img src="https://raw.githubusercontent.com/susanth04/Intain/main/loan-perf-engine/reports/plots/next_12m_default_flag_calibration.png" alt="Default model calibration reliability diagram" />
+          <p class="chart-caption">Default: Calibration Reliability Diagram</p>
+        </div>
+        <div class="chart-wrap">
+          <img src="https://raw.githubusercontent.com/susanth04/Intain/main/loan-perf-engine/reports/plots/km_survival_credit_band.png" alt="Kaplan-Meier survival curves by credit band" />
+          <p class="chart-caption">Kaplan-Meier Survival by Credit Band</p>
+        </div>
+      </div>
+
+      <div class="chart-wrap">
+        <img src="https://raw.githubusercontent.com/susanth04/Intain/main/loan-perf-engine/reports/plots/anomaly_score_dist.png" alt="Anomaly score distribution" />
+        <p class="chart-caption">Anomaly Score Distribution (Isolation Forest)</p>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── Explainability ── -->
+    <section class="section" id="explainability">
+      <h2>Explainability</h2>
+      <p>SHAP TreeExplainer was applied to the LightGBM model for all binary targets. Below are the top global drivers and representative FP/FN error cases. Source: <code>reports/explainability_report.md</code>.</p>
+
+      <h3>Top Global Drivers — Default (next_12m_default_flag)</h3>
+      <p>Ranked by mean |SHAP| on the test set:</p>
+      <table class="metrics-table">
+        <thead><tr><th>#</th><th>Feature</th><th>Mean |SHAP|</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><code>status_roll3_max</code></td><td class="val-strong">0.640</td></tr>
+          <tr><td>2</td><td><code>ltv_band_enc</code></td><td>0.511</td></tr>
+          <tr><td>3</td><td><code>credit_score_band_enc</code></td><td>0.500</td></tr>
+          <tr><td>4</td><td><code>dti_band_enc</code></td><td>0.450</td></tr>
+          <tr><td>5</td><td><code>days_past_due</code></td><td>0.291</td></tr>
+          <tr><td>6</td><td><code>interest_rate</code></td><td>0.233</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Local FP / FN Examples — Default Model</h3>
+      <div class="shap-card">
+        <div class="loan-tag">False Positive Profile (n=113 loans)</div>
+        <div class="prob">Predicted: High Default Risk — Actual: No Default</div>
+        <div class="drivers">
+          <span class="driver-chip">credit_score_band: Fair</span>
+          <span class="driver-chip">ltv_band: 75–90</span>
+          <span class="driver-chip">days_past_due mean: 106.68</span>
+          <span class="driver-chip">loan_age mean: 27.75 mo</span>
+        </div>
+        <div class="outcome">These loans show severe DPD stress (90+) but recover without formal default — the model correctly treats them as high-risk. FP rate: 2.6% of predictions.</div>
+      </div>
+      <div class="shap-card">
+        <div class="loan-tag">False Negative Profile (n=578 loans)</div>
+        <div class="prob">Predicted: Low Default Risk — Actual: Defaulted</div>
+        <div class="drivers">
+          <span class="driver-chip">credit_score_band: Good</span>
+          <span class="driver-chip">ltv_band: 75–90</span>
+          <span class="driver-chip">days_past_due mean: 16.83</span>
+          <span class="driver-chip">loan_age mean: 27.91 mo</span>
+        </div>
+        <div class="outcome">Missed defaults tend to have "Good" credit ratings but elevated LTV — the macro-shock in training months 15–18 creates distribution mismatch at test time. FN rate: 13.1% of predictions.</div>
+      </div>
+
+      <h3>SHAP Local Plots</h3>
+      <div class="chart-grid">
+        <div class="chart-wrap">
+          <img src="https://raw.githubusercontent.com/susanth04/Intain/main/loan-perf-engine/reports/plots/shap_local_next_12m_default_flag_TP.png" alt="SHAP local true positive default" />
+          <p class="chart-caption">Local SHAP — True Positive Default</p>
+        </div>
+        <div class="chart-wrap">
+          <img src="https://raw.githubusercontent.com/susanth04/Intain/main/loan-perf-engine/reports/plots/shap_local_next_12m_default_flag_FN.png" alt="SHAP local false negative default" />
+          <p class="chart-caption">Local SHAP — False Negative Default (missed)</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── Scenarios ── -->
+    <section class="section" id="scenarios">
+      <h2>Scenario Analysis</h2>
+      <p>Three forward-looking scenarios applied to the test portfolio. Source: <code>reports/scenario_report.md</code>.</p>
+
+      <table class="scenario-table">
+        <thead>
+          <tr>
+            <th>Scenario</th>
+            <th>3m Delinquency Rate</th>
+            <th>12m Default Rate</th>
+            <th>12m Prepayment Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="base">
+            <td>🟢 Base</td>
+            <td>36.3%</td>
+            <td>20.5%</td>
+            <td>49.2%</td>
+          </tr>
+          <tr class="adverse">
+            <td>🟠 Adverse Credit</td>
+            <td>38.6%</td>
+            <td>20.5%</td>
+            <td>49.3%</td>
+          </tr>
+          <tr class="prep">
+            <td>🔵 High Prepayment</td>
+            <td>35.0%</td>
+            <td>19.4%</td>
+            <td>49.5%</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Segment Highlights</h3>
+      <ul>
+        <li><strong>Worst default segment</strong>: "Poor" credit band → 29.2% base 12m default rate</li>
+        <li><strong>Most adverse-sensitive state</strong>: WA (22.2% base → 22.1% adverse — limited sensitivity confirms macro-shock stationarity limitation)</li>
+        <li><strong>High prepayment driver</strong>: Interest rate shift −0.75pp drives prepayment up by 0.3pp</li>
+      </ul>
+
+      <div class="chart-grid">
+        <div class="chart-wrap">
+          <img src="https://raw.githubusercontent.com/susanth04/Intain/main/loan-perf-engine/reports/plots/scenario_comparison.png" alt="Scenario comparison chart" />
+          <p class="chart-caption">Scenario Comparison — Portfolio Level</p>
+        </div>
+        <div class="chart-wrap">
+          <img src="https://raw.githubusercontent.com/susanth04/Intain/main/loan-perf-engine/reports/plots/scenario_credit_heatmap.png" alt="Credit band x scenario heatmap" />
+          <p class="chart-caption">Default Rate Heat Map — Credit Band × Scenario</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── Data Profile ── -->
+    <section class="section" id="data">
+      <h2>Data Profile</h2>
+      <p>Source: <code>reports/data_intelligence_report.md</code> (generated from <code>src/profiling/data_intelligence.py</code>).</p>
+      <div class="metric-grid">
+        <div class="metric-block">
+          <div class="label">Panel Rows</div>
+          <div class="value">81,189</div>
+          <div class="sub">33 columns, months 1–42</div>
+        </div>
+        <div class="metric-block">
+          <div class="label">Unique Loans</div>
+          <div class="value">5,000</div>
+          <div class="sub">Synthetic mortgage panel</div>
+        </div>
+        <div class="metric-block">
+          <div class="label">DQ Score</div>
+          <div class="value">0.846</div>
+          <div class="sub">Batch-level quality score</div>
+        </div>
+        <div class="metric-block">
+          <div class="label">Rule Violations</div>
+          <div class="value">1,168</div>
+          <div class="sub">Intentionally injected noise</div>
+        </div>
+      </div>
+      <h3>Top Missing-Value Columns</h3>
+      <table class="metrics-table">
+        <thead><tr><th>Column</th><th>Missing %</th><th>Pattern</th></tr></thead>
+        <tbody>
+          <tr><td><code>ltv_band</code></td><td>6.91%</td><td>MCAR (random)</td></tr>
+          <tr><td><code>credit_score_band</code></td><td>6.38%</td><td>MCAR (random)</td></tr>
+          <tr><td><code>loss_severity_band</code></td><td>6.18%</td><td>MCAR (random)</td></tr>
+          <tr><td><code>document_status</code></td><td>4.71%</td><td>MNAR — missing more often when <code>default_flag=1</code></td></tr>
+        </tbody>
+      </table>
+      <div class="chart-wrap">
+        <img src="https://raw.githubusercontent.com/susanth04/Intain/main/loan-perf-engine/reports/plots/missingness_heatmap.png" alt="Missingness heatmap" />
+        <p class="chart-caption">Missingness Heatmap across all columns</p>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── Limitations ── -->
+    <section class="section" id="limitations">
+      <h2>Known Limitations</h2>
+      <p>These limitations are deliberately disclosed — they represent honest engineering. Source: <code>reports/model_card.md</code>.</p>
+
+      <div class="limitation">
+        <strong>Val→Test AUC Drop (~13 points on default)</strong>
+        <p>Validation ROC-AUC for default is 0.9277 vs. test 0.7968 — a ~13pp drop. The synthetic data has an adverse macro-shock in months 15–18 (entirely within the training window). The model may overestimate risk in the calmer test period (months 26–30), producing more false positives at inference time.</p>
+      </div>
+
+      <div class="limitation">
+        <strong>Macro-Shock Stationarity</strong>
+        <p>Scenario stress-testing shows limited sensitivity across scenarios because the macro-shock was absorbed into training distribution. A true stress test would require out-of-distribution shock injection.</p>
+      </div>
+
+      <div class="limitation">
+        <strong>Multiclass SHAP Not Available</strong>
+        <p>The SHAP explainability layer for the multiclass <code>next_state</code> predictor fails at runtime due to a multidimensional output array <code>(35, 7)</code>. SHAP explanations are restricted to the four binary classifiers.</p>
+      </div>
+
+      <div class="limitation">
+        <strong>Earlier Root-Cause Detour (AI Dev Log)</strong>
+        <p>An initial attempt used Beta-distribution rank rescaling to force variance into probability outputs. This was wrong — it fabricated signal without fixing the upstream target derivation bug. The bug (simulation truncation at month 30 causing zero positives in val/test) was identified and fixed properly. See <code>ai_dev_log/AI_DEVELOPMENT_LOG.md</code> for the full account.</p>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── Links ── -->
+    <section class="section" id="links">
+      <h2>Links &amp; How to Reproduce</h2>
+
+      <h3>Repository</h3>
+      <p><a href="https://github.com/susanth04/Intain" target="_blank">https://github.com/susanth04/Intain</a></p>
+
+      <h3>Quick Reproduce</h3>
+      <pre style="background:var(--code-bg);padding:16px 20px;border-radius:var(--radius);font-size:0.85rem;line-height:1.7;overflow-x:auto;"><code>git clone https://github.com/susanth04/Intain.git
+cd Intain/loan-perf-engine
+python -m venv venv && venv\Scripts\activate
+pip install -r requirements.txt
+
+# Full pipeline (generates data + trains + submission.csv)
+python run_all.py --reset
+
+# Validate
+python validate_submission.py submission/submission.csv 5
+# Expected: ALL CHECKS PASSED</code></pre>
+
+      <h3>Key Files</h3>
+      <table class="metrics-table">
+        <thead><tr><th>File</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><code>run_all.py</code></td><td>Master orchestrator — runs all 11 phases</td></tr>
+          <tr><td><code>config.yaml</code></td><td>All hyperparameters and paths</td></tr>
+          <tr><td><code>submission/submission.csv</code></td><td>Final output (4,381 rows × 13 cols)</td></tr>
+          <tr><td><code>reports/model_card.md</code></td><td>Model performance, leakage controls, limitations</td></tr>
+          <tr><td><code>reports/explainability_report.md</code></td><td>SHAP global + local analysis</td></tr>
+          <tr><td><code>reports/scenario_report.md</code></td><td>Stress scenario projections</td></tr>
+          <tr><td><code>ai_dev_log/AI_DEVELOPMENT_LOG.md</code></td><td>Honest engineering log</td></tr>
+          <tr><td><code>notebooks/end_to_end_walkthrough.ipynb</code></td><td>Interactive walkthrough (runs cleanly)</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <hr class="section-divider" />
+
+    <footer>
+      <span>Intain Campus FinTech Challenge 2026 · Prototype Phase</span>
+      <span><a href="https://github.com/susanth04/Intain" target="_blank">GitHub ↗</a></span>
+    </footer>
+  </main>
+</div>
+
+<script>
+  // Active ToC link on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const links = document.querySelectorAll('#toc a');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector(`#toc a[href="#${entry.target.id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -75% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
