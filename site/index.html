@@ -82,7 +82,7 @@
     .hero-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); display: inline-block; animation: pulse 2s infinite; }
     @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
     .hero h1 {
-      font-family: 'Syne', sans-serif; font-size: clamp(2.6rem, 6vw, 4.5rem);
+      font-family: 'Inter', sans-serif; font-size: clamp(2.6rem, 6vw, 4.5rem);
       font-weight: 800; line-height: 1.05; letter-spacing: -0.03em;
       background: linear-gradient(135deg, #f0f2f5 30%, var(--accent) 80%, var(--accent2) 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
@@ -105,13 +105,13 @@
     }
     .h-stat { flex: 1; padding: 24px 20px; text-align: center; border-right: 1px solid var(--border); }
     .h-stat:last-child { border-right: none; }
-    .h-stat .val { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--accent); }
+    .h-stat .val { font-family: 'Inter', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--accent); }
     .h-stat .lbl { font-size: 0.75rem; color: var(--muted); margin-top: 2px; font-weight: 500; letter-spacing: 0.03em; }
 
     /* ── SECTIONS ── */
     section { padding: 90px 0; }
     .section-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
-    .section-title { font-family: 'Syne', sans-serif; font-size: clamp(1.6rem, 3vw, 2.5rem); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; color: var(--text); margin-bottom: 16px; }
+    .section-title { font-family: 'Inter', sans-serif; font-size: clamp(1.6rem, 3vw, 2.5rem); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; color: var(--text); margin-bottom: 16px; }
     .section-sub { font-size: 1rem; color: var(--muted); max-width: 560px; line-height: 1.75; margin-bottom: 48px; }
 
     hr.divider { border: none; border-top: 1px solid var(--border); }
@@ -163,7 +163,7 @@
     /* ── ACTION distribution ── */
     .actions-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; }
     .action-card { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
-    .action-card .count { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; }
+    .action-card .count { font-family: 'Inter', sans-serif; font-size: 2rem; font-weight: 800; }
     .action-card .name { font-size: 0.82rem; color: var(--muted); margin-top: 4px; line-height: 1.4; }
     .action-card .bar { height: 3px; border-radius: 2px; margin-top: 12px; background: var(--border); position: relative; }
     .action-card .bar-fill { height: 100%; border-radius: 2px; position: absolute; left: 0; top: 0; transition: width 1s ease; }
@@ -346,19 +346,19 @@
       <div style="font-size:0.82rem;font-weight:600;color:var(--muted);margin-bottom:16px;text-transform:uppercase;letter-spacing:0.08em;">Model diagnostic plots (from repo)</div>
       <div class="img-chart-grid">
         <div class="img-chart-box">
-          <img src="https://raw.githubusercontent.com/susanth04/Intain/main/loan-perf-engine/reports/plots/next_12m_default_flag_calibration.png" alt="Default calibration diagram" loading="lazy" />
+          <img src="plots/next_12m_default_flag_calibration.png" alt="Default calibration diagram" loading="lazy" />
           <div class="cap">Default — Calibration Reliability Diagram</div>
         </div>
         <div class="img-chart-box">
-          <img src="https://raw.githubusercontent.com/susanth04/Intain/main/loan-perf-engine/reports/plots/km_survival_credit_band.png" alt="KM survival curves" loading="lazy" />
+          <img src="plots/km_survival_credit_band.png" alt="KM survival curves" loading="lazy" />
           <div class="cap">Kaplan-Meier Survival by Credit Band</div>
         </div>
         <div class="img-chart-box">
-          <img src="https://raw.githubusercontent.com/susanth04/Intain/main/loan-perf-engine/reports/plots/competing_risks_cif.png" alt="Competing risks CIF" loading="lazy" />
+          <img src="plots/competing_risks_cif.png" alt="Competing risks CIF" loading="lazy" />
           <div class="cap">Competing Risks — CIF (Default vs Prepayment)</div>
         </div>
         <div class="img-chart-box">
-          <img src="https://raw.githubusercontent.com/susanth04/Intain/main/loan-perf-engine/reports/plots/anomaly_score_dist.png" alt="Anomaly score distribution" loading="lazy" />
+          <img src="plots/anomaly_score_dist.png" alt="Anomaly score distribution" loading="lazy" />
           <div class="cap">Anomaly Score Distribution (Isolation Forest)</div>
         </div>
       </div>
@@ -417,19 +417,19 @@
     <p class="section-sub">SHAP TreeExplainer applied per binary classifier. Global importance + local TP/FN waterfall plots. Source: <code>reports/explainability_report.md</code>.</p>
     <div class="shap-grid">
       <div class="shap-img-card">
-        <img src="https://raw.githubusercontent.com/susanth04/Intain/main/loan-perf-engine/reports/plots/shap_summary_next_12m_default_flag.png" alt="SHAP summary default" loading="lazy" />
+        <img src="plots/shap_summary_next_12m_default_flag.png" alt="SHAP summary default" loading="lazy" />
         <div class="cap">Global SHAP — Default (12m)</div>
       </div>
       <div class="shap-img-card">
-        <img src="https://raw.githubusercontent.com/susanth04/Intain/main/loan-perf-engine/reports/plots/shap_summary_next_12m_prepayment_flag.png" alt="SHAP summary prepayment" loading="lazy" />
+        <img src="plots/shap_summary_next_12m_prepayment_flag.png" alt="SHAP summary prepayment" loading="lazy" />
         <div class="cap">Global SHAP — Prepayment (12m)</div>
       </div>
       <div class="shap-img-card">
-        <img src="https://raw.githubusercontent.com/susanth04/Intain/main/loan-perf-engine/reports/plots/shap_local_next_12m_default_flag_TP.png" alt="Local SHAP true positive" loading="lazy" />
+        <img src="plots/shap_local_next_12m_default_flag_TP.png" alt="Local SHAP true positive" loading="lazy" />
         <div class="cap">Local SHAP — True Positive Default (correctly flagged)</div>
       </div>
       <div class="shap-img-card">
-        <img src="https://raw.githubusercontent.com/susanth04/Intain/main/loan-perf-engine/reports/plots/shap_local_next_12m_default_flag_FN.png" alt="Local SHAP false negative" loading="lazy" />
+        <img src="plots/shap_local_next_12m_default_flag_FN.png" alt="Local SHAP false negative" loading="lazy" />
         <div class="cap">Local SHAP — False Negative Default (missed loan)</div>
       </div>
     </div>
@@ -465,11 +465,11 @@
     <div style="margin-top:24px;">
       <div class="img-chart-grid">
         <div class="img-chart-box">
-          <img src="https://raw.githubusercontent.com/susanth04/Intain/main/loan-perf-engine/reports/plots/scenario_comparison.png" alt="Scenario comparison" loading="lazy" />
+          <img src="plots/scenario_comparison.png" alt="Scenario comparison" loading="lazy" />
           <div class="cap">Portfolio-Level Scenario Comparison</div>
         </div>
         <div class="img-chart-box">
-          <img src="https://raw.githubusercontent.com/susanth04/Intain/main/loan-perf-engine/reports/plots/scenario_credit_heatmap.png" alt="Credit band heatmap" loading="lazy" />
+          <img src="plots/scenario_credit_heatmap.png" alt="Credit band heatmap" loading="lazy" />
           <div class="cap">Default Rate — Credit Band × Scenario Heatmap</div>
         </div>
       </div>
