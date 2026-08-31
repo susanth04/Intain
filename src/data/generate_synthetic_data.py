@@ -257,9 +257,9 @@ def generate(cfg: dict, out_dir: Path):
                 "document_status":    rng_py.choices(DOC_STATUS, weights=[60,15,15,10], k=1)[0],
                 "_next_state_actual": next_s,
             })
-            state = next_s
             if state in TERMINAL and m > 3:
                 break  # loan exits
+            state = next_s
 
         # Derive forward-looking targets from trajectory
         traj_df = pd.DataFrame(trajectory)

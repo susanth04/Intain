@@ -4,7 +4,7 @@
 
 # ── Data generation ─────────────────────────────────────────
 N_LOANS: 5000          # loans to synthesise  (scale to 250000 for final run)
-N_MONTHS: 30           # months of history per loan (max, some loans exit early)
+N_MONTHS: 42           # months of history per loan (max, some loans exit early)
 RANDOM_SEED: 42
 
 # ── Paths ────────────────────────────────────────────────────

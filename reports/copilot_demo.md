@@ -1,130 +1,130 @@
 # LLM Reviewer Copilot — Demo Outputs
 
-Generated on 2026-08-29 03:02
+Generated on 2026-08-31 20:02
 
 > All outputs labeled: ⚠ AI-generated recommendation — not a decision.
 
 ## Flagged Loan Summaries
 
-### Loan LN0002871
+### Loan LN0001580
 
 ⚠ AI-generated recommendation — not a decision. Human review required.
 
 [Offline stub] Based on retrieved context:
-[Source: data_dictionary | ID: dd_29 | sim=0.436]
+[Source: data_dictionary | ID: dd_29 | sim=0.449]
 | current_status | categorical | Current/30DPD/60DPD/90DPD/Default/Prepaid/Closed |
 
 ---
 
-[Source: data_dictionary | ID: dd_49 | sim=0.398]
+[Source: data_dictionary | ID: dd_49 | sim=0.403]
 | current_status | categorical | Status per servicer (may conflict with primary) |
 
 Automated analysis indicates this record may require review based on the statistical model outputs and rule-violation scores. A human analyst should confirm the finding before taking action.
 
-### Loan LN0000205
+### Loan LN0000655
 
 ⚠ AI-generated recommendation — not a decision. Human review required.
 
 [Offline stub] Based on retrieved context:
-[Source: data_dictionary | ID: dd_49 | sim=0.397]
-| current_status | categorical | Status per servicer (may conflict with primary) |
-
----
-
-[Source: data_dictionary | ID: dd_30 | sim=0.360]
-| days_past_due | integer | Days past due (0 if current) |
-
-Automated analysis indicates this record may require review based on the statistical model outputs and rule-violation scores. A human analyst should confirm the finding before taking action.
-
-### Loan LN0001953
-
-⚠ AI-generated recommendation — not a decision. Human review required.
-
-[Offline stub] Based on retrieved context:
-[Source: data_dictionary | ID: dd_49 | sim=0.421]
+[Source: data_dictionary | ID: dd_49 | sim=0.394]
 | current_status | categorical | Status per servicer (may conflict with primary) |
 
 ---
 
-[Source: data_dictionary | ID: dd_30 | sim=0.340]
+[Source: data_dictionary | ID: dd_30 | sim=0.361]
 | days_past_due | integer | Days past due (0 if current) |
 
 Automated analysis indicates this record may require review based on the statistical model outputs and rule-violation scores. A human analyst should confirm the finding before taking action.
 
-### Loan LN0004291
+### Loan LN0000900
 
 ⚠ AI-generated recommendation — not a decision. Human review required.
 
 [Offline stub] Based on retrieved context:
-[Source: data_dictionary | ID: dd_29 | sim=0.431]
+[Source: data_dictionary | ID: dd_49 | sim=0.427]
+| current_status | categorical | Status per servicer (may conflict with primary) |
+
+---
+
+[Source: data_dictionary | ID: dd_30 | sim=0.349]
+| days_past_due | integer | Days past due (0 if current) |
+
+Automated analysis indicates this record may require review based on the statistical model outputs and rule-violation scores. A human analyst should confirm the finding before taking action.
+
+### Loan LN0003612
+
+⚠ AI-generated recommendation — not a decision. Human review required.
+
+[Offline stub] Based on retrieved context:
+[Source: data_dictionary | ID: dd_49 | sim=0.404]
+| current_status | categorical | Status per servicer (may conflict with primary) |
+
+---
+
+[Source: data_dictionary | ID: dd_30 | sim=0.350]
+| days_past_due | integer | Days past due (0 if current) |
+
+Automated analysis indicates this record may require review based on the statistical model outputs and rule-violation scores. A human analyst should confirm the finding before taking action.
+
+### Loan LN0003887
+
+⚠ AI-generated recommendation — not a decision. Human review required.
+
+[Offline stub] Based on retrieved context:
+[Source: data_dictionary | ID: dd_29 | sim=0.461]
 | current_status | categorical | Current/30DPD/60DPD/90DPD/Default/Prepaid/Closed |
 
 ---
 
-[Source: data_dictionary | ID: dd_49 | sim=0.393]
+[Source: data_dictionary | ID: dd_49 | sim=0.413]
 | current_status | categorical | Status per servicer (may conflict with primary) |
-
-Automated analysis indicates this record may require review based on the statistical model outputs and rule-violation scores. A human analyst should confirm the finding before taking action.
-
-### Loan LN0004994
-
-⚠ AI-generated recommendation — not a decision. Human review required.
-
-[Offline stub] Based on retrieved context:
-[Source: data_dictionary | ID: dd_49 | sim=0.407]
-| current_status | categorical | Status per servicer (may conflict with primary) |
-
----
-
-[Source: data_dictionary | ID: dd_30 | sim=0.328]
-| days_past_due | integer | Days past due (0 if current) |
 
 Automated analysis indicates this record may require review based on the statistical model outputs and rule-violation scores. A human analyst should confirm the finding before taking action.
 
 ## Anomaly Explanations
 
-### LN0002871 — Anomaly Explanation
+### LN0001580 — Anomaly Explanation
 
 ⚠ AI-generated recommendation — not a decision. Human review required.
 
 [Offline stub] Based on retrieved context:
-[Source: anomaly | ID: anomaly_examples | sim=0.979]
+[Source: anomaly | ID: anomaly_examples | sim=0.976]
 # Anomaly & Exception Examples (Reviewer-Ready)
 
-Total flagged records: **3,582** (threshold: anomaly_score ≥ 0.3308)
+Total flagged records: **4,061** (threshold: anomaly_score ≥ 0.3826)
 
-| loan_id   |   month_index |   anomaly_score | exception_type          | plain_language_reason                                                            | top_drivers                                                                           |
-|:----------|--------------:|----------------:|:------------------------|:---------
+| loan_id   |   month_index |   anomaly_score | exception_type          | plain_language_reason                                                                                                            | top_drivers                                                                      |
+|:----------|--------------:|-----------
 
 Automated analysis indicates this record may require review based on the statistical model outputs and rule-violation scores. A human analyst should confirm the finding before taking action.
 
-### LN0000205 — Anomaly Explanation
+### LN0000655 — Anomaly Explanation
 
 ⚠ AI-generated recommendation — not a decision. Human review required.
 
 [Offline stub] Based on retrieved context:
-[Source: anomaly | ID: anomaly_examples | sim=0.980]
+[Source: anomaly | ID: anomaly_examples | sim=0.975]
 # Anomaly & Exception Examples (Reviewer-Ready)
 
-Total flagged records: **3,582** (threshold: anomaly_score ≥ 0.3308)
+Total flagged records: **4,061** (threshold: anomaly_score ≥ 0.3826)
 
-| loan_id   |   month_index |   anomaly_score | exception_type          | plain_language_reason                                                            | top_drivers                                                                           |
-|:----------|--------------:|----------------:|:------------------------|:---------
+| loan_id   |   month_index |   anomaly_score | exception_type          | plain_language_reason                                                                                                            | top_drivers                                                                      |
+|:----------|--------------:|-----------
 
 Automated analysis indicates this record may require review based on the statistical model outputs and rule-violation scores. A human analyst should confirm the finding before taking action.
 
-### LN0001953 — Anomaly Explanation
+### LN0000900 — Anomaly Explanation
 
 ⚠ AI-generated recommendation — not a decision. Human review required.
 
 [Offline stub] Based on retrieved context:
-[Source: anomaly | ID: anomaly_examples | sim=0.981]
+[Source: anomaly | ID: anomaly_examples | sim=0.975]
 # Anomaly & Exception Examples (Reviewer-Ready)
 
-Total flagged records: **3,582** (threshold: anomaly_score ≥ 0.3308)
+Total flagged records: **4,061** (threshold: anomaly_score ≥ 0.3826)
 
-| loan_id   |   month_index |   anomaly_score | exception_type          | plain_language_reason                                                            | top_drivers                                                                           |
-|:----------|--------------:|----------------:|:------------------------|:---------
+| loan_id   |   month_index |   anomaly_score | exception_type          | plain_language_reason                                                                                                            | top_drivers                                                                      |
+|:----------|--------------:|-----------
 
 Automated analysis indicates this record may require review based on the statistical model outputs and rule-violation scores. A human analyst should confirm the finding before taking action.
 
@@ -135,12 +135,12 @@ Automated analysis indicates this record may require review based on the statist
 ⚠ AI-generated recommendation — not a decision. Human review required.
 
 [Offline stub] Based on retrieved context:
-[Source: data_dictionary | ID: dd_58 | sim=0.665]
+[Source: data_dictionary | ID: dd_58 | sim=0.669]
 | default_hazard_multiplier | float | Multiplier on base default hazard rate |
 
 ---
 
-[Source: data_dictionary | ID: dd_59 | sim=0.654]
+[Source: data_dictionary | ID: dd_59 | sim=0.658]
 | prepay_propensity_mult | float | Multiplier on base prepayment propensity |
 
 Automated analysis indicates this record may require review based on the statistical model outputs and rule-violation scores. A human analyst should confirm the finding before taking action.
@@ -150,12 +150,12 @@ Automated analysis indicates this record may require review based on the statist
 ⚠ AI-generated recommendation — not a decision. Human review required.
 
 [Offline stub] Based on retrieved context:
-[Source: data_dictionary | ID: dd_58 | sim=0.650]
+[Source: data_dictionary | ID: dd_58 | sim=0.654]
 | default_hazard_multiplier | float | Multiplier on base default hazard rate |
 
 ---
 
-[Source: data_dictionary | ID: dd_59 | sim=0.638]
+[Source: data_dictionary | ID: dd_59 | sim=0.642]
 | prepay_propensity_mult | float | Multiplier on base prepayment propensity |
 
 Automated analysis indicates this record may require review based on the statistical model outputs and rule-violation scores. A human analyst should confirm the finding before taking action.
@@ -165,12 +165,12 @@ Automated analysis indicates this record may require review based on the statist
 ⚠ AI-generated recommendation — not a decision. Human review required.
 
 [Offline stub] Based on retrieved context:
-[Source: data_dictionary | ID: dd_58 | sim=0.650]
+[Source: data_dictionary | ID: dd_58 | sim=0.654]
 | default_hazard_multiplier | float | Multiplier on base default hazard rate |
 
 ---
 
-[Source: data_dictionary | ID: dd_59 | sim=0.638]
+[Source: data_dictionary | ID: dd_59 | sim=0.642]
 | prepay_propensity_mult | float | Multiplier on base prepayment propensity |
 
 Automated analysis indicates this record may require review based on the statistical model outputs and rule-violation scores. A human analyst should confirm the finding before taking action.
@@ -195,7 +195,7 @@ Automated analysis indicates this record may require review based on the statist
 
 **LLM Output**: _Based on historical trends, the default rate will approximately double to around 10-15%. (AI-generated)_
 
-**Human Correction**: INCORRECT. The actual model-computed default rate under adverse_credit is 0.000. The LLM fabricated a plausible-sounding range rather than retrieving the computed figure.
+**Human Correction**: INCORRECT. The actual model-computed default rate under adverse_credit is 0.205. The LLM fabricated a plausible-sounding range rather than retrieving the computed figure.
 
 **Lesson Learned**: LLM ignored retrieved model output and generated a freeform estimate instead.
 

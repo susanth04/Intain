@@ -1,18 +1,18 @@
 {
   "LR_val": {
-    "macro_f1": 0.224,
-    "weighted_f1": 0.5177
+    "macro_f1": 0.3336,
+    "weighted_f1": 0.5562
   },
   "LR_test": {
-    "macro_f1": 0.2367,
-    "weighted_f1": 0.5548
+    "macro_f1": 0.314,
+    "weighted_f1": 0.5693
   },
   "LGBM_val": {
-    "macro_f1": 0.2525,
-    "weighted_f1": 0.6562
+    "macro_f1": 0.5219,
+    "weighted_f1": 0.7035
   },
   "LGBM_test": {
-    "macro_f1": 0.2741,
-    "weighted_f1": 0.6373
+    "macro_f1": 0.5083,
+    "weighted_f1": 0.7142
   }
 }

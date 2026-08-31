@@ -63,7 +63,7 @@ def make_splits(panel: pd.DataFrame, cfg: dict) -> tuple:
 
     df_train = panel[panel["month_index"] <= train_cut].copy()
     df_val   = panel[(panel["month_index"] > train_cut) & (panel["month_index"] <= val_cut)].copy()
-    df_test  = panel[panel["month_index"] > val_cut].copy()
+    df_test  = panel[(panel["month_index"] > val_cut) & (panel["month_index"] <= val_cut + 5)].copy()
 
     _print_split_stats(df_train, df_val, df_test, train_cut, val_cut)
     _leakage_check(df_train, df_val, df_test)
