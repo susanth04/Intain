@@ -1,3 +1,7 @@
+const apiProxyTarget = (process.env.API_PROXY_TARGET || 'http://3.80.28.250')
+  .trim()
+  .replace(/\/$/, '')
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   typescript: {
@@ -10,7 +14,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: `${process.env.API_PROXY_TARGET || 'http://3.80.28.250'}/api/:path*`,
+        destination: `${apiProxyTarget}/api/:path*`,
       },
     ]
   },
