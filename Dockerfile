@@ -1,0 +1,24 @@
+# syntax=docker/dockerfile:1
+# Production image for Render. Run scripts/bundle-engine.ps1 first so ./engine exists.
+
+FROM python:3.11-slim
+
+RUN apt-get update && apt-get install -y --no-install-recommends libgomp1 \
+  && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY backend/requirements.txt /app/backend/requirements.txt
+RUN pip install --no-cache-dir -r /app/backend/requirements.txt
+
+COPY backend /app/backend
+COPY engine /app/engine
+
+ENV INTAIN_PROJECT_ROOT=/app/engine
+ENV PYTHONUNBUFFERED=1
+ENV PORT=8000
+
+WORKDIR /app/backend
+EXPOSE 8000
+
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]

@@ -1,0 +1,9 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "npx next build",
+  "devCommand": "npx next dev",
+  "installCommand": "npm install",
+  "env": {
+    "NEXT_PUBLIC_API_URL": "https://intain-api.onrender.com"
+  }
+}

@@ -1,0 +1,15 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.local
+    ports:
+      - "8000:8000"
+    volumes:
+      - ${ENGINE_ROOT:-C:/Users/susan/OneDrive/Desktop/Intain/loan-perf-engine}:/app/engine:ro
+    environment:
+      INTAIN_PROJECT_ROOT: /app/engine
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gemini-2.5-flash}
+      PORT: 8000

@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: intain-api
+    runtime: docker
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    envVars:
+      - key: INTAIN_PROJECT_ROOT
+        value: /app/engine
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_BASE_URL
+        sync: false
+      - key: OPENAI_MODEL
+        value: gemini-2.5-flash
+      - key: PORT
+        value: 8000

@@ -1,0 +1,18 @@
+{
+  "LR_val": {
+    "macro_f1": 0.3336,
+    "weighted_f1": 0.5562
+  },
+  "LR_test": {
+    "macro_f1": 0.314,
+    "weighted_f1": 0.5693
+  },
+  "LGBM_val": {
+    "macro_f1": 0.5219,
+    "weighted_f1": 0.7035
+  },
+  "LGBM_test": {
+    "macro_f1": 0.5083,
+    "weighted_f1": 0.7142
+  }
+}
