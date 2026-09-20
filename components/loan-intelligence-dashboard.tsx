@@ -25,7 +25,21 @@ function statusLabel(status: StageStatus) { return status.toUpperCase() }
 function DataGrid({ data }: { data: unknown }) {
   const rows = entries(data)
   if (!rows.length) return <div className="empty-data">No backend output returned for this stage.</div>
-  return <div className="data-grid">{rows.map(([key, value]) => <div className="data-row" key={key}><span>{key.replaceAll('_', ' ')}</span><strong>{displayValue(value)}</strong></div>)}</div>
+  return <div className="data-grid">{rows.map(([key, value]) => <DataRow key={key} label={key} value={value} />)}</div>
+}
+
+function DataRow({ label, value }: { label: string; value: unknown }) {
+  if (Array.isArray(value)) {
+    return <div className="data-row data-row-stack"><span>{label.replaceAll('_', ' ')}</span><div className="data-list">{value.map((item, index) => <div key={index}>{typeof item === 'object' ? <DataGrid data={item} /> : displayValue(item)}</div>)}</div></div>
+  }
+  if (value && typeof value === 'object') return <div className="data-row data-row-stack"><span>{label.replaceAll('_', ' ')}</span><DataGrid data={value} /></div>
+  return <div className="data-row"><span>{label.replaceAll('_', ' ')}</span><strong>{displayValue(value)}</strong></div>
+}
+
+function MetricsPanel({ portfolio }: { portfolio: PortfolioOverview | null }) {
+  const metrics = asRecord(portfolio?.metrics)
+  const highlights = Array.isArray(metrics.highlights) ? metrics.highlights.map(asRecord) : []
+  return <div className="panel-card metrics-panel"><div className="metrics-heading"><div><p className="eyebrow">VALIDATION</p><h3>Model performance</h3></div><span>Held-out test set</span></div><p className="panel-copy">Real evaluation results from the strict out-of-time test window. These are model diagnostics, not loan-level predictions.</p><div className="metric-list">{highlights.map((metric, index) => <div className="metric-row" key={index}><div><strong>{displayValue(metric.target)}</strong><span>{displayValue(metric.note)}</span></div><b>{typeof metric.lgbm_test_roc === 'number' ? `ROC-AUC ${(metric.lgbm_test_roc * 100).toFixed(1)}%` : displayValue(metric.lgbm_test_roc)}</b></div>)}</div><div className="metrics-foot"><span>Survival model concordance</span><strong>{typeof metrics.cox_concordance === 'number' ? metrics.cox_concordance.toFixed(4) : '—'}</strong></div></div>
 }
 
 function PredictionCards({ output }: { output: unknown }) {
@@ -132,6 +146,7 @@ function OverviewView({ portfolio, loading, onOpenLoan }: { portfolio: Portfolio
           </div>
         </div>
       </div>
+      <MetricsPanel portfolio={portfolio} />
     </section>
   )
 }

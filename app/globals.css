@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&display=swap');
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
@@ -6,6 +7,7 @@
 * { box-sizing: border-box; }
 html, body { margin: 0; min-height: 100%; }
 body { background: #f7f9f9; color: var(--ink); font-family: Arial, Helvetica, sans-serif; }
+p { font-family: 'Archivo', Arial, Helvetica, sans-serif; }
 button, input { font: inherit; }
 button { cursor: pointer; }
 .app-shell { min-height: 100vh; background: radial-gradient(circle at 80% 5%, #eff9f7 0, transparent 30%), #f7f9f9; }
@@ -126,6 +128,12 @@ h1 em { color: var(--teal); font-style: italic; }
 .drawer-status em { color: #9aa5a8; font-style: normal; margin-left: auto; font-weight: 400; letter-spacing: 0; }
 .data-grid { margin-top: 20px; border-top: 1px solid var(--line); }
 .data-row { display: flex; justify-content: space-between; gap: 18px; padding: 13px 0; border-bottom: 1px solid var(--line); text-transform: capitalize; font-size: 12px; }
+.data-row-stack { display: block; }
+.data-row-stack > span { display: block; margin-bottom: 6px; }
+.data-row-stack .data-grid { margin: 0; border-top: 0; }
+.data-row-stack .data-row { padding: 8px 0; font-size: 11px; }
+.data-list { display: grid; gap: 6px; color: var(--ink); }
+.data-list > div { padding: 8px 10px; background: var(--soft); border-radius: 4px; }
 .data-row span { color: #7b888d; }
 .data-row strong { text-align: right; color: var(--ink); font-weight: 600; max-width: 58%; overflow-wrap: anywhere; }
 .drawer h3 { font: 20px Georgia, serif; margin: 27px 0 18px; }
@@ -191,6 +199,12 @@ h1 em { color: var(--teal); font-style: italic; }
 .metric-row strong, .watch-row strong { display: block; font-size: 13px; }
 .metric-row span, .watch-row span { display: block; color: #7b888d; font-size: 11px; margin-top: 4px; line-height: 1.4; }
 .metric-row b { color: var(--navy); font: 16px Georgia, serif; white-space: nowrap; }
+.metrics-panel { margin-top: 18px; }
+.metrics-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+.metrics-heading h3 { margin-bottom: 0; }
+.metrics-heading > span { color: var(--teal); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; }
+.metrics-foot { display: flex; justify-content: space-between; padding-top: 14px; margin-top: 8px; border-top: 1px solid var(--line); color: var(--muted-ink); font-size: 12px; }
+.metrics-foot strong { color: var(--navy); font: 18px Georgia, serif; }
 .pill { font-style: normal; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; border-radius: 99px; padding: 4px 8px; background: var(--mint); color: var(--teal); }
 .pill.high { background: #fee8e2; color: #c7583d; }
 .pill.elevated { background: #fff1e4; color: #c56a28; }

@@ -85,7 +85,8 @@ export function valueAt(object: unknown, ...keys: string[]): unknown {
 
 export function displayValue(value: unknown, fallback = '—') {
   if (value === undefined || value === null || value === '') return fallback
-  if (typeof value === 'object') return JSON.stringify(value)
+  if (typeof value === 'number') return Number.isInteger(value) ? String(value) : value.toFixed(4).replace(/0+$/, '').replace(/\.$/, '')
+  if (typeof value === 'object') return '[structured output]'
   return String(value)
 }
 
