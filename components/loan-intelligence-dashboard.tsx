@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
-import { AlertTriangle, ArrowRight, BarChart3, Check, ChevronRight, Circle, Layers3, Menu, MessageSquareText, Presentation, RefreshCw, Search, ShieldCheck, Sparkles, X, XCircle } from 'lucide-react'
+import { AlertTriangle, ArrowRight, BarChart3, Check, ChevronRight, Circle, Layers3, Menu, MessageSquareText, RefreshCw, Search, ShieldCheck, Sparkles, X, XCircle } from 'lucide-react'
 import CopilotAnswer from '@/components/copilot-answer'
 import SimpleHealthMap, { CreditRiskBars } from '@/components/heatmap-grid'
 import { askCopilot, asRecord, displayValue, entries, errorText, fetchPortfolio, normalizeStages, retryStage, runScenario, stageLabels, stageOrder, type PipelineResponse, type PipelineStage, type PortfolioOverview, type StageKey, type StageStatus, valueAt } from '@/lib/api'
@@ -158,7 +158,6 @@ export default function LoanIntelligenceDashboard() {
   const [selected, setSelected] = useState<PipelineStage | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [presentation, setPresentation] = useState(false)
   const [activeNav, setActiveNav] = useState<NavKey>('Overview')
   const [mobileOpen, setMobileOpen] = useState(false)
   const [question, setQuestion] = useState('')
@@ -266,7 +265,7 @@ export default function LoanIntelligenceDashboard() {
   )
 
   return (
-    <main className={presentation ? 'app-shell presentation' : 'app-shell'}>
+    <main className="app-shell">
       <header className="topbar">
         <div className="brand">
           <div className="brand-mark">I</div>
@@ -277,7 +276,6 @@ export default function LoanIntelligenceDashboard() {
             <button key={item} className={activeNav === item ? 'active' : ''} onClick={() => setActiveNav(item)}>{item}</button>
           ))}
         </nav>
-        <button className="presentation-button" onClick={() => setPresentation(!presentation)}><Presentation /> {presentation ? 'Exit presentation' : 'Presentation mode'}</button>
         <button className="mobile-menu" aria-label="Open navigation" onClick={() => setMobileOpen(!mobileOpen)}><Menu /></button>
       </header>
       {mobileOpen && (
