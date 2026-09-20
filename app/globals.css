@@ -4,9 +4,9 @@
 @import 'shadcn/tailwind.css';
 
 :root { color-scheme: dark; --ink: #edf7f5; --muted-ink: #9ab5b6; --line: rgba(146, 218, 215, .18); --soft: rgba(11, 43, 59, .72); --teal: #75e0d2; --mint: rgba(117, 224, 210, .14); --orange: #ff8064; --navy: #071c2a; }
-* { box-sizing: border-box; }
+* { box-sizing: border-box; font-family: 'Archivo', sans-serif; font-optical-sizing: auto; font-style: normal; font-variation-settings: 'wdth' 100; }
 html, body { margin: 0; min-height: 100%; }
-body { background: #06151f; color: var(--ink); font-family: 'Archivo', Arial, Helvetica, sans-serif; }
+body { background: #06151f; color: var(--ink); font-family: 'Archivo', sans-serif; font-optical-sizing: auto; font-variation-settings: 'wdth' 100; }
 button, input { font: inherit; }
 button { cursor: pointer; }
 .app-shell { min-height: 100vh; position: relative; isolation: isolate; background: rgba(4, 17, 27, .34); }
