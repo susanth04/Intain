@@ -116,9 +116,7 @@ function OverviewView({ portfolio, loading, onOpenLoan }: { portfolio: Portfolio
       <div className="section-heading">
         <div>
           <p className="eyebrow">PORTFOLIO SNAPSHOT</p>
-          <h2>Can they pay?</h2>
         </div>
-        <span className="chip">{portfolio?.total_loans ?? '—'} loans in the book</span>
       </div>
       {loading && <div className="loading-state"><RefreshCw className="spin" /> Loading the book…</div>}
       <div className="tier-row">
@@ -289,7 +287,6 @@ export default function LoanIntelligenceDashboard() {
           <div>
             <p className="eyebrow"><span className="live-dot" /> PORTFOLIO INTELLIGENCE / LIVE SYSTEM</p>
             <h1>Loan intelligence,<br /><em>without the guesswork.</em></h1>
-            <p className="hero-copy">See which credit groups are late, then open one loan and walk the full explainable pipeline.</p>
           </div>
         </section>
         {error && <div className="global-error"><AlertTriangle /> <span>{error}</span></div>}
