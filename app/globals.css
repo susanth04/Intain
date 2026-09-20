@@ -50,6 +50,7 @@ h1 em { color: var(--teal); font-style: italic; }
 .run-button svg { width: 15px; }
 .global-error { display: flex; gap: 10px; align-items: center; padding: 12px 15px; margin-top: 16px; border: 1px solid #f3c8bc; border-radius: 5px; background: #fff6f3; color: #a43f26; font-size: 12px; }
 .workspace { display: grid; grid-template-columns: 1.2fr .8fr; gap: 50px; margin-top: 50px; }
+.loan-run-bar { grid-column: 1 / -1; }
 .section-heading { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 22px; }
 .section-heading h2 { font: 400 28px 'Archivo', Arial, sans-serif; letter-spacing: 0; margin: 0; }
 .section-heading > svg { color: #98a8ac; width: 20px; }

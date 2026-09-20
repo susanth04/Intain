@@ -291,19 +291,6 @@ export default function LoanIntelligenceDashboard() {
             <h1>Loan intelligence,<br /><em>without the guesswork.</em></h1>
             <p className="hero-copy">See which credit groups are late, then open one loan and walk the full explainable pipeline.</p>
           </div>
-          <div className="hero-meta">
-            <span>BACKEND STATUS</span>
-            <strong><i /> CONNECTED</strong>
-            <small>{process.env.NEXT_PUBLIC_API_URL || 'API · relative / local'}</small>
-          </div>
-        </section>
-        <section className="run-panel">
-          <div className="run-label"><Search /><div><span>SELECT A LOAN</span><strong>Run full analysis</strong></div></div>
-          <div className="search-control">
-            <input value={loanId} onChange={(event) => setLoanId(event.target.value)} onKeyDown={(event) => { if (event.key === 'Enter' && !event.nativeEvent.isComposing && event.keyCode !== 229) run() }} placeholder="Search Loan ID..." aria-label="Loan ID" />
-            <span>⌘ K</span>
-          </div>
-          <button className="run-button" onClick={run} disabled={loading}>{loading ? <RefreshCw className="spin" /> : <ArrowRight />} {loading ? 'Running pipeline' : 'Run full analysis'}</button>
         </section>
         {error && <div className="global-error"><AlertTriangle /> <span>{error}</span></div>}
 
@@ -311,6 +298,16 @@ export default function LoanIntelligenceDashboard() {
 
         {activeNav === 'Loan Intelligence' && (
           <section className="workspace">
+            <div className="loan-run-bar">
+              <section className="run-panel">
+                <div className="run-label"><Search /><div><span>SELECT A LOAN</span><strong>Run full analysis</strong></div></div>
+                <div className="search-control">
+                  <input value={loanId} onChange={(event) => setLoanId(event.target.value)} onKeyDown={(event) => { if (event.key === 'Enter' && !event.nativeEvent.isComposing && event.keyCode !== 229) run() }} placeholder="Search Loan ID..." aria-label="Loan ID" />
+                  <span>⌘ K</span>
+                </div>
+                <button className="run-button" onClick={run} disabled={loading}>{loading ? <RefreshCw className="spin" /> : <ArrowRight />} {loading ? 'Running pipeline' : 'Run full analysis'}</button>
+              </section>
+            </div>
             <div className="pipeline-column">
               <div className="section-heading">
                 <div><p className="eyebrow">ORCHESTRATION</p><h2>Live pipeline</h2></div>
