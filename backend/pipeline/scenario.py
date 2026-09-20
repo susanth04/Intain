@@ -53,6 +53,15 @@ def _safe_float(v):
         return None
 
 
+def _scale_odds(probability: float, multiplier: float) -> float:
+    """Apply a scenario hazard/propensity multiplier to a probability."""
+    probability = min(max(float(probability), 0.0), 1.0)
+    if multiplier <= 0 or probability in (0.0, 1.0):
+        return probability
+    odds = probability / (1.0 - probability)
+    return odds * multiplier / (1.0 + odds * multiplier)
+
+
 def run(loan_id: str, scenario_name: str = None) -> dict:
     """
     Run scenario analysis for one or all scenarios.
@@ -110,7 +119,18 @@ def run(loan_id: str, scenario_name: str = None) -> dict:
                             proba = model.predict_proba(aligned)[:, 1]
                         else:
                             raise
-                    scen_preds[tgt] = _safe_float(proba[0])
+                    probability = float(proba[0])
+                    if tgt == "next_12m_default_flag":
+                        probability = _scale_odds(
+                            probability,
+                            scen_cfg.get("default_hazard_multiplier", 1.0),
+                        )
+                    elif tgt == "next_12m_prepayment_flag":
+                        probability = _scale_odds(
+                            probability,
+                            scen_cfg.get("prepay_propensity_multiplier", 1.0),
+                        )
+                    scen_preds[tgt] = _safe_float(probability)
                 except Exception as e:
                     scen_preds[tgt] = None
 
