@@ -29,13 +29,8 @@ share/python-wheels/
 .installed.cfg
 *.egg
 
-# Data and Models (Keep structure but ignore large files)
-data/raw/*.csv
-data/processed/*.csv
-data/processed/*.pkl
-data/processed/models/
-*.pkl
-*.model
+# Data and Models
+# Runtime inference inputs and artifacts must be included in the deployment bundle.
 
 # IDEs and OS files
 .vscode/

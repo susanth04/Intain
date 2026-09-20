@@ -1,0 +1,1169 @@
+loan_id,month_index,rule_id,rule_name,severity,details
+LN0001580,13,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000655,3,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004883,12,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001887,10,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001140,5,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002836,16,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001811,24,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004293,17,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000204,1,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002251,17,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000519,11,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001751,9,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001747,16,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001833,13,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000226,7,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002088,5,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001930,8,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003965,18,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004855,2,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001319,17,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003543,1,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002408,1,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003110,1,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001808,24,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001907,20,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001598,2,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000453,6,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000176,16,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000038,14,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002865,2,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002204,2,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000654,8,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002894,5,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003619,4,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003848,12,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004107,3,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004844,20,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002269,15,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003216,15,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004059,6,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002175,5,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003593,3,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002783,8,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000468,15,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000096,10,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002991,10,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001016,5,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001565,7,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004260,12,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002191,22,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002584,6,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002043,7,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001287,1,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002413,1,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001353,1,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004400,16,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002325,11,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004556,4,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004331,2,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002429,11,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002849,2,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002534,14,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004177,4,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004401,4,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003669,6,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003435,14,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000738,13,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000369,11,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002941,3,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003719,10,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004865,9,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000465,2,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000924,2,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002886,2,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002609,3,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003033,12,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003888,1,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004934,17,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004295,5,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001899,20,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004377,18,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004393,13,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004468,1,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000579,16,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004754,6,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003216,13,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004395,3,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003369,13,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001388,13,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004205,15,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000897,24,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004393,24,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000133,9,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000158,3,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004474,6,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003278,14,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002911,1,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000847,3,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004561,11,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004861,12,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002734,15,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004780,2,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001261,4,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001292,3,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000399,2,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001356,1,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003976,13,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003361,14,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003819,4,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004772,18,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004802,8,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002857,1,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000469,11,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000641,4,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003056,23,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002152,5,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000371,8,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000372,2,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002320,2,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001565,11,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002547,4,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004085,13,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001580,6,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000052,14,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004817,9,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001233,4,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000906,4,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004055,21,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000692,10,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001932,13,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004704,5,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000253,4,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003612,17,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002748,10,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001136,10,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002013,7,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004248,17,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001442,4,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000686,6,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000617,10,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004630,7,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000818,24,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002356,7,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001833,4,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001198,11,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000772,2,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004762,16,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002265,8,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000138,13,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000770,1,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001895,4,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002238,22,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001923,4,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003832,21,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002153,12,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004085,12,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003127,19,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000125,13,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002517,2,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003331,3,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002043,4,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002626,13,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003836,5,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004769,1,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004425,14,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004158,13,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004853,6,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004936,14,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000293,6,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003259,10,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001673,10,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003898,9,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000345,10,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000801,1,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003127,17,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000311,21,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001445,6,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004807,12,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000765,13,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003390,12,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003809,9,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002394,4,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002901,4,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001492,17,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000173,5,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000037,12,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001276,4,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002901,21,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002828,19,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001137,10,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002901,9,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000699,3,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000171,4,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003735,7,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000456,3,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001961,17,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002958,14,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001916,1,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001277,8,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000285,20,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001810,12,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003834,11,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003083,13,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004070,1,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002809,11,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004287,8,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002635,16,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000767,18,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000270,21,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002851,8,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003009,3,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002685,16,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001170,3,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004372,8,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003581,6,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002233,6,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001102,5,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003629,19,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003902,20,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001372,1,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001336,2,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003866,3,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002372,11,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002734,7,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003806,3,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003316,3,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001482,9,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002805,9,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000106,6,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004733,15,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001719,6,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000908,1,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003188,21,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003640,11,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000401,15,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004102,8,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003965,19,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000300,14,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004900,14,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000307,12,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003656,6,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003797,18,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001215,12,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003700,12,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002538,17,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000351,4,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003579,1,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001867,3,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004136,15,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002928,16,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003509,6,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001490,11,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001167,9,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000650,8,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003007,6,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000026,14,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002654,19,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004612,10,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003242,5,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003742,1,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000814,1,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002111,1,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000537,7,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004877,13,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003453,19,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003061,1,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000893,6,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004663,14,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002306,12,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002396,3,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004781,14,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004631,24,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004139,2,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003435,7,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003832,6,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002030,12,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000141,14,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000037,12,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003051,16,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004413,3,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003830,4,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001461,7,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002844,13,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000800,2,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004930,20,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004188,7,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000900,11,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003530,1,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000818,3,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003981,12,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000903,2,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003569,11,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004801,6,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000260,22,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002594,15,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000799,13,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002543,2,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002910,16,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002138,16,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002236,12,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003181,8,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002207,18,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000324,6,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004414,5,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000420,7,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001597,6,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001810,10,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002273,5,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001896,20,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001065,12,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004712,5,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003147,4,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000179,15,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003630,3,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002368,2,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004232,9,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000687,3,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003485,4,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002491,18,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000439,4,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000411,22,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004081,6,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000812,3,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004479,21,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004580,6,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001197,4,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001373,4,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001211,5,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000642,1,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000684,12,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000132,20,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001390,6,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003964,10,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001648,10,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004399,8,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001444,8,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001630,3,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002072,5,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000385,1,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003356,8,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003542,4,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001656,12,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001772,5,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000186,7,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004237,14,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003403,23,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002687,40,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001491,32,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000010,34,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003403,32,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000837,29,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001751,28,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002726,30,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000298,28,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002583,26,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004333,29,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004933,33,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002337,31,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001263,30,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001105,30,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003259,33,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002525,38,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002626,28,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002923,31,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004868,29,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001760,27,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001088,26,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003137,38,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002189,27,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004501,30,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004636,30,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001685,30,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002238,26,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002089,28,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004719,27,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000243,38,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003629,32,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001388,37,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002129,37,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000920,32,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004336,31,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003699,26,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004456,27,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003216,29,VR001,balance_consistency,error,current_balance > 105% of original
+LN0003309,32,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001924,40,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002274,26,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001859,26,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002534,29,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004672,30,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000422,26,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001409,27,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002901,34,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000898,29,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002627,35,VR001,balance_consistency,error,current_balance > 105% of original
+LN0004943,35,VR001,balance_consistency,error,current_balance > 105% of original
+LN0001592,30,VR001,balance_consistency,error,current_balance > 105% of original
+LN0000059,32,VR001,balance_consistency,error,current_balance > 105% of original
+LN0002492,19,VR002,date_validity,error,origination_month > reporting_month
+LN0002126,1,VR002,date_validity,error,origination_month > reporting_month
+LN0003674,23,VR002,date_validity,error,origination_month > reporting_month
+LN0000855,16,VR002,date_validity,error,origination_month > reporting_month
+LN0001800,15,VR002,date_validity,error,origination_month > reporting_month
+LN0001970,1,VR002,date_validity,error,origination_month > reporting_month
+LN0002076,13,VR002,date_validity,error,origination_month > reporting_month
+LN0004977,19,VR002,date_validity,error,origination_month > reporting_month
+LN0001646,8,VR002,date_validity,error,origination_month > reporting_month
+LN0001740,11,VR002,date_validity,error,origination_month > reporting_month
+LN0003541,13,VR002,date_validity,error,origination_month > reporting_month
+LN0003516,7,VR002,date_validity,error,origination_month > reporting_month
+LN0004548,14,VR002,date_validity,error,origination_month > reporting_month
+LN0003449,4,VR002,date_validity,error,origination_month > reporting_month
+LN0003971,2,VR002,date_validity,error,origination_month > reporting_month
+LN0004259,3,VR002,date_validity,error,origination_month > reporting_month
+LN0001923,5,VR002,date_validity,error,origination_month > reporting_month
+LN0004214,3,VR002,date_validity,error,origination_month > reporting_month
+LN0002758,17,VR002,date_validity,error,origination_month > reporting_month
+LN0000008,4,VR002,date_validity,error,origination_month > reporting_month
+LN0002755,5,VR002,date_validity,error,origination_month > reporting_month
+LN0001330,16,VR002,date_validity,error,origination_month > reporting_month
+LN0002263,5,VR002,date_validity,error,origination_month > reporting_month
+LN0002555,12,VR002,date_validity,error,origination_month > reporting_month
+LN0004327,12,VR002,date_validity,error,origination_month > reporting_month
+LN0002868,12,VR002,date_validity,error,origination_month > reporting_month
+LN0001842,9,VR002,date_validity,error,origination_month > reporting_month
+LN0000581,3,VR002,date_validity,error,origination_month > reporting_month
+LN0000363,14,VR002,date_validity,error,origination_month > reporting_month
+LN0002936,3,VR002,date_validity,error,origination_month > reporting_month
+LN0004351,5,VR002,date_validity,error,origination_month > reporting_month
+LN0002113,3,VR002,date_validity,error,origination_month > reporting_month
+LN0001653,4,VR002,date_validity,error,origination_month > reporting_month
+LN0001669,21,VR002,date_validity,error,origination_month > reporting_month
+LN0004428,14,VR002,date_validity,error,origination_month > reporting_month
+LN0003370,1,VR002,date_validity,error,origination_month > reporting_month
+LN0004495,18,VR002,date_validity,error,origination_month > reporting_month
+LN0002749,2,VR002,date_validity,error,origination_month > reporting_month
+LN0003715,15,VR002,date_validity,error,origination_month > reporting_month
+LN0002783,9,VR002,date_validity,error,origination_month > reporting_month
+LN0001228,9,VR002,date_validity,error,origination_month > reporting_month
+LN0001192,9,VR002,date_validity,error,origination_month > reporting_month
+LN0001947,21,VR002,date_validity,error,origination_month > reporting_month
+LN0004324,3,VR002,date_validity,error,origination_month > reporting_month
+LN0001842,13,VR002,date_validity,error,origination_month > reporting_month
+LN0002285,4,VR002,date_validity,error,origination_month > reporting_month
+LN0001219,1,VR002,date_validity,error,origination_month > reporting_month
+LN0003612,21,VR002,date_validity,error,origination_month > reporting_month
+LN0003865,12,VR002,date_validity,error,origination_month > reporting_month
+LN0000411,4,VR002,date_validity,error,origination_month > reporting_month
+LN0001425,8,VR002,date_validity,error,origination_month > reporting_month
+LN0003268,2,VR002,date_validity,error,origination_month > reporting_month
+LN0004095,18,VR002,date_validity,error,origination_month > reporting_month
+LN0001182,6,VR002,date_validity,error,origination_month > reporting_month
+LN0002868,12,VR002,date_validity,error,origination_month > reporting_month
+LN0001817,3,VR002,date_validity,error,origination_month > reporting_month
+LN0003367,5,VR002,date_validity,error,origination_month > reporting_month
+LN0004132,17,VR002,date_validity,error,origination_month > reporting_month
+LN0004741,8,VR002,date_validity,error,origination_month > reporting_month
+LN0004868,8,VR002,date_validity,error,origination_month > reporting_month
+LN0003377,17,VR002,date_validity,error,origination_month > reporting_month
+LN0000731,14,VR002,date_validity,error,origination_month > reporting_month
+LN0001214,15,VR002,date_validity,error,origination_month > reporting_month
+LN0004829,2,VR002,date_validity,error,origination_month > reporting_month
+LN0002868,15,VR002,date_validity,error,origination_month > reporting_month
+LN0004177,9,VR002,date_validity,error,origination_month > reporting_month
+LN0004636,2,VR002,date_validity,error,origination_month > reporting_month
+LN0003454,20,VR002,date_validity,error,origination_month > reporting_month
+LN0002835,9,VR002,date_validity,error,origination_month > reporting_month
+LN0003685,7,VR002,date_validity,error,origination_month > reporting_month
+LN0003894,7,VR002,date_validity,error,origination_month > reporting_month
+LN0003246,14,VR002,date_validity,error,origination_month > reporting_month
+LN0001547,3,VR002,date_validity,error,origination_month > reporting_month
+LN0000976,12,VR002,date_validity,error,origination_month > reporting_month
+LN0001040,16,VR002,date_validity,error,origination_month > reporting_month
+LN0003141,10,VR002,date_validity,error,origination_month > reporting_month
+LN0002191,21,VR002,date_validity,error,origination_month > reporting_month
+LN0001882,11,VR002,date_validity,error,origination_month > reporting_month
+LN0001014,9,VR002,date_validity,error,origination_month > reporting_month
+LN0004659,15,VR002,date_validity,error,origination_month > reporting_month
+LN0001565,12,VR002,date_validity,error,origination_month > reporting_month
+LN0001304,15,VR002,date_validity,error,origination_month > reporting_month
+LN0001986,4,VR002,date_validity,error,origination_month > reporting_month
+LN0002367,9,VR002,date_validity,error,origination_month > reporting_month
+LN0003410,5,VR002,date_validity,error,origination_month > reporting_month
+LN0004739,10,VR002,date_validity,error,origination_month > reporting_month
+LN0004419,1,VR002,date_validity,error,origination_month > reporting_month
+LN0001799,1,VR002,date_validity,error,origination_month > reporting_month
+LN0004555,7,VR002,date_validity,error,origination_month > reporting_month
+LN0001061,12,VR002,date_validity,error,origination_month > reporting_month
+LN0001710,20,VR002,date_validity,error,origination_month > reporting_month
+LN0002514,4,VR002,date_validity,error,origination_month > reporting_month
+LN0002321,16,VR002,date_validity,error,origination_month > reporting_month
+LN0000546,13,VR002,date_validity,error,origination_month > reporting_month
+LN0001142,24,VR002,date_validity,error,origination_month > reporting_month
+LN0004189,13,VR002,date_validity,error,origination_month > reporting_month
+LN0001404,9,VR002,date_validity,error,origination_month > reporting_month
+LN0004334,8,VR002,date_validity,error,origination_month > reporting_month
+LN0004427,5,VR002,date_validity,error,origination_month > reporting_month
+LN0000718,3,VR002,date_validity,error,origination_month > reporting_month
+LN0001749,10,VR002,date_validity,error,origination_month > reporting_month
+LN0001480,13,VR002,date_validity,error,origination_month > reporting_month
+LN0003358,19,VR002,date_validity,error,origination_month > reporting_month
+LN0002070,1,VR002,date_validity,error,origination_month > reporting_month
+LN0002431,11,VR002,date_validity,error,origination_month > reporting_month
+LN0000858,11,VR002,date_validity,error,origination_month > reporting_month
+LN0002228,1,VR002,date_validity,error,origination_month > reporting_month
+LN0001496,3,VR002,date_validity,error,origination_month > reporting_month
+LN0003071,21,VR002,date_validity,error,origination_month > reporting_month
+LN0001649,1,VR002,date_validity,error,origination_month > reporting_month
+LN0001087,9,VR002,date_validity,error,origination_month > reporting_month
+LN0001580,14,VR002,date_validity,error,origination_month > reporting_month
+LN0002504,7,VR002,date_validity,error,origination_month > reporting_month
+LN0000363,17,VR002,date_validity,error,origination_month > reporting_month
+LN0002136,5,VR002,date_validity,error,origination_month > reporting_month
+LN0003478,3,VR002,date_validity,error,origination_month > reporting_month
+LN0003446,10,VR002,date_validity,error,origination_month > reporting_month
+LN0003082,2,VR002,date_validity,error,origination_month > reporting_month
+LN0005000,5,VR002,date_validity,error,origination_month > reporting_month
+LN0001573,9,VR002,date_validity,error,origination_month > reporting_month
+LN0003390,10,VR002,date_validity,error,origination_month > reporting_month
+LN0003283,1,VR002,date_validity,error,origination_month > reporting_month
+LN0001380,6,VR002,date_validity,error,origination_month > reporting_month
+LN0002995,12,VR002,date_validity,error,origination_month > reporting_month
+LN0004594,2,VR002,date_validity,error,origination_month > reporting_month
+LN0001042,4,VR002,date_validity,error,origination_month > reporting_month
+LN0004933,10,VR002,date_validity,error,origination_month > reporting_month
+LN0004977,19,VR002,date_validity,error,origination_month > reporting_month
+LN0004063,21,VR002,date_validity,error,origination_month > reporting_month
+LN0003412,4,VR002,date_validity,error,origination_month > reporting_month
+LN0004671,4,VR002,date_validity,error,origination_month > reporting_month
+LN0002684,11,VR002,date_validity,error,origination_month > reporting_month
+LN0002200,5,VR002,date_validity,error,origination_month > reporting_month
+LN0002321,14,VR002,date_validity,error,origination_month > reporting_month
+LN0002823,2,VR002,date_validity,error,origination_month > reporting_month
+LN0001304,2,VR002,date_validity,error,origination_month > reporting_month
+LN0002042,10,VR002,date_validity,error,origination_month > reporting_month
+LN0002764,2,VR002,date_validity,error,origination_month > reporting_month
+LN0004032,18,VR002,date_validity,error,origination_month > reporting_month
+LN0002959,8,VR002,date_validity,error,origination_month > reporting_month
+LN0001117,16,VR002,date_validity,error,origination_month > reporting_month
+LN0000363,17,VR002,date_validity,error,origination_month > reporting_month
+LN0004960,23,VR002,date_validity,error,origination_month > reporting_month
+LN0002101,2,VR002,date_validity,error,origination_month > reporting_month
+LN0000280,3,VR002,date_validity,error,origination_month > reporting_month
+LN0001390,16,VR002,date_validity,error,origination_month > reporting_month
+LN0003482,1,VR002,date_validity,error,origination_month > reporting_month
+LN0000405,16,VR002,date_validity,error,origination_month > reporting_month
+LN0000572,13,VR002,date_validity,error,origination_month > reporting_month
+LN0001684,4,VR002,date_validity,error,origination_month > reporting_month
+LN0004433,17,VR002,date_validity,error,origination_month > reporting_month
+LN0001552,5,VR002,date_validity,error,origination_month > reporting_month
+LN0003392,9,VR002,date_validity,error,origination_month > reporting_month
+LN0003491,7,VR002,date_validity,error,origination_month > reporting_month
+LN0000147,13,VR002,date_validity,error,origination_month > reporting_month
+LN0002785,12,VR002,date_validity,error,origination_month > reporting_month
+LN0002081,4,VR002,date_validity,error,origination_month > reporting_month
+LN0003468,12,VR002,date_validity,error,origination_month > reporting_month
+LN0003095,8,VR002,date_validity,error,origination_month > reporting_month
+LN0000601,6,VR002,date_validity,error,origination_month > reporting_month
+LN0000588,23,VR002,date_validity,error,origination_month > reporting_month
+LN0000470,3,VR002,date_validity,error,origination_month > reporting_month
+LN0001511,2,VR002,date_validity,error,origination_month > reporting_month
+LN0000508,11,VR002,date_validity,error,origination_month > reporting_month
+LN0004793,4,VR002,date_validity,error,origination_month > reporting_month
+LN0001165,8,VR002,date_validity,error,origination_month > reporting_month
+LN0004968,6,VR002,date_validity,error,origination_month > reporting_month
+LN0001304,2,VR002,date_validity,error,origination_month > reporting_month
+LN0003146,20,VR002,date_validity,error,origination_month > reporting_month
+LN0002855,13,VR002,date_validity,error,origination_month > reporting_month
+LN0000279,14,VR002,date_validity,error,origination_month > reporting_month
+LN0003630,4,VR002,date_validity,error,origination_month > reporting_month
+LN0004018,3,VR002,date_validity,error,origination_month > reporting_month
+LN0004406,9,VR002,date_validity,error,origination_month > reporting_month
+LN0001646,16,VR002,date_validity,error,origination_month > reporting_month
+LN0002230,1,VR002,date_validity,error,origination_month > reporting_month
+LN0003146,20,VR002,date_validity,error,origination_month > reporting_month
+LN0002891,15,VR002,date_validity,error,origination_month > reporting_month
+LN0003515,16,VR002,date_validity,error,origination_month > reporting_month
+LN0003631,3,VR002,date_validity,error,origination_month > reporting_month
+LN0001540,12,VR002,date_validity,error,origination_month > reporting_month
+LN0002868,15,VR002,date_validity,error,origination_month > reporting_month
+LN0002154,20,VR002,date_validity,error,origination_month > reporting_month
+LN0003603,7,VR002,date_validity,error,origination_month > reporting_month
+LN0001898,4,VR002,date_validity,error,origination_month > reporting_month
+LN0000838,6,VR002,date_validity,error,origination_month > reporting_month
+LN0002989,3,VR002,date_validity,error,origination_month > reporting_month
+LN0002350,18,VR002,date_validity,error,origination_month > reporting_month
+LN0000903,17,VR002,date_validity,error,origination_month > reporting_month
+LN0001422,5,VR002,date_validity,error,origination_month > reporting_month
+LN0000241,1,VR002,date_validity,error,origination_month > reporting_month
+LN0003442,26,VR002,date_validity,error,origination_month > reporting_month
+LN0004697,30,VR002,date_validity,error,origination_month > reporting_month
+LN0001911,28,VR002,date_validity,error,origination_month > reporting_month
+LN0002506,40,VR002,date_validity,error,origination_month > reporting_month
+LN0002963,28,VR002,date_validity,error,origination_month > reporting_month
+LN0000733,28,VR002,date_validity,error,origination_month > reporting_month
+LN0000697,28,VR002,date_validity,error,origination_month > reporting_month
+LN0000697,28,VR002,date_validity,error,origination_month > reporting_month
+LN0000369,27,VR002,date_validity,error,origination_month > reporting_month
+LN0000432,41,VR002,date_validity,error,origination_month > reporting_month
+LN0004324,28,VR002,date_validity,error,origination_month > reporting_month
+LN0000378,39,VR002,date_validity,error,origination_month > reporting_month
+LN0003724,26,VR002,date_validity,error,origination_month > reporting_month
+LN0003589,33,VR002,date_validity,error,origination_month > reporting_month
+LN0004106,29,VR002,date_validity,error,origination_month > reporting_month
+LN0004396,37,VR002,date_validity,error,origination_month > reporting_month
+LN0002497,35,VR002,date_validity,error,origination_month > reporting_month
+LN0000906,38,VR002,date_validity,error,origination_month > reporting_month
+LN0002901,35,VR002,date_validity,error,origination_month > reporting_month
+LN0003059,38,VR002,date_validity,error,origination_month > reporting_month
+LN0000930,31,VR002,date_validity,error,origination_month > reporting_month
+LN0004498,26,VR002,date_validity,error,origination_month > reporting_month
+LN0001719,30,VR002,date_validity,error,origination_month > reporting_month
+LN0002766,33,VR002,date_validity,error,origination_month > reporting_month
+LN0001030,37,VR002,date_validity,error,origination_month > reporting_month
+LN0002645,32,VR002,date_validity,error,origination_month > reporting_month
+LN0003693,33,VR002,date_validity,error,origination_month > reporting_month
+LN0003868,30,VR002,date_validity,error,origination_month > reporting_month
+LN0002234,29,VR002,date_validity,error,origination_month > reporting_month
+LN0003595,32,VR002,date_validity,error,origination_month > reporting_month
+LN0002150,27,VR002,date_validity,error,origination_month > reporting_month
+LN0002659,36,VR002,date_validity,error,origination_month > reporting_month
+LN0000192,39,VR002,date_validity,error,origination_month > reporting_month
+LN0001942,37,VR002,date_validity,error,origination_month > reporting_month
+LN0001686,28,VR002,date_validity,error,origination_month > reporting_month
+LN0000378,28,VR002,date_validity,error,origination_month > reporting_month
+LN0003126,40,VR002,date_validity,error,origination_month > reporting_month
+LN0004960,31,VR002,date_validity,error,origination_month > reporting_month
+LN0001677,33,VR002,date_validity,error,origination_month > reporting_month
+LN0000899,42,VR002,date_validity,error,origination_month > reporting_month
+LN0003569,29,VR002,date_validity,error,origination_month > reporting_month
+LN0002334,26,VR002,date_validity,error,origination_month > reporting_month
+LN0003752,39,VR002,date_validity,error,origination_month > reporting_month
+LN0001172,28,VR002,date_validity,error,origination_month > reporting_month
+LN0001281,28,VR002,date_validity,error,origination_month > reporting_month
+LN0002323,41,VR002,date_validity,error,origination_month > reporting_month
+LN0003138,40,VR002,date_validity,error,origination_month > reporting_month
+LN0001263,31,VR002,date_validity,error,origination_month > reporting_month
+LN0003974,42,VR002,date_validity,error,origination_month > reporting_month
+LN0004743,31,VR002,date_validity,error,origination_month > reporting_month
+LN0000655,28,VR002,date_validity,error,origination_month > reporting_month
+LN0000347,9,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003495,4,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000657,7,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000970,23,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0002380,18,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001319,17,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001074,17,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001666,9,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000124,10,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001174,19,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000617,24,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003428,15,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0004675,11,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000505,22,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0004163,21,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003670,8,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001557,10,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000322,15,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0002439,11,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001261,10,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001936,15,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001780,4,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001580,21,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003864,4,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0004858,11,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0002712,16,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0004959,18,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0004514,12,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000021,7,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0002036,14,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0004834,14,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0002884,11,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0004756,15,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003208,25,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001690,11,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000748,18,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0002977,11,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001338,17,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003756,19,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000478,15,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003233,17,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0004047,16,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003173,4,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000931,17,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0002596,11,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003781,20,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003479,13,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003768,7,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0002536,15,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003516,11,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0002236,14,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003593,20,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0002311,14,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003036,12,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003958,11,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003208,25,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000914,8,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003837,8,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001300,14,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003101,6,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000203,11,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001107,16,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003920,18,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001746,7,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003574,13,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000013,5,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0002745,25,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0002888,4,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001343,10,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003291,9,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0002570,4,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0004131,21,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001496,14,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0002821,17,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001872,4,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001552,18,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003847,5,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001706,8,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003092,10,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000277,6,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000406,15,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000757,19,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001345,13,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003701,16,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003743,18,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003110,19,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000678,16,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003251,6,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0004287,12,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000968,7,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0004346,25,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001705,22,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001357,15,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000673,3,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0004311,3,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0004175,6,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001118,6,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001917,7,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000351,4,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0004935,19,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003566,4,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000570,5,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0004680,12,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0002249,9,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0004690,13,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000983,20,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0002991,23,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003305,8,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0004246,17,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001733,7,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003850,13,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0004862,10,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0002688,14,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003653,12,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0004991,21,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0004538,18,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003194,19,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000782,3,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0002952,5,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001538,10,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001936,15,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003379,11,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003182,4,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0004107,14,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0004748,9,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000974,15,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000012,7,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000318,3,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0004841,19,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0002183,14,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0002367,13,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003690,18,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001288,10,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001287,10,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001696,4,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001758,6,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000087,19,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0004668,10,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001353,22,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000776,12,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0004396,38,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000298,28,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0004468,28,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000022,34,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0004300,26,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003122,28,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0002274,28,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001195,33,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0002143,28,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0002238,32,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003878,36,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001116,33,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003961,34,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001363,28,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0003940,27,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000684,34,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0002566,37,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0001379,28,VR005,document_completeness,warning,default=1 but doc status Incomplete
+LN0000010,34,VR006,balance_monotonic,warning,balance increased without modification
+LN0000026,14,VR006,balance_monotonic,warning,balance increased without modification
+LN0000037,12,VR006,balance_monotonic,warning,balance increased without modification
+LN0000038,14,VR006,balance_monotonic,warning,balance increased without modification
+LN0000052,14,VR006,balance_monotonic,warning,balance increased without modification
+LN0000059,32,VR006,balance_monotonic,warning,balance increased without modification
+LN0000096,10,VR006,balance_monotonic,warning,balance increased without modification
+LN0000106,6,VR006,balance_monotonic,warning,balance increased without modification
+LN0000125,13,VR006,balance_monotonic,warning,balance increased without modification
+LN0000132,20,VR006,balance_monotonic,warning,balance increased without modification
+LN0000133,9,VR006,balance_monotonic,warning,balance increased without modification
+LN0000138,13,VR006,balance_monotonic,warning,balance increased without modification
+LN0000141,14,VR006,balance_monotonic,warning,balance increased without modification
+LN0000158,3,VR006,balance_monotonic,warning,balance increased without modification
+LN0000171,4,VR006,balance_monotonic,warning,balance increased without modification
+LN0000173,5,VR006,balance_monotonic,warning,balance increased without modification
+LN0000176,16,VR006,balance_monotonic,warning,balance increased without modification
+LN0000179,15,VR006,balance_monotonic,warning,balance increased without modification
+LN0000186,7,VR006,balance_monotonic,warning,balance increased without modification
+LN0000226,7,VR006,balance_monotonic,warning,balance increased without modification
+LN0000243,38,VR006,balance_monotonic,warning,balance increased without modification
+LN0000253,4,VR006,balance_monotonic,warning,balance increased without modification
+LN0000260,22,VR006,balance_monotonic,warning,balance increased without modification
+LN0000270,21,VR006,balance_monotonic,warning,balance increased without modification
+LN0000285,20,VR006,balance_monotonic,warning,balance increased without modification
+LN0000293,6,VR006,balance_monotonic,warning,balance increased without modification
+LN0000298,28,VR006,balance_monotonic,warning,balance increased without modification
+LN0000300,14,VR006,balance_monotonic,warning,balance increased without modification
+LN0000307,12,VR006,balance_monotonic,warning,balance increased without modification
+LN0000311,21,VR006,balance_monotonic,warning,balance increased without modification
+LN0000324,6,VR006,balance_monotonic,warning,balance increased without modification
+LN0000345,10,VR006,balance_monotonic,warning,balance increased without modification
+LN0000351,4,VR006,balance_monotonic,warning,balance increased without modification
+LN0000369,11,VR006,balance_monotonic,warning,balance increased without modification
+LN0000371,8,VR006,balance_monotonic,warning,balance increased without modification
+LN0000372,2,VR006,balance_monotonic,warning,balance increased without modification
+LN0000399,2,VR006,balance_monotonic,warning,balance increased without modification
+LN0000401,15,VR006,balance_monotonic,warning,balance increased without modification
+LN0000411,22,VR006,balance_monotonic,warning,balance increased without modification
+LN0000420,7,VR006,balance_monotonic,warning,balance increased without modification
+LN0000422,26,VR006,balance_monotonic,warning,balance increased without modification
+LN0000439,4,VR006,balance_monotonic,warning,balance increased without modification
+LN0000453,6,VR006,balance_monotonic,warning,balance increased without modification
+LN0000456,3,VR006,balance_monotonic,warning,balance increased without modification
+LN0000465,2,VR006,balance_monotonic,warning,balance increased without modification
+LN0000468,15,VR006,balance_monotonic,warning,balance increased without modification
+LN0000469,11,VR006,balance_monotonic,warning,balance increased without modification
+LN0000519,11,VR006,balance_monotonic,warning,balance increased without modification
+LN0000537,7,VR006,balance_monotonic,warning,balance increased without modification
+LN0000579,16,VR006,balance_monotonic,warning,balance increased without modification
+LN0000617,10,VR006,balance_monotonic,warning,balance increased without modification
+LN0000641,4,VR006,balance_monotonic,warning,balance increased without modification
+LN0000650,8,VR006,balance_monotonic,warning,balance increased without modification
+LN0000654,8,VR006,balance_monotonic,warning,balance increased without modification
+LN0000655,3,VR006,balance_monotonic,warning,balance increased without modification
+LN0000684,12,VR006,balance_monotonic,warning,balance increased without modification
+LN0000686,6,VR006,balance_monotonic,warning,balance increased without modification
+LN0000687,3,VR006,balance_monotonic,warning,balance increased without modification
+LN0000692,10,VR006,balance_monotonic,warning,balance increased without modification
+LN0000699,3,VR006,balance_monotonic,warning,balance increased without modification
+LN0000738,13,VR006,balance_monotonic,warning,balance increased without modification
+LN0000765,13,VR006,balance_monotonic,warning,balance increased without modification
+LN0000767,18,VR006,balance_monotonic,warning,balance increased without modification
+LN0000772,2,VR006,balance_monotonic,warning,balance increased without modification
+LN0000799,13,VR006,balance_monotonic,warning,balance increased without modification
+LN0000800,2,VR006,balance_monotonic,warning,balance increased without modification
+LN0000812,3,VR006,balance_monotonic,warning,balance increased without modification
+LN0000818,3,VR006,balance_monotonic,warning,balance increased without modification
+LN0000818,24,VR006,balance_monotonic,warning,balance increased without modification
+LN0000837,29,VR006,balance_monotonic,warning,balance increased without modification
+LN0000847,3,VR006,balance_monotonic,warning,balance increased without modification
+LN0000893,6,VR006,balance_monotonic,warning,balance increased without modification
+LN0000897,24,VR006,balance_monotonic,warning,balance increased without modification
+LN0000898,29,VR006,balance_monotonic,warning,balance increased without modification
+LN0000900,11,VR006,balance_monotonic,warning,balance increased without modification
+LN0000903,2,VR006,balance_monotonic,warning,balance increased without modification
+LN0000906,4,VR006,balance_monotonic,warning,balance increased without modification
+LN0000920,32,VR006,balance_monotonic,warning,balance increased without modification
+LN0000924,2,VR006,balance_monotonic,warning,balance increased without modification
+LN0001016,5,VR006,balance_monotonic,warning,balance increased without modification
+LN0001065,12,VR006,balance_monotonic,warning,balance increased without modification
+LN0001088,26,VR006,balance_monotonic,warning,balance increased without modification
+LN0001102,5,VR006,balance_monotonic,warning,balance increased without modification
+LN0001105,30,VR006,balance_monotonic,warning,balance increased without modification
+LN0001136,10,VR006,balance_monotonic,warning,balance increased without modification
+LN0001137,10,VR006,balance_monotonic,warning,balance increased without modification
+LN0001140,5,VR006,balance_monotonic,warning,balance increased without modification
+LN0001167,9,VR006,balance_monotonic,warning,balance increased without modification
+LN0001170,3,VR006,balance_monotonic,warning,balance increased without modification
+LN0001197,4,VR006,balance_monotonic,warning,balance increased without modification
+LN0001198,11,VR006,balance_monotonic,warning,balance increased without modification
+LN0001211,5,VR006,balance_monotonic,warning,balance increased without modification
+LN0001215,12,VR006,balance_monotonic,warning,balance increased without modification
+LN0001233,4,VR006,balance_monotonic,warning,balance increased without modification
+LN0001261,4,VR006,balance_monotonic,warning,balance increased without modification
+LN0001263,30,VR006,balance_monotonic,warning,balance increased without modification
+LN0001276,4,VR006,balance_monotonic,warning,balance increased without modification
+LN0001277,8,VR006,balance_monotonic,warning,balance increased without modification
+LN0001292,3,VR006,balance_monotonic,warning,balance increased without modification
+LN0001319,17,VR006,balance_monotonic,warning,balance increased without modification
+LN0001336,2,VR006,balance_monotonic,warning,balance increased without modification
+LN0001373,4,VR006,balance_monotonic,warning,balance increased without modification
+LN0001388,13,VR006,balance_monotonic,warning,balance increased without modification
+LN0001388,37,VR006,balance_monotonic,warning,balance increased without modification
+LN0001390,6,VR006,balance_monotonic,warning,balance increased without modification
+LN0001409,27,VR006,balance_monotonic,warning,balance increased without modification
+LN0001442,4,VR006,balance_monotonic,warning,balance increased without modification
+LN0001444,8,VR006,balance_monotonic,warning,balance increased without modification
+LN0001445,6,VR006,balance_monotonic,warning,balance increased without modification
+LN0001461,7,VR006,balance_monotonic,warning,balance increased without modification
+LN0001482,9,VR006,balance_monotonic,warning,balance increased without modification
+LN0001490,11,VR006,balance_monotonic,warning,balance increased without modification
+LN0001491,32,VR006,balance_monotonic,warning,balance increased without modification
+LN0001492,17,VR006,balance_monotonic,warning,balance increased without modification
+LN0001565,7,VR006,balance_monotonic,warning,balance increased without modification
+LN0001565,11,VR006,balance_monotonic,warning,balance increased without modification
+LN0001580,6,VR006,balance_monotonic,warning,balance increased without modification
+LN0001580,13,VR006,balance_monotonic,warning,balance increased without modification
+LN0001592,30,VR006,balance_monotonic,warning,balance increased without modification
+LN0001597,6,VR006,balance_monotonic,warning,balance increased without modification
+LN0001598,2,VR006,balance_monotonic,warning,balance increased without modification
+LN0001630,3,VR006,balance_monotonic,warning,balance increased without modification
+LN0001648,10,VR006,balance_monotonic,warning,balance increased without modification
+LN0001656,12,VR006,balance_monotonic,warning,balance increased without modification
+LN0001673,10,VR006,balance_monotonic,warning,balance increased without modification
+LN0001685,30,VR006,balance_monotonic,warning,balance increased without modification
+LN0001719,6,VR006,balance_monotonic,warning,balance increased without modification
+LN0001747,16,VR006,balance_monotonic,warning,balance increased without modification
+LN0001751,9,VR006,balance_monotonic,warning,balance increased without modification
+LN0001751,28,VR006,balance_monotonic,warning,balance increased without modification
+LN0001760,27,VR006,balance_monotonic,warning,balance increased without modification
+LN0001772,5,VR006,balance_monotonic,warning,balance increased without modification
+LN0001808,24,VR006,balance_monotonic,warning,balance increased without modification
+LN0001810,10,VR006,balance_monotonic,warning,balance increased without modification
+LN0001810,12,VR006,balance_monotonic,warning,balance increased without modification
+LN0001811,24,VR006,balance_monotonic,warning,balance increased without modification
+LN0001833,4,VR006,balance_monotonic,warning,balance increased without modification
+LN0001833,13,VR006,balance_monotonic,warning,balance increased without modification
+LN0001859,26,VR006,balance_monotonic,warning,balance increased without modification
+LN0001867,3,VR006,balance_monotonic,warning,balance increased without modification
+LN0001887,10,VR006,balance_monotonic,warning,balance increased without modification
+LN0001895,4,VR006,balance_monotonic,warning,balance increased without modification
+LN0001896,20,VR006,balance_monotonic,warning,balance increased without modification
+LN0001899,20,VR006,balance_monotonic,warning,balance increased without modification
+LN0001907,20,VR006,balance_monotonic,warning,balance increased without modification
+LN0001923,4,VR006,balance_monotonic,warning,balance increased without modification
+LN0001924,40,VR006,balance_monotonic,warning,balance increased without modification
+LN0001930,8,VR006,balance_monotonic,warning,balance increased without modification
+LN0001932,13,VR006,balance_monotonic,warning,balance increased without modification
+LN0001961,17,VR006,balance_monotonic,warning,balance increased without modification
+LN0002013,7,VR006,balance_monotonic,warning,balance increased without modification
+LN0002030,12,VR006,balance_monotonic,warning,balance increased without modification
+LN0002043,4,VR006,balance_monotonic,warning,balance increased without modification
+LN0002043,7,VR006,balance_monotonic,warning,balance increased without modification
+LN0002072,5,VR006,balance_monotonic,warning,balance increased without modification
+LN0002088,5,VR006,balance_monotonic,warning,balance increased without modification
+LN0002089,28,VR006,balance_monotonic,warning,balance increased without modification
+LN0002129,37,VR006,balance_monotonic,warning,balance increased without modification
+LN0002138,16,VR006,balance_monotonic,warning,balance increased without modification
+LN0002152,5,VR006,balance_monotonic,warning,balance increased without modification
+LN0002153,12,VR006,balance_monotonic,warning,balance increased without modification
+LN0002175,5,VR006,balance_monotonic,warning,balance increased without modification
+LN0002189,27,VR006,balance_monotonic,warning,balance increased without modification
+LN0002191,22,VR006,balance_monotonic,warning,balance increased without modification
+LN0002204,2,VR006,balance_monotonic,warning,balance increased without modification
+LN0002207,18,VR006,balance_monotonic,warning,balance increased without modification
+LN0002233,6,VR006,balance_monotonic,warning,balance increased without modification
+LN0002236,12,VR006,balance_monotonic,warning,balance increased without modification
+LN0002238,22,VR006,balance_monotonic,warning,balance increased without modification
+LN0002238,26,VR006,balance_monotonic,warning,balance increased without modification
+LN0002251,17,VR006,balance_monotonic,warning,balance increased without modification
+LN0002265,8,VR006,balance_monotonic,warning,balance increased without modification
+LN0002269,15,VR006,balance_monotonic,warning,balance increased without modification
+LN0002273,5,VR006,balance_monotonic,warning,balance increased without modification
+LN0002274,26,VR006,balance_monotonic,warning,balance increased without modification
+LN0002306,12,VR006,balance_monotonic,warning,balance increased without modification
+LN0002320,2,VR006,balance_monotonic,warning,balance increased without modification
+LN0002325,11,VR006,balance_monotonic,warning,balance increased without modification
+LN0002337,31,VR006,balance_monotonic,warning,balance increased without modification
+LN0002356,7,VR006,balance_monotonic,warning,balance increased without modification
+LN0002368,2,VR006,balance_monotonic,warning,balance increased without modification
+LN0002372,11,VR006,balance_monotonic,warning,balance increased without modification
+LN0002394,4,VR006,balance_monotonic,warning,balance increased without modification
+LN0002396,3,VR006,balance_monotonic,warning,balance increased without modification
+LN0002429,11,VR006,balance_monotonic,warning,balance increased without modification
+LN0002491,18,VR006,balance_monotonic,warning,balance increased without modification
+LN0002517,2,VR006,balance_monotonic,warning,balance increased without modification
+LN0002525,38,VR006,balance_monotonic,warning,balance increased without modification
+LN0002534,14,VR006,balance_monotonic,warning,balance increased without modification
+LN0002534,29,VR006,balance_monotonic,warning,balance increased without modification
+LN0002538,17,VR006,balance_monotonic,warning,balance increased without modification
+LN0002543,2,VR006,balance_monotonic,warning,balance increased without modification
+LN0002547,4,VR006,balance_monotonic,warning,balance increased without modification
+LN0002583,26,VR006,balance_monotonic,warning,balance increased without modification
+LN0002584,6,VR006,balance_monotonic,warning,balance increased without modification
+LN0002594,15,VR006,balance_monotonic,warning,balance increased without modification
+LN0002609,3,VR006,balance_monotonic,warning,balance increased without modification
+LN0002626,13,VR006,balance_monotonic,warning,balance increased without modification
+LN0002626,28,VR006,balance_monotonic,warning,balance increased without modification
+LN0002627,35,VR006,balance_monotonic,warning,balance increased without modification
+LN0002635,16,VR006,balance_monotonic,warning,balance increased without modification
+LN0002654,19,VR006,balance_monotonic,warning,balance increased without modification
+LN0002685,16,VR006,balance_monotonic,warning,balance increased without modification
+LN0002687,40,VR006,balance_monotonic,warning,balance increased without modification
+LN0002726,30,VR006,balance_monotonic,warning,balance increased without modification
+LN0002734,7,VR006,balance_monotonic,warning,balance increased without modification
+LN0002734,15,VR006,balance_monotonic,warning,balance increased without modification
+LN0002748,10,VR006,balance_monotonic,warning,balance increased without modification
+LN0002783,8,VR006,balance_monotonic,warning,balance increased without modification
+LN0002805,9,VR006,balance_monotonic,warning,balance increased without modification
+LN0002809,11,VR006,balance_monotonic,warning,balance increased without modification
+LN0002828,19,VR006,balance_monotonic,warning,balance increased without modification
+LN0002836,16,VR006,balance_monotonic,warning,balance increased without modification
+LN0002844,13,VR006,balance_monotonic,warning,balance increased without modification
+LN0002849,2,VR006,balance_monotonic,warning,balance increased without modification
+LN0002851,8,VR006,balance_monotonic,warning,balance increased without modification
+LN0002865,2,VR006,balance_monotonic,warning,balance increased without modification
+LN0002886,2,VR006,balance_monotonic,warning,balance increased without modification
+LN0002894,5,VR006,balance_monotonic,warning,balance increased without modification
+LN0002901,4,VR006,balance_monotonic,warning,balance increased without modification
+LN0002901,9,VR006,balance_monotonic,warning,balance increased without modification
+LN0002901,21,VR006,balance_monotonic,warning,balance increased without modification
+LN0002901,34,VR006,balance_monotonic,warning,balance increased without modification
+LN0002910,16,VR006,balance_monotonic,warning,balance increased without modification
+LN0002923,31,VR006,balance_monotonic,warning,balance increased without modification
+LN0002928,16,VR006,balance_monotonic,warning,balance increased without modification
+LN0002941,3,VR006,balance_monotonic,warning,balance increased without modification
+LN0002958,14,VR006,balance_monotonic,warning,balance increased without modification
+LN0002991,10,VR006,balance_monotonic,warning,balance increased without modification
+LN0003007,6,VR006,balance_monotonic,warning,balance increased without modification
+LN0003009,3,VR006,balance_monotonic,warning,balance increased without modification
+LN0003033,12,VR006,balance_monotonic,warning,balance increased without modification
+LN0003051,16,VR006,balance_monotonic,warning,balance increased without modification
+LN0003056,23,VR006,balance_monotonic,warning,balance increased without modification
+LN0003083,13,VR006,balance_monotonic,warning,balance increased without modification
+LN0003127,17,VR006,balance_monotonic,warning,balance increased without modification
+LN0003127,19,VR006,balance_monotonic,warning,balance increased without modification
+LN0003137,38,VR006,balance_monotonic,warning,balance increased without modification
+LN0003147,4,VR006,balance_monotonic,warning,balance increased without modification
+LN0003181,8,VR006,balance_monotonic,warning,balance increased without modification
+LN0003188,21,VR006,balance_monotonic,warning,balance increased without modification
+LN0003216,13,VR006,balance_monotonic,warning,balance increased without modification
+LN0003216,15,VR006,balance_monotonic,warning,balance increased without modification
+LN0003216,29,VR006,balance_monotonic,warning,balance increased without modification
+LN0003242,5,VR006,balance_monotonic,warning,balance increased without modification
+LN0003259,10,VR006,balance_monotonic,warning,balance increased without modification
+LN0003259,33,VR006,balance_monotonic,warning,balance increased without modification
+LN0003278,14,VR006,balance_monotonic,warning,balance increased without modification
+LN0003309,32,VR006,balance_monotonic,warning,balance increased without modification
+LN0003316,3,VR006,balance_monotonic,warning,balance increased without modification
+LN0003331,3,VR006,balance_monotonic,warning,balance increased without modification
+LN0003356,8,VR006,balance_monotonic,warning,balance increased without modification
+LN0003361,14,VR006,balance_monotonic,warning,balance increased without modification
+LN0003369,13,VR006,balance_monotonic,warning,balance increased without modification
+LN0003390,12,VR006,balance_monotonic,warning,balance increased without modification
+LN0003403,23,VR006,balance_monotonic,warning,balance increased without modification
+LN0003403,32,VR006,balance_monotonic,warning,balance increased without modification
+LN0003435,7,VR006,balance_monotonic,warning,balance increased without modification
+LN0003435,14,VR006,balance_monotonic,warning,balance increased without modification
+LN0003453,19,VR006,balance_monotonic,warning,balance increased without modification
+LN0003485,4,VR006,balance_monotonic,warning,balance increased without modification
+LN0003509,6,VR006,balance_monotonic,warning,balance increased without modification
+LN0003542,4,VR006,balance_monotonic,warning,balance increased without modification
+LN0003569,11,VR006,balance_monotonic,warning,balance increased without modification
+LN0003581,6,VR006,balance_monotonic,warning,balance increased without modification
+LN0003593,3,VR006,balance_monotonic,warning,balance increased without modification
+LN0003612,17,VR006,balance_monotonic,warning,balance increased without modification
+LN0003619,4,VR006,balance_monotonic,warning,balance increased without modification
+LN0003629,19,VR006,balance_monotonic,warning,balance increased without modification
+LN0003629,32,VR006,balance_monotonic,warning,balance increased without modification
+LN0003630,3,VR006,balance_monotonic,warning,balance increased without modification
+LN0003640,11,VR006,balance_monotonic,warning,balance increased without modification
+LN0003656,6,VR006,balance_monotonic,warning,balance increased without modification
+LN0003669,6,VR006,balance_monotonic,warning,balance increased without modification
+LN0003699,26,VR006,balance_monotonic,warning,balance increased without modification
+LN0003700,12,VR006,balance_monotonic,warning,balance increased without modification
+LN0003719,10,VR006,balance_monotonic,warning,balance increased without modification
+LN0003735,7,VR006,balance_monotonic,warning,balance increased without modification
+LN0003797,18,VR006,balance_monotonic,warning,balance increased without modification
+LN0003806,3,VR006,balance_monotonic,warning,balance increased without modification
+LN0003809,9,VR006,balance_monotonic,warning,balance increased without modification
+LN0003819,4,VR006,balance_monotonic,warning,balance increased without modification
+LN0003830,4,VR006,balance_monotonic,warning,balance increased without modification
+LN0003832,6,VR006,balance_monotonic,warning,balance increased without modification
+LN0003832,21,VR006,balance_monotonic,warning,balance increased without modification
+LN0003834,11,VR006,balance_monotonic,warning,balance increased without modification
+LN0003836,5,VR006,balance_monotonic,warning,balance increased without modification
+LN0003848,12,VR006,balance_monotonic,warning,balance increased without modification
+LN0003866,3,VR006,balance_monotonic,warning,balance increased without modification
+LN0003898,9,VR006,balance_monotonic,warning,balance increased without modification
+LN0003902,20,VR006,balance_monotonic,warning,balance increased without modification
+LN0003964,10,VR006,balance_monotonic,warning,balance increased without modification
+LN0003965,18,VR006,balance_monotonic,warning,balance increased without modification
+LN0003965,19,VR006,balance_monotonic,warning,balance increased without modification
+LN0003976,13,VR006,balance_monotonic,warning,balance increased without modification
+LN0003981,12,VR006,balance_monotonic,warning,balance increased without modification
+LN0004055,21,VR006,balance_monotonic,warning,balance increased without modification
+LN0004059,6,VR006,balance_monotonic,warning,balance increased without modification
+LN0004081,6,VR006,balance_monotonic,warning,balance increased without modification
+LN0004085,12,VR006,balance_monotonic,warning,balance increased without modification
+LN0004085,13,VR006,balance_monotonic,warning,balance increased without modification
+LN0004102,8,VR006,balance_monotonic,warning,balance increased without modification
+LN0004107,3,VR006,balance_monotonic,warning,balance increased without modification
+LN0004136,15,VR006,balance_monotonic,warning,balance increased without modification
+LN0004139,2,VR006,balance_monotonic,warning,balance increased without modification
+LN0004158,13,VR006,balance_monotonic,warning,balance increased without modification
+LN0004177,4,VR006,balance_monotonic,warning,balance increased without modification
+LN0004188,7,VR006,balance_monotonic,warning,balance increased without modification
+LN0004205,15,VR006,balance_monotonic,warning,balance increased without modification
+LN0004232,9,VR006,balance_monotonic,warning,balance increased without modification
+LN0004237,14,VR006,balance_monotonic,warning,balance increased without modification
+LN0004248,17,VR006,balance_monotonic,warning,balance increased without modification
+LN0004260,12,VR006,balance_monotonic,warning,balance increased without modification
+LN0004287,8,VR006,balance_monotonic,warning,balance increased without modification
+LN0004293,17,VR006,balance_monotonic,warning,balance increased without modification
+LN0004295,5,VR006,balance_monotonic,warning,balance increased without modification
+LN0004331,2,VR006,balance_monotonic,warning,balance increased without modification
+LN0004333,29,VR006,balance_monotonic,warning,balance increased without modification
+LN0004336,31,VR006,balance_monotonic,warning,balance increased without modification
+LN0004372,8,VR006,balance_monotonic,warning,balance increased without modification
+LN0004377,18,VR006,balance_monotonic,warning,balance increased without modification
+LN0004393,13,VR006,balance_monotonic,warning,balance increased without modification
+LN0004393,24,VR006,balance_monotonic,warning,balance increased without modification
+LN0004395,3,VR006,balance_monotonic,warning,balance increased without modification
+LN0004399,8,VR006,balance_monotonic,warning,balance increased without modification
+LN0004400,16,VR006,balance_monotonic,warning,balance increased without modification
+LN0004401,4,VR006,balance_monotonic,warning,balance increased without modification
+LN0004413,3,VR006,balance_monotonic,warning,balance increased without modification
+LN0004414,5,VR006,balance_monotonic,warning,balance increased without modification
+LN0004425,14,VR006,balance_monotonic,warning,balance increased without modification
+LN0004456,27,VR006,balance_monotonic,warning,balance increased without modification
+LN0004474,6,VR006,balance_monotonic,warning,balance increased without modification
+LN0004479,21,VR006,balance_monotonic,warning,balance increased without modification
+LN0004501,30,VR006,balance_monotonic,warning,balance increased without modification
+LN0004556,4,VR006,balance_monotonic,warning,balance increased without modification
+LN0004561,11,VR006,balance_monotonic,warning,balance increased without modification
+LN0004580,6,VR006,balance_monotonic,warning,balance increased without modification
+LN0004612,10,VR006,balance_monotonic,warning,balance increased without modification
+LN0004630,7,VR006,balance_monotonic,warning,balance increased without modification
+LN0004631,24,VR006,balance_monotonic,warning,balance increased without modification
+LN0004636,30,VR006,balance_monotonic,warning,balance increased without modification
+LN0004663,14,VR006,balance_monotonic,warning,balance increased without modification
+LN0004672,30,VR006,balance_monotonic,warning,balance increased without modification
+LN0004704,5,VR006,balance_monotonic,warning,balance increased without modification
+LN0004712,5,VR006,balance_monotonic,warning,balance increased without modification
+LN0004719,27,VR006,balance_monotonic,warning,balance increased without modification
+LN0004733,15,VR006,balance_monotonic,warning,balance increased without modification
+LN0004754,6,VR006,balance_monotonic,warning,balance increased without modification
+LN0004762,16,VR006,balance_monotonic,warning,balance increased without modification
+LN0004772,18,VR006,balance_monotonic,warning,balance increased without modification
+LN0004780,2,VR006,balance_monotonic,warning,balance increased without modification
+LN0004781,14,VR006,balance_monotonic,warning,balance increased without modification
+LN0004801,6,VR006,balance_monotonic,warning,balance increased without modification
+LN0004802,8,VR006,balance_monotonic,warning,balance increased without modification
+LN0004807,12,VR006,balance_monotonic,warning,balance increased without modification
+LN0004817,9,VR006,balance_monotonic,warning,balance increased without modification
+LN0004844,20,VR006,balance_monotonic,warning,balance increased without modification
+LN0004853,6,VR006,balance_monotonic,warning,balance increased without modification
+LN0004855,2,VR006,balance_monotonic,warning,balance increased without modification
+LN0004861,12,VR006,balance_monotonic,warning,balance increased without modification
+LN0004865,9,VR006,balance_monotonic,warning,balance increased without modification
+LN0004868,29,VR006,balance_monotonic,warning,balance increased without modification
+LN0004877,13,VR006,balance_monotonic,warning,balance increased without modification
+LN0004883,12,VR006,balance_monotonic,warning,balance increased without modification
+LN0004900,14,VR006,balance_monotonic,warning,balance increased without modification
+LN0004930,20,VR006,balance_monotonic,warning,balance increased without modification
+LN0004933,33,VR006,balance_monotonic,warning,balance increased without modification
+LN0004934,17,VR006,balance_monotonic,warning,balance increased without modification
+LN0004936,14,VR006,balance_monotonic,warning,balance increased without modification
+LN0004943,35,VR006,balance_monotonic,warning,balance increased without modification
