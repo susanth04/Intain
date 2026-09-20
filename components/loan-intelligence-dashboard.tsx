@@ -123,7 +123,7 @@ function OverviewView({ portfolio, loading, onOpenLoan }: { portfolio: Portfolio
       {loading && <div className="loading-state"><RefreshCw className="spin" /> Loading the book…</div>}
       <div className="tier-row">
         {[['red', 'Needs attention', 'Accounts requiring immediate review.'], ['blue', 'Watch closely', 'Elevated signals across the book.'], ['default', 'Keep an eye', 'Moderate risk worth monitoring.'], ['gray', 'Healthy', 'No urgent risk signal detected.']].map(([variant, label, description]) => (
-          <ServiceCard key={label} title={label} href="#portfolio-signals" imgSrc="/metric-grid.svg" imgAlt="Abstract portfolio metric grid" variant={variant as 'red' | 'blue' | 'default' | 'gray'} value={tiers[label === 'Needs attention' ? 'high' : label === 'Watch closely' ? 'elevated' : label === 'Keep an eye' ? 'moderate' : 'low'] ?? 0} description={description} />
+          <ServiceCard key={label} title={label} href="#portfolio-signals" variant={variant as 'red' | 'blue' | 'default' | 'gray'} value={tiers[label === 'Needs attention' ? 'high' : label === 'Watch closely' ? 'elevated' : label === 'Keep an eye' ? 'moderate' : 'low'] ?? 0} description={description} />
         ))}
       </div>
       <SimpleHealthMap matrix={portfolio?.status_heatmap} />

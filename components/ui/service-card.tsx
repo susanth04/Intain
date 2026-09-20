@@ -25,8 +25,8 @@ export interface ServiceCardProps
   extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof cardVariants> {
   title: string
   href: string
-  imgSrc: string
-  imgAlt: string
+  imgSrc?: string
+  imgAlt?: string
   value?: React.ReactNode
   description?: string
 }
@@ -53,7 +53,7 @@ const ServiceCard = React.forwardRef<HTMLDivElement, ServiceCardProps>(
             </motion.span>
           </a>
         </div>
-        <motion.img src={imgSrc} alt={imgAlt} className="pointer-events-none absolute -bottom-10 -right-8 h-40 w-40 object-contain opacity-65" whileHover={{ scale: 1.1, rotate: 3, x: 10 }} transition={{ duration: 0.4, ease: "easeInOut" }} />
+        {imgSrc && <motion.img src={imgSrc} alt={imgAlt || ""} className="pointer-events-none absolute -bottom-10 -right-8 h-40 w-40 object-contain opacity-65" whileHover={{ scale: 1.1, rotate: 3, x: 10 }} transition={{ duration: 0.4, ease: "easeInOut" }} />}
       </motion.div>
     )
   },
