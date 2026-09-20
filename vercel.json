@@ -1,11 +1,6 @@
 {
-  "services": {
-    "frontend": {
-      "root": ".",
-      "framework": "nextjs",
-      "buildCommand": "npx next build",
-      "installCommand": "npm install",
-      "devCommand": "npx next dev"
-    }
-  }
+  "framework": "nextjs",
+  "buildCommand": "npx next build",
+  "installCommand": "npm install",
+  "outputDirectory": ".next"
 }
