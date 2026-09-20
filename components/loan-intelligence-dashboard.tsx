@@ -270,10 +270,6 @@ export default function LoanIntelligenceDashboard() {
     <main className="app-shell">
       <AnimatedGradient className="animated-gradient" />
       <header className="topbar">
-        <div className="brand">
-          <div className="brand-mark">I</div>
-          <div><strong>INTAIN</strong><span>LOAN PERFORMANCE<br />INTELLIGENCE ENGINE</span></div>
-        </div>
         <nav>
           {navItems.map((item) => (
             <button key={item} className={activeNav === item ? 'active' : ''} onClick={() => setActiveNav(item)}>{item}</button>
