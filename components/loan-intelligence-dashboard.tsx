@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
-import { AlertTriangle, ArrowRight, BarChart3, Check, ChevronRight, Circle, Layers3, Menu, MessageSquareText, RefreshCw, Search, ShieldCheck, Sparkles, X, XCircle } from 'lucide-react'
+import { AlertTriangle, ArrowRight, BarChart3, Check, ChevronRight, Circle, Layers3, Menu, MessageSquareText, RefreshCw, Search, ShieldCheck, Sparkles, X, XCircle, Moon, Sun } from 'lucide-react'
 import CopilotAnswer from '@/components/copilot-answer'
 import SimpleHealthMap, { CreditRiskBars } from '@/components/heatmap-grid'
 import { LedgerCard } from '@/components/ui/ledger-card'
@@ -51,8 +51,8 @@ function PortfolioPulse({ portfolio }: { portfolio: PortfolioOverview | null }) 
   const totals = rows.map((label, index) => ({ label, total: (cells[index] || []).reduce((sum, value) => sum + Number(value || 0), 0) })).filter((row) => row.total > 0)
   const max = Math.max(...totals.map((row) => row.total), 1)
   return <div className="portfolio-pulse" aria-label="Portfolio distribution by credit band">
-    <div className="pulse-head"><span>CREDIT BAND</span><span>LOAN COUNT</span></div>
-    {totals.slice().reverse().map((row) => <div className="pulse-row" key={row.label}><span>{row.label}</span><div><i style={{ width: `${Math.max((row.total / max) * 100, 3)}%` }} /></div><b>{row.total.toLocaleString()}</b></div>)}
+    <div className="pulse-head"><span>CREDIT BAND</span><span /><span>LOAN COUNT</span></div>
+    {totals.slice().reverse().map((row) => <div className="pulse-row" key={row.label}><span>{row.label}</span><div className="pulse-bar-bg"><i className="pulse-bar-fill" style={{ width: `${Math.max((row.total / max) * 100, 3)}%` }} /></div><b>{row.total.toLocaleString()}</b></div>)}
     {!totals.length && <div className="empty-data">Portfolio distribution is loading.</div>}
   </div>
 }
@@ -201,6 +201,7 @@ export default function LoanIntelligenceDashboard() {
   const [selected, setSelected] = useState<PipelineStage | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark')
   const [activeNav, setActiveNav] = useState<NavKey>('Overview')
   const [mobileOpen, setMobileOpen] = useState(false)
   const [question, setQuestion] = useState('')
@@ -325,7 +326,7 @@ export default function LoanIntelligenceDashboard() {
   )
 
   return (
-    <main className="app-shell">
+    <main className="app-shell" data-theme={theme}>
       <header className="topbar">
         <div className="topbar-inner">
           <a href="#" className="brand">
@@ -336,7 +337,12 @@ export default function LoanIntelligenceDashboard() {
               <button key={item} className={activeNav === item ? 'active' : ''} onClick={() => setActiveNav(item)}>{item}</button>
             ))}
           </nav>
-          <button className="mobile-menu" aria-label="Open navigation" onClick={() => setMobileOpen(!mobileOpen)}><Menu /></button>
+          <div className="topbar-actions">
+            <button onClick={() => setTheme(t => t === 'dark' ? 'light' : 'dark')} className="icon-button" style={{ border: 'none' }} aria-label="Toggle theme">
+              {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+            <button className="mobile-menu" aria-label="Open navigation" onClick={() => setMobileOpen(!mobileOpen)}><Menu /></button>
+          </div>
         </div>
       </header>
       {mobileOpen && (
