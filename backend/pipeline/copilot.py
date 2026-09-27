@@ -6,6 +6,7 @@ Live LLM answers grounded in loan model outputs.
 import os
 import time
 import json
+import re
 import traceback
 from models.loader import PROJECT_ROOT
 from env_loader import load_env
@@ -127,7 +128,14 @@ Write a natural analyst note in markdown with:
 ## Drivers
 ## Watchouts
 ## Recommendation
-Keep it under 220 words. Every claim must be traceable to the JSON."""
+Keep it under 220 words. Every claim must be traceable to the JSON.
+Include all four headings and finish every sentence; never stop mid-sentence."""
+
+
+def _is_complete_answer(answer: str) -> bool:
+    headings = re.findall(r"(?m)^#{1,3}\s+(Verdict|Drivers|Watchouts|Recommendation)\b", answer, re.IGNORECASE)
+    ends_with_sentence = re.search(r"[.!?][\"'’”\])}*_`]*\s*$", answer)
+    return len({heading.lower() for heading in headings}) == 4 and ends_with_sentence is not None
 
 
 def _is_gemini(api_key: str, base_url: str) -> bool:
@@ -256,6 +264,16 @@ def run(loan_id, question=None):
             "## Question\n" + effective_question
         )
         response = _call_llm(api_key, base_url, model_name, user_message)
+        if not _is_complete_answer(response):
+            retry_message = (
+                user_message
+                + "\n\nYour previous response was incomplete. Return a complete replacement answer, "
+                + "not a continuation. Include Verdict, Drivers, Watchouts, and Recommendation; "
+                + "finish with a complete sentence."
+            )
+            response = _call_llm(api_key, base_url, model_name, retry_message)
+            if not _is_complete_answer(response):
+                raise RuntimeError("LLM returned an incomplete answer after retrying.")
 
         elapsed_ms = round((time.perf_counter() - t0) * 1000, 1)
         return {
