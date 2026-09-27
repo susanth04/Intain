@@ -22,3 +22,4 @@ __pycache__/
 *.pyo
 *.pyd
 backend/.env
+.vercel

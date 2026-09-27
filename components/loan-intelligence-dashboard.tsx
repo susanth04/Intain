@@ -15,6 +15,8 @@ const stageNumbers = ['01', '02', '03', '04', '05', '06', '07', '08']
 const prompts = ['Why was this loan flagged?', 'What are the main risk drivers?', 'Explain the model prediction.', 'What data-quality issues were found?']
 const navItems: NavKey[] = ['Overview', 'Loan Intelligence', 'Anomaly Detection', 'Scenario Analysis', 'AI Reviewer', 'Model Cards']
 
+type ModelCardKey = 'next_3m_delinquency_lgbm' | 'next_6m_delinquency_lgbm' | 'next_12m_default_lr' | 'next_12m_prepayment_lr' | 'next_state_lgbm'
+
 function StatusIcon({ status }: { status: StageStatus }) {
   if (status === 'completed') return <span className="status-icon completed"><Check /></span>
   if (status === 'failed') return <span className="status-icon failed"><X /></span>
@@ -175,6 +177,7 @@ export default function LoanIntelligenceDashboard() {
   const [copilotLoading, setCopilotLoading] = useState(false)
   const [portfolio, setPortfolio] = useState<PortfolioOverview | null>(null)
   const [portfolioLoading, setPortfolioLoading] = useState(true)
+  const [expandedModelCard, setExpandedModelCard] = useState<ModelCardKey | null>(null)
 
   const completed = stages.filter((stage) => stage.status === 'completed').length
   const prediction = useMemo(() => asRecord(stages.find((stage) => stage.key === 'prediction')?.output), [stages])
@@ -424,7 +427,39 @@ export default function LoanIntelligenceDashboard() {
                     <span className="model-card-metric">ROC-AUC: 0.7129</span>
                   </div>
                   <p>Predicts 3-month delinquency probability using gradient boosting. Strong performance with comprehensive feature engineering.</p>
-                  <button className="text-button">View Full Card</button>
+                  <button className="text-button" onClick={() => setExpandedModelCard(expandedModelCard === 'next_3m_delinquency_lgbm' ? null : 'next_3m_delinquency_lgbm')}>
+                    {expandedModelCard === 'next_3m_delinquency_lgbm' ? 'Collapse' : 'View Full Card'}
+                  </button>
+                  {expandedModelCard === 'next_3m_delinquency_lgbm' && (
+                    <div className="model-card-details">
+                      <div className="model-card-section">
+                        <h4>Performance Metrics</h4>
+                        <ul>
+                          <li>Test ROC-AUC: 0.7129</li>
+                          <li>Test PR-AUC: 0.5732</li>
+                          <li>Test F1: 0.4604</li>
+                          <li>Brier Score: 0.1973</li>
+                        </ul>
+                      </div>
+                      <div className="model-card-section">
+                        <h4>Key Features</h4>
+                        <ul>
+                          <li>Rolling delinquency status windows</li>
+                          <li>Balance utilization ratios</li>
+                          <li>Credit score × LTV interactions</li>
+                          <li>Rate spread calculations</li>
+                        </ul>
+                      </div>
+                      <div className="model-card-section">
+                        <h4>Limitations</h4>
+                        <ul>
+                          <li>Trained on synthetic data</li>
+                          <li>3-month horizon may miss longer-term risks</li>
+                          <li>Does not incorporate economic indicators</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
                 </div>
                 <div className="model-card-item">
                   <div className="model-card-header">
@@ -432,7 +467,39 @@ export default function LoanIntelligenceDashboard() {
                     <span className="model-card-metric">ROC-AUC: 0.7098</span>
                   </div>
                   <p>Extended horizon delinquency prediction with excellent precision-recall tradeoff. Best performing model in the system.</p>
-                  <button className="text-button">View Full Card</button>
+                  <button className="text-button" onClick={() => setExpandedModelCard(expandedModelCard === 'next_6m_delinquency_lgbm' ? null : 'next_6m_delinquency_lgbm')}>
+                    {expandedModelCard === 'next_6m_delinquency_lgbm' ? 'Collapse' : 'View Full Card'}
+                  </button>
+                  {expandedModelCard === 'next_6m_delinquency_lgbm' && (
+                    <div className="model-card-details">
+                      <div className="model-card-section">
+                        <h4>Performance Metrics</h4>
+                        <ul>
+                          <li>Test ROC-AUC: 0.7098</li>
+                          <li>Test PR-AUC: 0.6873</li>
+                          <li>Test F1: 0.6801</li>
+                          <li>Brier Score: 0.2161</li>
+                        </ul>
+                      </div>
+                      <div className="model-card-section">
+                        <h4>Key Features</h4>
+                        <ul>
+                          <li>Extended 6-month rolling windows</li>
+                          <li>Seasoning bucket analysis</li>
+                          <li>High-risk combo features</li>
+                          <li>Historical payment patterns</li>
+                        </ul>
+                      </div>
+                      <div className="model-card-section">
+                        <h4>Strengths</h4>
+                        <ul>
+                          <li>Best performing model in system</li>
+                          <li>Excellent precision-recall tradeoff</li>
+                          <li>Strong F1 score (0.68)</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
                 </div>
                 <div className="model-card-item">
                   <div className="model-card-header">
@@ -440,7 +507,38 @@ export default function LoanIntelligenceDashboard() {
                     <span className="model-card-metric">ROC-AUC: 0.6966</span>
                   </div>
                   <p>Baseline model for default prediction. Limited signal in target; used as fallback. Requires feature engineering improvements.</p>
-                  <button className="text-button">View Full Card</button>
+                  <button className="text-button" onClick={() => setExpandedModelCard(expandedModelCard === 'next_12m_default_lr' ? null : 'next_12m_default_lr')}>
+                    {expandedModelCard === 'next_12m_default_lr' ? 'Collapse' : 'View Full Card'}
+                  </button>
+                  {expandedModelCard === 'next_12m_default_lr' && (
+                    <div className="model-card-details">
+                      <div className="model-card-section">
+                        <h4>Performance Metrics</h4>
+                        <ul>
+                          <li>Test ROC-AUC: 0.6966</li>
+                          <li>Test PR-AUC: 0.2743</li>
+                          <li>Test F1: 0.1665</li>
+                          <li>Brier Score: 0.1222</li>
+                        </ul>
+                      </div>
+                      <div className="model-card-section">
+                        <h4>Known Issues</h4>
+                        <ul>
+                          <li>Weak signal in target (PR-AUC 0.27)</li>
+                          <li>Identical performance to LightGBM</li>
+                          <li>Cannot achieve 80% precision with meaningful recall</li>
+                        </ul>
+                      </div>
+                      <div className="model-card-section">
+                        <h4>Recommendations</h4>
+                        <ul>
+                          <li>Investigate target definition and data quality</li>
+                          <li>Develop features specifically for default prediction</li>
+                          <li>Consider survival analysis for time-to-default</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
                 </div>
                 <div className="model-card-item">
                   <div className="model-card-header">
@@ -448,7 +546,38 @@ export default function LoanIntelligenceDashboard() {
                     <span className="model-card-metric">ROC-AUC: 0.5652</span>
                   </div>
                   <p>Weak performance on prepayment prediction. Requires interest rate forecasts and economic indicators for improvement.</p>
-                  <button className="text-button">View Full Card</button>
+                  <button className="text-button" onClick={() => setExpandedModelCard(expandedModelCard === 'next_12m_prepayment_lr' ? null : 'next_12m_prepayment_lr')}>
+                    {expandedModelCard === 'next_12m_prepayment_lr' ? 'Collapse' : 'View Full Card'}
+                  </button>
+                  {expandedModelCard === 'next_12m_prepayment_lr' && (
+                    <div className="model-card-details">
+                      <div className="model-card-section">
+                        <h4>Performance Metrics</h4>
+                        <ul>
+                          <li>Test ROC-AUC: 0.5652 (barely above random)</li>
+                          <li>Test PR-AUC: 0.315</li>
+                          <li>Test F1: 0.4377</li>
+                          <li>Brier Score: 0.2459</li>
+                        </ul>
+                      </div>
+                      <div className="model-card-section">
+                        <h4>Known Issues</h4>
+                        <ul>
+                          <li>Very weak signal (ROC-AUC ~0.57)</li>
+                          <li>Not sensitive to interest rate changes</li>
+                          <li>Does not capture economic conditions</li>
+                        </ul>
+                      </div>
+                      <div className="model-card-section">
+                        <h4>Required Improvements</h4>
+                        <ul>
+                          <li>Add interest rate forecasts and market indicators</li>
+                          <li>Incorporate housing market indices</li>
+                          <li>Consider different prepayment definitions</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
                 </div>
                 <div className="model-card-item">
                   <div className="model-card-header">
@@ -456,7 +585,36 @@ export default function LoanIntelligenceDashboard() {
                     <span className="model-card-metric">Macro F1: 0.71</span>
                   </div>
                   <p>Multiclass prediction of loan state transitions. Predicts distribution over 7 possible states for comprehensive trajectory analysis.</p>
-                  <button className="text-button">View Full Card</button>
+                  <button className="text-button" onClick={() => setExpandedModelCard(expandedModelCard === 'next_state_lgbm' ? null : 'next_state_lgbm')}>
+                    {expandedModelCard === 'next_state_lgbm' ? 'Collapse' : 'View Full Card'}
+                  </button>
+                  {expandedModelCard === 'next_state_lgbm' && (
+                    <div className="model-card-details">
+                      <div className="model-card-section">
+                        <h4>Performance Metrics</h4>
+                        <ul>
+                          <li>Macro F1: 0.71</li>
+                          <li>Weighted F1: 0.68</li>
+                          <li>7 possible output states</li>
+                        </ul>
+                      </div>
+                      <div className="model-card-section">
+                        <h4>Possible States</h4>
+                        <ul>
+                          <li>Current, 30DPD, 60DPD, 90DPD</li>
+                          <li>Default, Prepaid, Closed</li>
+                        </ul>
+                      </div>
+                      <div className="model-card-section">
+                        <h4>Known Limitations</h4>
+                        <ul>
+                          <li>SHAP explainability currently limited</li>
+                          <li>Poor performance on rare state transitions</li>
+                          <li>May not capture rapid state changes</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
