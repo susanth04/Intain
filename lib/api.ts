@@ -66,8 +66,18 @@ export type PortfolioOverview = {
   [key: string]: unknown
 }
 
+export type ModelMetric = { roc_auc: number; pr_auc: number; f1: number; brier: number }
+export type ModelComparison = {
+  results: Record<string, Record<string, ModelMetric>>
+  winners: Record<string, { model: string; test_roc_auc: number; pr_auc: number; f1: number; brier: number; models_compared: string[] }>
+}
+
 export function fetchPortfolio(limit = 24) {
   return request<PortfolioOverview>(`/api/portfolio/overview?limit=${limit}`)
+}
+
+export function fetchModelComparison() {
+  return request<ModelComparison>('/api/model-comparison')
 }
 
 export function retryStage(loanId: string, stage: StageKey) {

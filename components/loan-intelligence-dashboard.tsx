@@ -6,7 +6,7 @@ import CopilotAnswer from '@/components/copilot-answer'
 import SimpleHealthMap, { CreditRiskBars } from '@/components/heatmap-grid'
 import AnimatedGradient from '@/components/ui/animated-gradient'
 import { ServiceCard } from '@/components/ui/service-card'
-import { askCopilot, asRecord, displayValue, entries, errorText, fetchPortfolio, normalizeStages, retryStage, runScenario, stageLabels, stageOrder, type PipelineResponse, type PipelineStage, type PortfolioOverview, type StageKey, type StageStatus, valueAt } from '@/lib/api'
+import { askCopilot, asRecord, displayValue, entries, errorText, fetchModelComparison, fetchPortfolio, normalizeStages, retryStage, runScenario, stageLabels, stageOrder, type ModelComparison, type PipelineResponse, type PipelineStage, type PortfolioOverview, type StageKey, type StageStatus, valueAt } from '@/lib/api'
 
 type DetailDrawerProps = { stage: PipelineStage; loanId: string; onClose: () => void; onRetry: () => void }
 type NavKey = 'Overview' | 'Loan Intelligence' | 'Anomaly Detection' | 'Scenario Analysis' | 'AI Reviewer' | 'Model Cards'
@@ -177,6 +177,7 @@ export default function LoanIntelligenceDashboard() {
   const [copilotLoading, setCopilotLoading] = useState(false)
   const [portfolio, setPortfolio] = useState<PortfolioOverview | null>(null)
   const [portfolioLoading, setPortfolioLoading] = useState(true)
+  const [modelComparison, setModelComparison] = useState<ModelComparison | null>(null)
   const [expandedModelCard, setExpandedModelCard] = useState<ModelCardKey | null>(null)
 
   const completed = stages.filter((stage) => stage.status === 'completed').length
@@ -189,6 +190,10 @@ export default function LoanIntelligenceDashboard() {
       .catch((e) => { if (!cancelled) setError(errorText(e)) })
       .finally(() => { if (!cancelled) setPortfolioLoading(false) })
     return () => { cancelled = true }
+  }, [])
+
+  useEffect(() => {
+    fetchModelComparison().then(setModelComparison).catch(() => setModelComparison(null))
   }, [])
 
   async function run() {
@@ -256,6 +261,17 @@ export default function LoanIntelligenceDashboard() {
     setLoanId(id)
     setActiveNav('Loan Intelligence')
     setMobileOpen(false)
+  }
+
+  function toggleModelCard(card: ModelCardKey) {
+    setExpandedModelCard((current) => current === card ? null : card)
+  }
+
+  function activateModelCard(event: React.KeyboardEvent<HTMLDivElement>, card: ModelCardKey) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      toggleModelCard(card)
+    }
   }
 
   const reviewerCard = (
@@ -420,14 +436,26 @@ export default function LoanIntelligenceDashboard() {
               <div className="model-cards-intro">
                 <p>Comprehensive documentation for each machine learning model used in the Loan Performance Intelligence Engine. Model cards provide transparency into model performance, limitations, and intended use cases.</p>
               </div>
+              {modelComparison && <div className="comparison-panel">
+                <div className="comparison-heading"><div><p className="eyebrow">HELD-OUT TEST BENCHMARK</p><h3>Best model by target</h3></div><span>ROC-AUC winner</span></div>
+                <div className="comparison-list">
+                  {Object.entries(modelComparison.winners).map(([target, winner]) => (
+                    <div className="comparison-row" key={target}>
+                      <div><strong>{target.replaceAll('_', ' ')}</strong><span>{winner.models_compared.join(' · ')}</span></div>
+                      <b>{winner.model} · {winner.test_roc_auc.toFixed(4)}</b>
+                    </div>
+                  ))}
+                </div>
+                <p className="comparison-note">Models use the same time-aware train, validation, and test split. Winners are selected by held-out test ROC-AUC.</p>
+              </div>}
               <div className="model-cards-grid">
-                <div className="model-card-item">
+                <div className="model-card-item" role="button" tabIndex={0} onClick={() => toggleModelCard('next_3m_delinquency_lgbm')} onKeyDown={(event) => activateModelCard(event, 'next_3m_delinquency_lgbm')}>
                   <div className="model-card-header">
                     <strong>3-Month Delinquency (LightGBM)</strong>
                     <span className="model-card-metric">ROC-AUC: 0.7129</span>
                   </div>
                   <p>Predicts 3-month delinquency probability using gradient boosting. Strong performance with comprehensive feature engineering.</p>
-                  <button className="text-button" onClick={() => setExpandedModelCard(expandedModelCard === 'next_3m_delinquency_lgbm' ? null : 'next_3m_delinquency_lgbm')}>
+                  <button className="text-button" onClick={(event) => { event.stopPropagation(); toggleModelCard('next_3m_delinquency_lgbm') }}>
                     {expandedModelCard === 'next_3m_delinquency_lgbm' ? 'Collapse' : 'View Full Card'}
                   </button>
                   {expandedModelCard === 'next_3m_delinquency_lgbm' && (
@@ -461,13 +489,13 @@ export default function LoanIntelligenceDashboard() {
                     </div>
                   )}
                 </div>
-                <div className="model-card-item">
+                <div className="model-card-item" role="button" tabIndex={0} onClick={() => toggleModelCard('next_6m_delinquency_lgbm')} onKeyDown={(event) => activateModelCard(event, 'next_6m_delinquency_lgbm')}>
                   <div className="model-card-header">
                     <strong>6-Month Delinquency (LightGBM)</strong>
                     <span className="model-card-metric">ROC-AUC: 0.7098</span>
                   </div>
                   <p>Extended horizon delinquency prediction with excellent precision-recall tradeoff. Best performing model in the system.</p>
-                  <button className="text-button" onClick={() => setExpandedModelCard(expandedModelCard === 'next_6m_delinquency_lgbm' ? null : 'next_6m_delinquency_lgbm')}>
+                  <button className="text-button" onClick={(event) => { event.stopPropagation(); toggleModelCard('next_6m_delinquency_lgbm') }}>
                     {expandedModelCard === 'next_6m_delinquency_lgbm' ? 'Collapse' : 'View Full Card'}
                   </button>
                   {expandedModelCard === 'next_6m_delinquency_lgbm' && (
@@ -501,13 +529,13 @@ export default function LoanIntelligenceDashboard() {
                     </div>
                   )}
                 </div>
-                <div className="model-card-item">
+                <div className="model-card-item" role="button" tabIndex={0} onClick={() => toggleModelCard('next_12m_default_lr')} onKeyDown={(event) => activateModelCard(event, 'next_12m_default_lr')}>
                   <div className="model-card-header">
                     <strong>12-Month Default (Logistic Regression)</strong>
                     <span className="model-card-metric">ROC-AUC: 0.6966</span>
                   </div>
                   <p>Baseline model for default prediction. Limited signal in target; used as fallback. Requires feature engineering improvements.</p>
-                  <button className="text-button" onClick={() => setExpandedModelCard(expandedModelCard === 'next_12m_default_lr' ? null : 'next_12m_default_lr')}>
+                  <button className="text-button" onClick={(event) => { event.stopPropagation(); toggleModelCard('next_12m_default_lr') }}>
                     {expandedModelCard === 'next_12m_default_lr' ? 'Collapse' : 'View Full Card'}
                   </button>
                   {expandedModelCard === 'next_12m_default_lr' && (
@@ -540,13 +568,13 @@ export default function LoanIntelligenceDashboard() {
                     </div>
                   )}
                 </div>
-                <div className="model-card-item">
+                <div className="model-card-item" role="button" tabIndex={0} onClick={() => toggleModelCard('next_12m_prepayment_lr')} onKeyDown={(event) => activateModelCard(event, 'next_12m_prepayment_lr')}>
                   <div className="model-card-header">
                     <strong>12-Month Prepayment (Logistic Regression)</strong>
                     <span className="model-card-metric">ROC-AUC: 0.5652</span>
                   </div>
                   <p>Weak performance on prepayment prediction. Requires interest rate forecasts and economic indicators for improvement.</p>
-                  <button className="text-button" onClick={() => setExpandedModelCard(expandedModelCard === 'next_12m_prepayment_lr' ? null : 'next_12m_prepayment_lr')}>
+                  <button className="text-button" onClick={(event) => { event.stopPropagation(); toggleModelCard('next_12m_prepayment_lr') }}>
                     {expandedModelCard === 'next_12m_prepayment_lr' ? 'Collapse' : 'View Full Card'}
                   </button>
                   {expandedModelCard === 'next_12m_prepayment_lr' && (
@@ -579,13 +607,13 @@ export default function LoanIntelligenceDashboard() {
                     </div>
                   )}
                 </div>
-                <div className="model-card-item">
+                <div className="model-card-item" role="button" tabIndex={0} onClick={() => toggleModelCard('next_state_lgbm')} onKeyDown={(event) => activateModelCard(event, 'next_state_lgbm')}>
                   <div className="model-card-header">
                     <strong>Next State (LightGBM)</strong>
                     <span className="model-card-metric">Macro F1: 0.71</span>
                   </div>
                   <p>Multiclass prediction of loan state transitions. Predicts distribution over 7 possible states for comprehensive trajectory analysis.</p>
-                  <button className="text-button" onClick={() => setExpandedModelCard(expandedModelCard === 'next_state_lgbm' ? null : 'next_state_lgbm')}>
+                  <button className="text-button" onClick={(event) => { event.stopPropagation(); toggleModelCard('next_state_lgbm') }}>
                     {expandedModelCard === 'next_state_lgbm' ? 'Collapse' : 'View Full Card'}
                   </button>
                   {expandedModelCard === 'next_state_lgbm' && (

@@ -5,6 +5,8 @@ Production inference backend for Intain Loan Performance Intelligence Engine.
 
 import time
 import os
+import json
+from pathlib import Path
 
 from env_loader import load_env
 load_env()
@@ -238,6 +240,19 @@ def portfolio_heatmap(limit: int = 24):
 def model_metrics():
     try:
         return portfolio._load_metrics()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/model-comparison")
+def model_comparison():
+    try:
+        processed = Path(__file__).resolve().parent.parent / "engine" / "data" / "processed"
+        with (processed / "model_comparison_results.json").open(encoding="utf-8") as results_file:
+            results = json.load(results_file)
+        with (processed / "model_winners.json").open(encoding="utf-8") as winners_file:
+            winners = json.load(winners_file)
+        return {"results": results, "winners": winners}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
