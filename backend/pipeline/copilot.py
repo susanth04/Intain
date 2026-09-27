@@ -279,13 +279,28 @@ def run(loan_id, question=None):
         if not _is_complete_answer(response):
             retry_message = (
                 user_message
-                + "\n\nYour previous response was incomplete. Return a complete replacement answer, "
-                + "not a continuation. Include Verdict, Drivers, Watchouts, and Recommendation; "
-                + "finish with a complete sentence."
+                + "\n\nFORMAT REPAIR: Your previous draft did not meet the required format. "
+                + "Return a complete replacement, not a continuation, using these exact Markdown headings "
+                + "in this order, with at least one complete sentence under each:\n"
+                + "## Verdict\n[verdict]\n## Drivers\n[drivers]\n"
+                + "## Watchouts\n[watchouts]\n## Recommendation\n[recommendation]\n"
+                + "Do not add a preamble. Finish every sentence."
             )
             response = _call_llm(api_key, base_url, model_name, retry_message, provider)
             if not _is_complete_answer(response):
-                raise RuntimeError("LLM returned an incomplete answer after retrying.")
+                elapsed_ms = round((time.perf_counter() - t0) * 1000, 1)
+                return {
+                    "loan_id": loan_id,
+                    "question": question,
+                    "status": "warning",
+                    "response_complete": False,
+                    "answer": "INCOMPLETE RESPONSE: The model did not satisfy the required format after retrying. Review before use.\n\n" + response,
+                    "offline_mode": False,
+                    "model": model_name,
+                    "rag_docs_retrieved": len(retrieved),
+                    "execution_ms": elapsed_ms,
+                    "disclaimer": "AI-generated recommendation — not a decision. Human review required.",
+                }
 
         elapsed_ms = round((time.perf_counter() - t0) * 1000, 1)
         return {
