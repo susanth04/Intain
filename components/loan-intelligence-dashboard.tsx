@@ -329,7 +329,6 @@ export default function LoanIntelligenceDashboard() {
       <header className="topbar">
         <div className="topbar-inner">
           <a href="#" className="brand">
-            <div className="brand-mark" aria-hidden="true">i</div>
             <div className="brand-text"><strong>INTAIN</strong><span>LOAN INTELLIGENCE</span></div>
           </a>
           <nav>
