@@ -15,5 +15,9 @@ services:
         sync: false
       - key: OPENAI_MODEL
         value: gemini-3.8-flash
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GROQ_MODEL
+        value: openai/gpt-oss-120b
       - key: PORT
         value: 8000

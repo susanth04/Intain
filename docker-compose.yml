@@ -12,4 +12,6 @@ services:
     environment:
       INTAIN_PROJECT_ROOT: /app/engine
       PORT: 8000
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+      GROQ_MODEL: ${GROQ_MODEL:-openai/gpt-oss-120b}
       OPENAI_MODEL: ${OPENAI_MODEL:-gemini-3.8-flash}

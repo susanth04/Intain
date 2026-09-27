@@ -60,13 +60,20 @@ class CopilotRequest(BaseModel):
 
 @app.get("/api/health")
 def health_check():
-    api_key = os.environ.get("OPENAI_API_KEY", "")
+    groq_api_key = os.environ.get("GROQ_API_KEY", "")
+    api_key = groq_api_key or os.environ.get("OPENAI_API_KEY", "")
+    llm_model = (
+        os.environ.get("GROQ_MODEL", "openai/gpt-oss-120b")
+        if groq_api_key
+        else os.environ.get("OPENAI_MODEL", "gemini-3.8-flash")
+    )
     return {
         "status": "ok",
         "models_loaded": len(MODELS),
         "data_panel_rows": len(_DATA.get("panel", [])),
         "llm_configured": bool(api_key),
-        "llm_model": os.environ.get("OPENAI_MODEL", "gemini-3.8-flash"),
+        "llm_provider": "groq" if groq_api_key else "openai",
+        "llm_model": llm_model,
     }
 
 

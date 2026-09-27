@@ -190,7 +190,7 @@ def _call_gemini(api_key: str, model_name: str, user_message: str) -> str:
     raise RuntimeError("LLM returned an empty response. Check model name and API key.")
 
 
-def _call_llm(api_key: str, base_url: str, model_name: str, user_message: str) -> str:
+def _call_llm(api_key: str, base_url: str, model_name: str, user_message: str, provider: str = "") -> str:
     if _is_gemini(api_key, base_url):
         return _call_gemini(api_key, model_name, user_message)
 
@@ -201,15 +201,19 @@ def _call_llm(api_key: str, base_url: str, model_name: str, user_message: str) -
         timeout=45.0,
     )
     for max_tokens in (2048, 4096):
-        llm_resp = client.chat.completions.create(
-            model=model_name,
-            messages=[
+        request = {
+            "model": model_name,
+            "messages": [
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": user_message},
             ],
-            temperature=0.3,
-            max_tokens=max_tokens,
-        )
+            "temperature": 1 if provider == "groq" else 0.3,
+        }
+        if provider == "groq":
+            request.update(max_completion_tokens=max_tokens, top_p=1, reasoning_effort="medium")
+        else:
+            request["max_tokens"] = max_tokens
+        llm_resp = client.chat.completions.create(**request)
         choice = llm_resp.choices[0]
         if choice.finish_reason == "length":
             continue
@@ -236,17 +240,25 @@ def run(loan_id, question=None):
         }
 
     load_env()
-    api_key = os.environ.get("OPENAI_API_KEY", "").strip()
-    base_url = os.environ.get("OPENAI_BASE_URL", "").strip()
-    model_name = os.environ.get("OPENAI_MODEL", "gemini-3.8-flash").strip() or "gemini-3.8-flash"
+    groq_api_key = os.environ.get("GROQ_API_KEY", "").strip()
+    if groq_api_key:
+        api_key = groq_api_key
+        base_url = "https://api.groq.com/openai/v1"
+        model_name = os.environ.get("GROQ_MODEL", "openai/gpt-oss-120b").strip() or "openai/gpt-oss-120b"
+        provider = "groq"
+    else:
+        api_key = os.environ.get("OPENAI_API_KEY", "").strip()
+        base_url = os.environ.get("OPENAI_BASE_URL", "").strip()
+        model_name = os.environ.get("OPENAI_MODEL", "gemini-3.8-flash").strip() or "gemini-3.8-flash"
+        provider = ""
 
     if not api_key:
         return {
             "loan_id": loan_id,
             "status": "error",
             "offline_mode": True,
-            "error": "OPENAI_API_KEY is not loaded. Put it in backend/.env and restart the API.",
-            "answer": "LLM is not configured. Add OPENAI_API_KEY to backend/.env, restart the backend, then ask again.",
+            "error": "No LLM API key is loaded. Set GROQ_API_KEY or OPENAI_API_KEY and restart the API.",
+            "answer": "LLM is not configured. Add GROQ_API_KEY or OPENAI_API_KEY to backend/.env, restart the backend, then ask again.",
         }
 
     try:
@@ -263,7 +275,7 @@ def run(loan_id, question=None):
             "## Live Model Data\n" + loan_context + "\n\n"
             "## Question\n" + effective_question
         )
-        response = _call_llm(api_key, base_url, model_name, user_message)
+        response = _call_llm(api_key, base_url, model_name, user_message, provider)
         if not _is_complete_answer(response):
             retry_message = (
                 user_message
@@ -271,7 +283,7 @@ def run(loan_id, question=None):
                 + "not a continuation. Include Verdict, Drivers, Watchouts, and Recommendation; "
                 + "finish with a complete sentence."
             )
-            response = _call_llm(api_key, base_url, model_name, retry_message)
+            response = _call_llm(api_key, base_url, model_name, retry_message, provider)
             if not _is_complete_answer(response):
                 raise RuntimeError("LLM returned an incomplete answer after retrying.")
 
