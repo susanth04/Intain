@@ -4,8 +4,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { AlertTriangle, ArrowRight, BarChart3, Check, ChevronRight, Circle, Layers3, Menu, MessageSquareText, RefreshCw, Search, ShieldCheck, Sparkles, X, XCircle } from 'lucide-react'
 import CopilotAnswer from '@/components/copilot-answer'
 import SimpleHealthMap, { CreditRiskBars } from '@/components/heatmap-grid'
-import AnimatedGradient from '@/components/ui/animated-gradient'
-import { ServiceCard } from '@/components/ui/service-card'
+import { LedgerCard } from '@/components/ui/ledger-card'
 import { askCopilot, asRecord, displayValue, entries, errorText, fetchModelComparison, fetchPortfolio, normalizeStages, retryStage, runScenario, stageLabels, stageOrder, type ModelComparison, type PipelineResponse, type PipelineStage, type PortfolioOverview, type StageKey, type StageStatus, valueAt } from '@/lib/api'
 
 type DetailDrawerProps = { stage: PipelineStage; loanId: string; onClose: () => void; onRetry: () => void }
@@ -43,7 +42,19 @@ function DataRow({ label, value }: { label: string; value: unknown }) {
 function MetricsPanel({ portfolio }: { portfolio: PortfolioOverview | null }) {
   const metrics = asRecord(portfolio?.metrics)
   const highlights = Array.isArray(metrics.highlights) ? metrics.highlights.map(asRecord) : []
-  return <div className="panel-card metrics-panel"><div className="metrics-heading"><div><p className="eyebrow">VALIDATION</p><h3>Model performance</h3></div><span>Held-out test set</span></div><p className="panel-copy">Real evaluation results from the strict out-of-time test window. These are model diagnostics, not loan-level predictions.</p><div className="metric-list">{highlights.map((metric, index) => <div className="metric-row" key={index}><div><strong>{displayValue(metric.target)}</strong><span>{displayValue(metric.note)}</span></div><b>{typeof metric.lgbm_test_roc === 'number' ? `ROC-AUC ${(metric.lgbm_test_roc * 100).toFixed(1)}%` : displayValue(metric.lgbm_test_roc)}</b></div>)}</div><div className="metrics-foot"><span>Survival model concordance</span><strong>{typeof metrics.cox_concordance === 'number' ? metrics.cox_concordance.toFixed(4) : '—'}</strong></div></div>
+  return <LedgerCard className="metrics-panel"><div className="ledger-card-title"><div><p className="eyebrow">VALIDATION</p><h3>Model performance</h3></div><p className="body-text">Real evaluation results from the strict out-of-time test window. These are model diagnostics, not loan-level predictions.</p></div><div className="metric-list">{highlights.map((metric, index) => <div className="metric-row" key={index}><div><strong>{displayValue(metric.target)}</strong><span>{displayValue(metric.note)}</span></div><b>{typeof metric.lgbm_test_roc === 'number' ? `ROC-AUC ${(metric.lgbm_test_roc * 100).toFixed(1)}%` : displayValue(metric.lgbm_test_roc)}</b></div>)}</div><div className="metric-row" style={{marginTop: '16px', borderTop: '1px solid var(--line)', paddingTop: '16px'}}><span>Survival model concordance</span><strong>{typeof metrics.cox_concordance === 'number' ? metrics.cox_concordance.toFixed(4) : '—'}</strong></div></LedgerCard>
+}
+
+function PortfolioPulse({ portfolio }: { portfolio: PortfolioOverview | null }) {
+  const rows = portfolio?.status_heatmap?.rows || []
+  const cells = portfolio?.status_heatmap?.cells || []
+  const totals = rows.map((label, index) => ({ label, total: (cells[index] || []).reduce((sum, value) => sum + Number(value || 0), 0) })).filter((row) => row.total > 0)
+  const max = Math.max(...totals.map((row) => row.total), 1)
+  return <div className="portfolio-pulse" aria-label="Portfolio distribution by credit band">
+    <div className="pulse-head"><span>CREDIT BAND</span><span>LOAN COUNT</span></div>
+    {totals.slice().reverse().map((row) => <div className="pulse-row" key={row.label}><span>{row.label}</span><div><i style={{ width: `${Math.max((row.total / max) * 100, 3)}%` }} /></div><b>{row.total.toLocaleString()}</b></div>)}
+    {!totals.length && <div className="empty-data">Portfolio distribution is loading.</div>}
+  </div>
 }
 
 function PredictionCards({ output }: { output: unknown }) {
@@ -126,22 +137,40 @@ function OverviewView({ portfolio, loading, onOpenLoan }: { portfolio: Portfolio
   return (
     <section className="demo-view">
       <div className="section-heading">
-        <div>
-          <p className="eyebrow">PORTFOLIO SNAPSHOT</p>
-        </div>
+        <p className="eyebrow">PORTFOLIO SNAPSHOT</p>
       </div>
       {loading && <div className="loading-state"><RefreshCw className="spin" /> Loading the book…</div>}
-      <div className="tier-row">
-        {[['red', 'Needs attention', 'Accounts requiring immediate review.'], ['blue', 'Watch closely', 'Elevated signals across the book.'], ['default', 'Keep an eye', 'Moderate risk worth monitoring.'], ['gray', 'Healthy', 'No urgent risk signal detected.']].map(([variant, label, description]) => (
-          <ServiceCard key={label} title={label} href="#portfolio-signals" variant={variant as 'red' | 'blue' | 'default' | 'gray'} value={tiers[label === 'Needs attention' ? 'high' : label === 'Watch closely' ? 'elevated' : label === 'Keep an eye' ? 'moderate' : 'low'] ?? 0} description={description} />
+      <div className="grid-asymmetric">
+        {[['high', 'Needs attention', 'Immediate review']].map(([key, label, description]) => (
+          <LedgerCard key={label} className={`signal-card signal-${key}`} as="article">
+            <span className="eyebrow">PORTFOLIO SIGNAL</span>
+            <h3>{label}</h3>
+            <strong className="signal-value">{tiers[key] ?? 0}</strong>
+            <p className="body-text">{description}</p>
+            <a href="#portfolio-signals" className="text-button" style={{marginTop: 'auto', paddingTop: '16px'}}>Inspect signal <ArrowRight /></a>
+          </LedgerCard>
         ))}
+        <div className="grid-3">
+          {[['elevated', 'Watch closely', 'Elevated signals'], ['moderate', 'Keep an eye', 'Monitor the book'], ['low', 'Healthy', 'No urgent signal']].map(([key, label, description]) => (
+            <LedgerCard key={label} className={`signal-card signal-${key}`} as="article">
+              <span className="eyebrow">PORTFOLIO SIGNAL</span>
+              <h3 style={{fontSize: '15px'}}>{label}</h3>
+              <strong className="signal-value" style={{fontSize: '24px'}}>{tiers[key] ?? 0}</strong>
+              <p className="body-text" style={{fontSize: '13px'}}>{description}</p>
+            </LedgerCard>
+          ))}
+        </div>
       </div>
-      <SimpleHealthMap matrix={portfolio?.status_heatmap} />
-      <div className="split-panels">
+      <div className="health-grid-section">
+        <SimpleHealthMap matrix={portfolio?.status_heatmap} />
+      </div>
+      <div className="grid-2 section-spacing">
         <CreditRiskBars matrix={portfolio?.scenario_heatmap} />
-        <div className="panel-card">
-          <h3>Loans to open first</h3>
-          <p className="panel-copy">Highest-risk accounts. Click one, then run the full analysis.</p>
+        <LedgerCard>
+          <div className="ledger-card-title">
+            <h3>Loans to open first</h3>
+            <p className="body-text">Highest-risk accounts. Click one, then run the full analysis.</p>
+          </div>
           <div className="watch-list">
             {(portfolio?.top_loans || []).slice(0, 6).map((loan) => {
               const row = asRecord(loan)
@@ -156,9 +185,11 @@ function OverviewView({ portfolio, loading, onOpenLoan }: { portfolio: Portfolio
               )
             })}
           </div>
-        </div>
+        </LedgerCard>
       </div>
-      <MetricsPanel portfolio={portfolio} />
+      <div className="section-spacing">
+        <MetricsPanel portfolio={portfolio} />
+      </div>
     </section>
   )
 }
@@ -275,12 +306,12 @@ export default function LoanIntelligenceDashboard() {
   }
 
   const reviewerCard = (
-    <div className="reviewer-card">
+    <LedgerCard className="reviewer-card">
       <div className="reviewer-title">
         <div className="reviewer-icon"><Sparkles /></div>
         <div>
           <strong>AI reviewer copilot</strong>
-          <span>Short grounded brief · Human review required</span>
+          <span className="eyebrow" style={{marginTop: '4px'}}>Short grounded brief · Human review required</span>
         </div>
       </div>
       <div className="prompt-list">{prompts.map((prompt) => <button key={prompt} onClick={() => ask(prompt)}>{prompt}<ArrowRight /></button>)}</div>
@@ -290,13 +321,16 @@ export default function LoanIntelligenceDashboard() {
         <button onClick={() => ask()} disabled={copilotLoading}>{copilotLoading ? <RefreshCw className="spin" /> : <ArrowRight />}</button>
       </div>
       {answer && <div className="copilot-answer"><span>AI-GENERATED</span><CopilotAnswer text={answer} /></div>}
-    </div>
+    </LedgerCard>
   )
 
   return (
     <main className="app-shell">
-      <AnimatedGradient className="animated-gradient" />
       <header className="topbar">
+        <a href="#" className="brand">
+          <div className="brand-mark" aria-hidden="true">i</div>
+          <div className="brand-text"><strong>INTAIN</strong><span>LOAN INTELLIGENCE</span></div>
+        </a>
         <nav>
           {navItems.map((item) => (
             <button key={item} className={activeNav === item ? 'active' : ''} onClick={() => setActiveNav(item)}>{item}</button>
@@ -311,13 +345,19 @@ export default function LoanIntelligenceDashboard() {
           ))}
         </div>
       )}
-      <div className="page-wrap">
-        <section className="hero">
-          <div>
+      <div className="page-container">
+        {activeNav === 'Overview' && <section className="hero">
+          <div className="hero-copy-block">
             <p className="eyebrow"><span className="live-dot" /> PORTFOLIO INTELLIGENCE / LIVE SYSTEM</p>
-            <h1>Loan intelligence,<br /><em>without the guesswork.</em></h1>
+            <h1>See the risk surface<br /><em>before it moves.</em></h1>
+            <p className="hero-copy">A decision layer for loan performance: find the pockets that need attention, understand why, and move from signal to review without losing the thread.</p>
+            <div className="hero-metadata">
+              <div className="hero-metadata-item"><span>BOOK SIZE</span><strong>{portfolio?.total_loans?.toLocaleString() || '—'} LOANS</strong></div>
+              <div className="hero-metadata-item"><span>LAST REFRESH</span><strong>LIVE / OUT-OF-TIME</strong></div>
+            </div>
           </div>
-        </section>
+          <LedgerCard className="hero-pulse"><div className="hero-pulse-head"><span>PORTFOLIO SHAPE</span><b>LIVE</b></div><PortfolioPulse portfolio={portfolio} /><p>Loan concentration by credit band. The shape of the book is the first risk signal.</p></LedgerCard>
+        </section>}
         {error && <div className="global-error"><AlertTriangle /> <span>{error}</span></div>}
 
         {activeNav === 'Overview' && <OverviewView portfolio={portfolio} loading={portfolioLoading} onOpenLoan={openLoan} />}
@@ -357,8 +397,11 @@ export default function LoanIntelligenceDashboard() {
               </div>
             </div>
             <aside className="summary-column">
-              <div className="section-heading"><div><p className="eyebrow">OUTPUT</p><h2>Analysis summary</h2></div><BarChart3 /></div>
-              <div className="summary-card">
+              <div className="section-heading">
+                <p className="eyebrow">OUTPUT</p>
+                <h2>Analysis summary</h2>
+              </div>
+              <LedgerCard className="summary-card" style={{padding: 0}}>
                 {result ? (
                   <>
                     <div className="summary-top"><span>ANALYSIS COMPLETE</span><ShieldCheck /><small>{loanId}</small></div>
@@ -366,13 +409,13 @@ export default function LoanIntelligenceDashboard() {
                     <PredictionCards output={prediction} />
                     <div className="summary-foot">
                       <span>Every value is returned by the inference API</span>
-                      <button onClick={() => stages.find((stage) => stage.key === 'prediction') && setSelected(stages.find((stage) => stage.key === 'prediction')!)}>View full analysis <ArrowRight /></button>
+                      <button className="text-button" onClick={() => stages.find((stage) => stage.key === 'prediction') && setSelected(stages.find((stage) => stage.key === 'prediction')!)}>View full analysis <ArrowRight /></button>
                     </div>
                   </>
                 ) : (
-                  <div className="summary-empty"><Layers3 /><strong>Awaiting loan analysis</strong><p>Select a loan and run the pipeline to populate model outputs.</p></div>
+                  <div className="summary-empty"><Layers3 /><strong>Awaiting loan analysis</strong><p className="body-text">Select a loan and run the pipeline to populate model outputs.</p></div>
                 )}
-              </div>
+              </LedgerCard>
               {reviewerCard}
             </aside>
           </section>
@@ -380,18 +423,26 @@ export default function LoanIntelligenceDashboard() {
 
         {activeNav === 'Anomaly Detection' && (
           <section className="demo-view">
-            <div className="section-heading"><div><p className="eyebrow">EXCEPTIONS</p><h2>Odd loans the rules caught</h2></div></div>
-            <p className="demo-note">These are accounts that look unusual — missing documents, strange balances, or statistical outliers. Open one to see why.</p>
-            <div className="panel-card">
-              <h3>Why they were flagged</h3>
-              <div className="metric-list">
-                {(portfolio?.exception_mix || []).map((item) => (
-                  <div className="metric-row" key={item.type}><div><strong>{item.type || 'Unusual pattern'}</strong><span>Number of flagged loans in this bucket</span></div><b>{item.count}</b></div>
-                ))}
-              </div>
+            <div className="section-heading">
+              <p className="eyebrow">EXCEPTIONS</p>
+              <h2>Odd loans the rules caught</h2>
+              <p className="body-text" style={{marginTop: '8px'}}>These are accounts that look unusual — missing documents, strange balances, or statistical outliers. Open one to see why.</p>
             </div>
-            <div className="panel-card">
-              <h3>Start with these</h3>
+            <div className="grid-asymmetric section-spacing">
+              <LedgerCard>
+                <div className="ledger-card-title">
+                  <h3>Why they were flagged</h3>
+                </div>
+                <div className="metric-list">
+                  {(portfolio?.exception_mix || []).map((item) => (
+                    <div className="metric-row" key={item.type}><div><strong>{item.type || 'Unusual pattern'}</strong><span>Number of flagged loans in this bucket</span></div><b>{item.count}</b></div>
+                  ))}
+                </div>
+              </LedgerCard>
+              <LedgerCard>
+                <div className="ledger-card-title">
+                  <h3>Start with these</h3>
+                </div>
               <div className="watch-list">
                 {(portfolio?.top_loans || []).slice(0, 8).map((loan) => {
                   const row = asRecord(loan)
@@ -406,38 +457,52 @@ export default function LoanIntelligenceDashboard() {
                   )
                 })}
               </div>
+              </LedgerCard>
             </div>
           </section>
         )}
 
         {activeNav === 'Scenario Analysis' && (
           <section className="demo-view">
-            <div className="section-heading"><div><p className="eyebrow">STRESS</p><h2>What if credit gets worse?</h2></div></div>
-            <CreditRiskBars matrix={portfolio?.scenario_heatmap} />
-            <p className="demo-note">Pick a loan above, run analysis, then tap Base / Adverse / High prepayment to see how that one loan shifts.</p>
-            <div className="panel-card">
-              <h3>Stress this loan ({loanId})</h3>
-              <ScenarioPanel loanId={loanId} initial={{}} />
+            <div className="section-heading">
+              <p className="eyebrow">STRESS</p>
+              <h2>What if credit gets worse?</h2>
+              <p className="body-text" style={{marginTop: '8px'}}>Pick a loan above, run analysis, then tap Base / Adverse / High prepayment to see how that one loan shifts.</p>
+            </div>
+            <div className="grid-2 section-spacing">
+              <CreditRiskBars matrix={portfolio?.scenario_heatmap} />
+              <LedgerCard>
+                <div className="ledger-card-title">
+                  <h3>Stress this loan ({loanId})</h3>
+                </div>
+                <ScenarioPanel loanId={loanId} initial={{}} />
+              </LedgerCard>
             </div>
           </section>
         )}
 
         {activeNav === 'AI Reviewer' && (
           <section className="demo-view reviewer-page">
-            <div className="section-heading"><div><p className="eyebrow">COPILOT</p><h2>Reviewer brief for {loanId}</h2></div></div>
+            <div className="section-heading">
+              <p className="eyebrow">COPILOT</p>
+              <h2>Reviewer brief for {loanId}</h2>
+            </div>
             {reviewerCard}
           </section>
         )}
 
         {activeNav === 'Model Cards' && (
           <section className="demo-view model-cards-page">
-            <div className="section-heading"><div><p className="eyebrow">MODEL DOCUMENTATION</p><h2>Model Cards</h2></div></div>
-            <div className="model-cards-container">
-              <div className="model-cards-intro">
-                <p>Comprehensive documentation for each machine learning model used in the Loan Performance Intelligence Engine. Model cards provide transparency into model performance, limitations, and intended use cases.</p>
-              </div>
-              {modelComparison && <div className="comparison-panel">
-                <div className="comparison-heading"><div><p className="eyebrow">HELD-OUT TEST BENCHMARK</p><h3>Four models, target by target</h3></div><span>ROC-AUC · higher is better</span></div>
+            <div className="section-heading">
+              <p className="eyebrow">MODEL DOCUMENTATION</p>
+              <h2>Model Cards</h2>
+            </div>
+            <div className="model-cards-container section-spacing">
+              <LedgerCard className="model-cards-intro">
+                <p className="body-text">Comprehensive documentation for each machine learning model used in the Loan Performance Intelligence Engine. Model cards provide transparency into model performance, limitations, and intended use cases.</p>
+              </LedgerCard>
+              {modelComparison && <LedgerCard className="comparison-panel">
+                <div className="comparison-heading"><div><p className="eyebrow">HELD-OUT TEST BENCHMARK</p><h3>Four models, target by target</h3></div><span className="mono-numeral">ROC-AUC · higher is better</span></div>
                 <div className="comparison-list">
                   {Object.entries(modelComparison.results).map(([target, models]) => {
                     const winner = modelComparison.winners[target]
@@ -455,9 +520,9 @@ export default function LoanIntelligenceDashboard() {
                   })}
                 </div>
                 <p className="comparison-note">Models use the same time-aware train, validation, and test split. Winners are selected by held-out test ROC-AUC.</p>
-              </div>}
+              </LedgerCard>}
               <div className="model-cards-grid">
-                <div className="model-card-item" role="button" tabIndex={0} onClick={() => toggleModelCard('next_3m_delinquency_lgbm')} onKeyDown={(event) => activateModelCard(event, 'next_3m_delinquency_lgbm')}>
+                <LedgerCard className="model-card-item" as="div" role="button" tabIndex={0} onClick={() => toggleModelCard('next_3m_delinquency_lgbm')} onKeyDown={(event) => activateModelCard(event, 'next_3m_delinquency_lgbm')}>
                   <div className="model-card-header">
                     <strong>3-Month Delinquency (LightGBM)</strong>
                     <span className="model-card-metric">ROC-AUC: 0.7129</span>
@@ -496,8 +561,8 @@ export default function LoanIntelligenceDashboard() {
                       </div>
                     </div>
                   )}
-                </div>
-                <div className="model-card-item" role="button" tabIndex={0} onClick={() => toggleModelCard('next_6m_delinquency_lgbm')} onKeyDown={(event) => activateModelCard(event, 'next_6m_delinquency_lgbm')}>
+                </LedgerCard>
+                <LedgerCard className="model-card-item" as="div" role="button" tabIndex={0} onClick={() => toggleModelCard('next_6m_delinquency_lgbm')} onKeyDown={(event) => activateModelCard(event, 'next_6m_delinquency_lgbm')}>
                   <div className="model-card-header">
                     <strong>6-Month Delinquency (LightGBM)</strong>
                     <span className="model-card-metric">ROC-AUC: 0.7098</span>
@@ -536,8 +601,8 @@ export default function LoanIntelligenceDashboard() {
                       </div>
                     </div>
                   )}
-                </div>
-                <div className="model-card-item" role="button" tabIndex={0} onClick={() => toggleModelCard('next_12m_default_lr')} onKeyDown={(event) => activateModelCard(event, 'next_12m_default_lr')}>
+                </LedgerCard>
+                <LedgerCard className="model-card-item" as="div" role="button" tabIndex={0} onClick={() => toggleModelCard('next_12m_default_lr')} onKeyDown={(event) => activateModelCard(event, 'next_12m_default_lr')}>
                   <div className="model-card-header">
                     <strong>12-Month Default (Logistic Regression)</strong>
                     <span className="model-card-metric">ROC-AUC: 0.6966</span>
@@ -575,8 +640,8 @@ export default function LoanIntelligenceDashboard() {
                       </div>
                     </div>
                   )}
-                </div>
-                <div className="model-card-item" role="button" tabIndex={0} onClick={() => toggleModelCard('next_12m_prepayment_lr')} onKeyDown={(event) => activateModelCard(event, 'next_12m_prepayment_lr')}>
+                </LedgerCard>
+                <LedgerCard className="model-card-item" as="div" role="button" tabIndex={0} onClick={() => toggleModelCard('next_12m_prepayment_lr')} onKeyDown={(event) => activateModelCard(event, 'next_12m_prepayment_lr')}>
                   <div className="model-card-header">
                     <strong>12-Month Prepayment (Logistic Regression)</strong>
                     <span className="model-card-metric">ROC-AUC: 0.5652</span>
@@ -614,8 +679,8 @@ export default function LoanIntelligenceDashboard() {
                       </div>
                     </div>
                   )}
-                </div>
-                <div className="model-card-item" role="button" tabIndex={0} onClick={() => toggleModelCard('next_state_lgbm')} onKeyDown={(event) => activateModelCard(event, 'next_state_lgbm')}>
+                </LedgerCard>
+                <LedgerCard className="model-card-item" as="div" role="button" tabIndex={0} onClick={() => toggleModelCard('next_state_lgbm')} onKeyDown={(event) => activateModelCard(event, 'next_state_lgbm')}>
                   <div className="model-card-header">
                     <strong>Next State (LightGBM)</strong>
                     <span className="model-card-metric">Macro F1: 0.71</span>
@@ -651,7 +716,7 @@ export default function LoanIntelligenceDashboard() {
                       </div>
                     </div>
                   )}
-                </div>
+                </LedgerCard>
               </div>
             </div>
           </section>
