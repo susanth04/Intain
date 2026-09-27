@@ -146,6 +146,11 @@ h1 em { color: var(--teal); font-style: italic; }
 .error-box p { margin: 5px 0 0; color: #805c53; line-height: 1.45; }
 .error-box .text-button { margin-left: auto; color: #ad4b33; }
 .shap-list { display: flex; flex-direction: column; gap: 18px; margin-top: 24px; }
+.explanation-groups { display: grid; gap: 28px; margin-top: 24px; }
+.explanation-group { border-top: 1px solid var(--line); padding-top: 16px; }
+.explanation-group-head { display: flex; flex-direction: column; gap: 5px; }
+.explanation-group-head strong { color: var(--ink); font-size: 14px; }
+.explanation-group-head span { color: var(--muted-ink); font-size: 10px; line-height: 1.4; }
 .shap-row > div:first-child { display: flex; justify-content: space-between; font-size: 11px; text-transform: capitalize; }
 .shap-row b { color: var(--teal); font-weight: 700; }
 .shap-row b.negative { color: #d2654c; }
@@ -242,3 +247,15 @@ h1 em { color: var(--teal); font-style: italic; }
 .map-takeaway { background: rgba(138, 231, 224, .1); color: #d7f1ec; }
 .mobile-nav { background: rgba(4, 22, 34, .96); border-color: var(--line); }
 .mobile-nav button { background: rgba(138, 231, 224, .08); border-color: var(--line); color: #d5e9e6; }
+.model-cards-page { max-width: 900px; }
+.model-cards-container { display: flex; flex-direction: column; gap: 24px; }
+.model-cards-intro { background: rgba(5, 26, 40, .78); border: 1px solid rgba(138, 231, 224, .2); padding: 20px; border-radius: 10px; }
+.model-cards-intro p { color: #9ab5b6; font-size: 14px; line-height: 1.6; margin: 0; }
+.model-cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+.model-card-item { background: rgba(5, 26, 40, .78); border: 1px solid rgba(138, 231, 224, .2); padding: 20px; border-radius: 10px; display: flex; flex-direction: column; gap: 12px; }
+.model-card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.model-card-header strong { color: #f0faf8; font-size: 14px; font-weight: 600; }
+.model-card-metric { background: rgba(117, 224, 210, .1); color: var(--teal); font-size: 11px; padding: 4px 8px; border-radius: 6px; font-weight: 600; white-space: nowrap; }
+.model-card-item p { color: #9ab5b6; font-size: 13px; line-height: 1.5; margin: 0; }
+.model-card-item .text-button { background: rgba(117, 224, 210, .08); border: 1px solid rgba(117, 224, 210, .25); color: var(--teal); padding: 8px 12px; border-radius: 6px; font-size: 11px; font-weight: 600; margin-top: auto; }
+.model-card-item .text-button:hover { background: rgba(117, 224, 210, .15); }

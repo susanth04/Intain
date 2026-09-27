@@ -1,0 +1,34 @@
+{
+  "next_3m_delinquency_flag": {
+    "model": "LGBM",
+    "test_roc_auc": 0.7129,
+    "pr_auc": 0.5732,
+    "f1": 0.4604,
+    "brier": 0.1973,
+    "reason": "Highest test ROC-AUC among 2 models (0.7129 vs 0.6618 for LR)"
+  },
+  "next_6m_delinquency_flag": {
+    "model": "LGBM", 
+    "test_roc_auc": 0.7098,
+    "pr_auc": 0.6873,
+    "f1": 0.6801,
+    "brier": 0.2161,
+    "reason": "Highest test ROC-AUC among 2 models (0.7098 vs 0.658 for LR)"
+  },
+  "next_12m_default_flag": {
+    "model": "LR",
+    "test_roc_auc": 0.6966,
+    "pr_auc": 0.2743,
+    "f1": 0.1665,
+    "brier": 0.1222,
+    "reason": "Tied performance with LGBM (both 0.6966), LR selected for simplicity"
+  },
+  "next_12m_prepayment_flag": {
+    "model": "LR",
+    "test_roc_auc": 0.5652,
+    "pr_auc": 0.315,
+    "f1": 0.4377,
+    "brier": 0.2459,
+    "reason": "Tied performance with LGBM (both 0.5652), LR selected for simplicity"
+  }
+}

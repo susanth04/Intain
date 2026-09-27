@@ -9,11 +9,11 @@ import { ServiceCard } from '@/components/ui/service-card'
 import { askCopilot, asRecord, displayValue, entries, errorText, fetchPortfolio, normalizeStages, retryStage, runScenario, stageLabels, stageOrder, type PipelineResponse, type PipelineStage, type PortfolioOverview, type StageKey, type StageStatus, valueAt } from '@/lib/api'
 
 type DetailDrawerProps = { stage: PipelineStage; loanId: string; onClose: () => void; onRetry: () => void }
-type NavKey = 'Overview' | 'Loan Intelligence' | 'Anomaly Detection' | 'Scenario Analysis' | 'AI Reviewer'
+type NavKey = 'Overview' | 'Loan Intelligence' | 'Anomaly Detection' | 'Scenario Analysis' | 'AI Reviewer' | 'Model Cards'
 
 const stageNumbers = ['01', '02', '03', '04', '05', '06', '07', '08']
 const prompts = ['Why was this loan flagged?', 'What are the main risk drivers?', 'Explain the model prediction.', 'What data-quality issues were found?']
-const navItems: NavKey[] = ['Overview', 'Loan Intelligence', 'Anomaly Detection', 'Scenario Analysis', 'AI Reviewer']
+const navItems: NavKey[] = ['Overview', 'Loan Intelligence', 'Anomaly Detection', 'Scenario Analysis', 'AI Reviewer', 'Model Cards']
 
 function StatusIcon({ status }: { status: StageStatus }) {
   if (status === 'completed') return <span className="status-icon completed"><Check /></span>
@@ -64,11 +64,21 @@ function PredictionCards({ output }: { output: unknown }) {
 
 function Explainability({ output }: { output: unknown }) {
   const data = asRecord(output)
-  const shapWrapper = asRecord(valueAt(data, 'shap_values'))
-  const shap = valueAt(shapWrapper, 'features')
-  if (!shap) return <div className="empty-data">Explainability unavailable for this model.<br /><span>{displayValue(valueAt(data, 'reason', 'message'))}</span></div>
-  const rows = Array.isArray(shap) ? shap : Object.entries(shap).map(([feature, contribution]) => ({ feature, contribution }))
-  return <div className="shap-list">{rows.map((item, index) => { const row = asRecord(item); const contribution = Number(valueAt(row, 'contribution', 'value', 'shap_value') || 0); return <div className="shap-row" key={index}><div><span>{displayValue(valueAt(row, 'feature', 'name'), `Feature ${index + 1}`)}</span><b className={contribution < 0 ? 'negative' : ''}>{contribution > 0 ? '+' : ''}{contribution || '—'}</b></div><div className="shap-track"><i className={contribution < 0 ? 'negative' : ''} style={{ width: `${Math.min(Math.abs(contribution) * 100, 100)}%` }} /></div></div> })}</div>
+  const explanations = asRecord(valueAt(data, 'explanations'))
+  const available = entries(explanations).filter(([, value]) => asRecord(value).available === true)
+  if (!available.length) return <div className="empty-data">Explainability unavailable for this model.<br /><span>{displayValue(valueAt(data, 'reason', 'message'))}</span></div>
+  return <div className="explanation-groups">{available.map(([key, value]) => {
+    const explanation = asRecord(value)
+    const features = Array.isArray(explanation.top_features) ? explanation.top_features : []
+    return <section className="explanation-group" key={key}>
+      <div className="explanation-group-head"><strong>{displayValue(explanation.label, key.replaceAll('_', ' '))}</strong><span>{displayValue(explanation.model_used)}</span></div>
+      <div className="shap-list">{features.map((item, index) => {
+        const row = asRecord(item)
+        const contribution = Number(valueAt(row, 'shap_value', 'contribution', 'value') || 0)
+        return <div className="shap-row" key={index}><div><span>{displayValue(valueAt(row, 'feature', 'name'), `Feature ${index + 1}`)}</span><b className={contribution < 0 ? 'negative' : ''}>{contribution > 0 ? '+' : ''}{contribution.toFixed(3)}</b></div><div className="shap-track"><i className={contribution < 0 ? 'negative' : ''} style={{ width: `${Math.min(Math.abs(contribution) * 100, 100)}%` }} /></div></div>
+      })}</div>
+    </section>
+  })}</div>
 }
 
 function ScenarioPanel({ loanId, initial }: { loanId: string; initial: unknown }) {
@@ -397,6 +407,59 @@ export default function LoanIntelligenceDashboard() {
           <section className="demo-view reviewer-page">
             <div className="section-heading"><div><p className="eyebrow">COPILOT</p><h2>Reviewer brief for {loanId}</h2></div></div>
             {reviewerCard}
+          </section>
+        )}
+
+        {activeNav === 'Model Cards' && (
+          <section className="demo-view model-cards-page">
+            <div className="section-heading"><div><p className="eyebrow">MODEL DOCUMENTATION</p><h2>Model Cards</h2></div></div>
+            <div className="model-cards-container">
+              <div className="model-cards-intro">
+                <p>Comprehensive documentation for each machine learning model used in the Loan Performance Intelligence Engine. Model cards provide transparency into model performance, limitations, and intended use cases.</p>
+              </div>
+              <div className="model-cards-grid">
+                <div className="model-card-item">
+                  <div className="model-card-header">
+                    <strong>3-Month Delinquency (LightGBM)</strong>
+                    <span className="model-card-metric">ROC-AUC: 0.7129</span>
+                  </div>
+                  <p>Predicts 3-month delinquency probability using gradient boosting. Strong performance with comprehensive feature engineering.</p>
+                  <button className="text-button">View Full Card</button>
+                </div>
+                <div className="model-card-item">
+                  <div className="model-card-header">
+                    <strong>6-Month Delinquency (LightGBM)</strong>
+                    <span className="model-card-metric">ROC-AUC: 0.7098</span>
+                  </div>
+                  <p>Extended horizon delinquency prediction with excellent precision-recall tradeoff. Best performing model in the system.</p>
+                  <button className="text-button">View Full Card</button>
+                </div>
+                <div className="model-card-item">
+                  <div className="model-card-header">
+                    <strong>12-Month Default (Logistic Regression)</strong>
+                    <span className="model-card-metric">ROC-AUC: 0.6966</span>
+                  </div>
+                  <p>Baseline model for default prediction. Limited signal in target; used as fallback. Requires feature engineering improvements.</p>
+                  <button className="text-button">View Full Card</button>
+                </div>
+                <div className="model-card-item">
+                  <div className="model-card-header">
+                    <strong>12-Month Prepayment (Logistic Regression)</strong>
+                    <span className="model-card-metric">ROC-AUC: 0.5652</span>
+                  </div>
+                  <p>Weak performance on prepayment prediction. Requires interest rate forecasts and economic indicators for improvement.</p>
+                  <button className="text-button">View Full Card</button>
+                </div>
+                <div className="model-card-item">
+                  <div className="model-card-header">
+                    <strong>Next State (LightGBM)</strong>
+                    <span className="model-card-metric">Macro F1: 0.71</span>
+                  </div>
+                  <p>Multiclass prediction of loan state transitions. Predicts distribution over 7 possible states for comprehensive trajectory analysis.</p>
+                  <button className="text-button">View Full Card</button>
+                </div>
+              </div>
+            </div>
           </section>
         )}
       </div>

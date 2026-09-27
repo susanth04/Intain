@@ -23,9 +23,19 @@ else:
         if (_parent / "config.yaml").exists():
             PROJECT_ROOT = _parent
             break
+        # Also check for engine subdirectory with config.yaml
+        if (_parent / "engine" / "config.yaml").exists():
+            PROJECT_ROOT = (_parent / "engine").resolve()
+            break
     else:
-        # Hardcoded fallback
-        PROJECT_ROOT = Path(r"C:\Users\susan\OneDrive\Desktop\Intain\loan-perf-engine").resolve()
+        # Fallback: assume engine is sibling to backend
+        _backend_dir = Path(__file__).resolve().parent.parent
+        _engine_dir = _backend_dir.parent / "engine"
+        if (_engine_dir / "config.yaml").exists():
+            PROJECT_ROOT = _engine_dir.resolve()
+        else:
+            # Last resort hardcoded fallback
+            PROJECT_ROOT = Path(r"C:\Users\susan\OneDrive\Desktop\Intain\loan-perf-engine").resolve()
 
 # Add project root to sys.path so we can import src.*
 if str(PROJECT_ROOT) not in sys.path:

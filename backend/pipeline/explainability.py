@@ -58,6 +58,10 @@ def run(loan_id: str) -> dict:
         }
 
     explanations = {}
+    
+    # Debug: log which models are available
+    available_raw_models = [k for k in MODELS.keys() if k.endswith("_raw")]
+    print(f"[explainability] Available raw models: {available_raw_models}")
 
     for tgt in BINARY_TARGETS:
         raw_model_key = f"{tgt}_raw"
@@ -67,7 +71,7 @@ def run(loan_id: str) -> dict:
             explanations[tgt] = {
                 "label": TARGET_LABELS[tgt],
                 "available": False,
-                "reason": f"Raw model artifact '{tgt}_lgbm_raw.pkl' not found.",
+                "reason": f"Raw model artifact '{raw_model_key}' not found. Available models: {list(MODELS.keys())}",
             }
             continue
 
@@ -150,11 +154,14 @@ def run(loan_id: str) -> dict:
             }
 
         except Exception as e:
+            import traceback
+            error_detail = f"{str(e)}\n\nTraceback:\n{traceback.format_exc()}"
             explanations[tgt] = {
                 "label": TARGET_LABELS[tgt],
                 "available": False,
-                "reason": str(e),
+                "reason": error_detail[:500],  # Truncate very long errors
             }
+            print(f"[explainability] Error computing SHAP for {tgt}: {e}")
 
     # Next-state SHAP — known to fail due to (35, 7) multidimensional output
     explanations["next_state"] = {

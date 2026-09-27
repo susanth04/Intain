@@ -14,6 +14,7 @@ RUN pip install --no-cache-dir -r /app/backend/requirements.txt
 COPY backend /app/backend
 COPY engine /app/engine
 
+# Set engine root for model loading
 ENV INTAIN_PROJECT_ROOT=/app/engine
 ENV PYTHONUNBUFFERED=1
 ENV PORT=8000
