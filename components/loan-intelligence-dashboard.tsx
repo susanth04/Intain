@@ -437,14 +437,22 @@ export default function LoanIntelligenceDashboard() {
                 <p>Comprehensive documentation for each machine learning model used in the Loan Performance Intelligence Engine. Model cards provide transparency into model performance, limitations, and intended use cases.</p>
               </div>
               {modelComparison && <div className="comparison-panel">
-                <div className="comparison-heading"><div><p className="eyebrow">HELD-OUT TEST BENCHMARK</p><h3>Best model by target</h3></div><span>ROC-AUC winner</span></div>
+                <div className="comparison-heading"><div><p className="eyebrow">HELD-OUT TEST BENCHMARK</p><h3>Four models, target by target</h3></div><span>ROC-AUC · higher is better</span></div>
                 <div className="comparison-list">
-                  {Object.entries(modelComparison.winners).map(([target, winner]) => (
-                    <div className="comparison-row" key={target}>
-                      <div><strong>{target.replaceAll('_', ' ')}</strong><span>{winner.models_compared.join(' · ')}</span></div>
-                      <b>{winner.model} · {winner.test_roc_auc.toFixed(4)}</b>
+                  {Object.entries(modelComparison.results).map(([target, models]) => {
+                    const winner = modelComparison.winners[target]
+                    return <div className="comparison-target" key={target}>
+                      <div className="comparison-target-head"><strong>{target.replaceAll('_', ' ')}</strong><b>Best: {winner.model} · {winner.test_roc_auc.toFixed(4)}</b></div>
+                      {Object.entries(models).filter(([key]) => key.endsWith('_test')).map(([key, metric]) => {
+                        const model = key.replace('_test', '')
+                        return <div className="comparison-model" key={key}>
+                          <span>{model}</span>
+                          <div className="comparison-track"><i className={model === winner.model ? 'winner' : ''} style={{ width: `${Math.max(metric.roc_auc * 100, 2)}%` }} /></div>
+                          <b>{metric.roc_auc.toFixed(4)}</b>
+                        </div>
+                      })}
                     </div>
-                  ))}
+                  })}
                 </div>
                 <p className="comparison-note">Models use the same time-aware train, validation, and test split. Winners are selected by held-out test ROC-AUC.</p>
               </div>}

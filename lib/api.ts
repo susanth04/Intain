@@ -77,7 +77,11 @@ export function fetchPortfolio(limit = 24) {
 }
 
 export function fetchModelComparison() {
-  return request<ModelComparison>('/api/model-comparison')
+  return request<ModelComparison>('/api/model-comparison').catch(async () => {
+    const response = await fetch('/model-comparison.json')
+    if (!response.ok) throw new Error(`Comparison fallback failed (${response.status})`)
+    return response.json() as Promise<ModelComparison>
+  })
 }
 
 export function retryStage(loanId: string, stage: StageKey) {

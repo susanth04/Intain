@@ -351,6 +351,16 @@ h1 em { font-family: var(--display); font-weight: 400; letter-spacing: -.02em; }
 .comparison-heading h3 { color: #f0faf8; font-family: var(--sans); font-size: 20px; font-weight: 500; margin: 0; }
 .comparison-heading > span { color: var(--teal); font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
 .comparison-list { display: grid; gap: 0; margin-top: 16px; }
+.comparison-target { padding: 14px 0 16px; border-top: 1px solid rgba(183, 224, 205, .14); }
+.comparison-target-head { display: flex; justify-content: space-between; gap: 16px; margin-bottom: 10px; }
+.comparison-target-head strong { color: #f0faf8; font-size: 12px; text-transform: capitalize; }
+.comparison-target-head b { color: var(--teal); font-family: var(--mono); font-size: 10px; white-space: nowrap; }
+.comparison-model { display: grid; grid-template-columns: 48px 1fr 52px; align-items: center; gap: 10px; margin-top: 7px; }
+.comparison-model > span, .comparison-model > b { color: #9ab5b6; font-family: var(--mono); font-size: 10px; }
+.comparison-model > b { text-align: right; color: #d9eee8; }
+.comparison-track { height: 8px; overflow: hidden; border-radius: 2px; background: rgba(120, 224, 201, .1); }
+.comparison-track i { display: block; height: 100%; border-radius: inherit; background: rgba(120, 224, 201, .34); }
+.comparison-track i.winner { background: var(--teal); }
 .comparison-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 12px 0; border-top: 1px solid rgba(183, 224, 205, .14); }
 .comparison-row strong, .comparison-row span { display: block; text-transform: capitalize; }
 .comparison-row strong { color: #f0faf8; font-size: 12px; }
@@ -369,4 +379,5 @@ h1 em { font-family: var(--display); font-weight: 400; letter-spacing: -.02em; }
 	.hero { min-height: auto; padding-bottom: 34px; }
 	.page-wrap::before { height: 420px; }
 	.comparison-row { align-items: flex-start; flex-direction: column; gap: 6px; }
+	.comparison-target-head { align-items: flex-start; flex-direction: column; gap: 5px; }
 }

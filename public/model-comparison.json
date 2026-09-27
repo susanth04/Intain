@@ -1,0 +1,34 @@
+{
+  "results": {
+    "next_3m_delinquency_flag": {
+      "LR_test": { "roc_auc": 0.6618, "pr_auc": 0.4913, "f1": 0.3948, "brier": 0.2126 },
+      "RF_test": { "roc_auc": 0.692, "pr_auc": 0.5585, "f1": 0.497, "brier": 0.2047 },
+      "XGB_test": { "roc_auc": 0.7206, "pr_auc": 0.5853, "f1": 0.4349, "brier": 0.1956 },
+      "LGBM_test": { "roc_auc": 0.7122, "pr_auc": 0.5776, "f1": 0.5368, "brier": 0.2053 }
+    },
+    "next_6m_delinquency_flag": {
+      "LR_test": { "roc_auc": 0.6586, "pr_auc": 0.6226, "f1": 0.1509, "brier": 0.2637 },
+      "RF_test": { "roc_auc": 0.68, "pr_auc": 0.6637, "f1": 0.6267, "brier": 0.2252 },
+      "XGB_test": { "roc_auc": 0.7263, "pr_auc": 0.6971, "f1": 0.657, "brier": 0.2101 },
+      "LGBM_test": { "roc_auc": 0.7131, "pr_auc": 0.6833, "f1": 0.6538, "brier": 0.2177 }
+    },
+    "next_12m_default_flag": {
+      "LR_test": { "roc_auc": 0.6963, "pr_auc": 0.2735, "f1": 0.1578, "brier": 0.1233 },
+      "RF_test": { "roc_auc": 0.7719, "pr_auc": 0.4564, "f1": 0.3704, "brier": 0.1035 },
+      "XGB_test": { "roc_auc": 0.7963, "pr_auc": 0.4983, "f1": 0.297, "brier": 0.1002 },
+      "LGBM_test": { "roc_auc": 0.7968, "pr_auc": 0.5374, "f1": 0.4494, "brier": 0.0954 }
+    },
+    "next_12m_prepayment_flag": {
+      "LR_test": { "roc_auc": 0.5673, "pr_auc": 0.316, "f1": 0.4338, "brier": 0.2448 },
+      "RF_test": { "roc_auc": 0.7364, "pr_auc": 0.6378, "f1": 0.4013, "brier": 0.1647 },
+      "XGB_test": { "roc_auc": 0.6844, "pr_auc": 0.48, "f1": 0.0791, "brier": 0.1856 },
+      "LGBM_test": { "roc_auc": 0.7358, "pr_auc": 0.6189, "f1": 0.505, "brier": 0.1659 }
+    }
+  },
+  "winners": {
+    "next_3m_delinquency_flag": { "model": "XGB", "test_roc_auc": 0.7206, "pr_auc": 0.5853, "f1": 0.4349, "brier": 0.1956, "models_compared": ["LR", "RF", "XGB", "LGBM"] },
+    "next_6m_delinquency_flag": { "model": "XGB", "test_roc_auc": 0.7263, "pr_auc": 0.6971, "f1": 0.657, "brier": 0.2101, "models_compared": ["LR", "RF", "XGB", "LGBM"] },
+    "next_12m_default_flag": { "model": "LGBM", "test_roc_auc": 0.7968, "pr_auc": 0.5374, "f1": 0.4494, "brier": 0.0954, "models_compared": ["LR", "RF", "XGB", "LGBM"] },
+    "next_12m_prepayment_flag": { "model": "RF", "test_roc_auc": 0.7364, "pr_auc": 0.6378, "f1": 0.4013, "brier": 0.1647, "models_compared": ["LR", "RF", "XGB", "LGBM"] }
+  }
+}
