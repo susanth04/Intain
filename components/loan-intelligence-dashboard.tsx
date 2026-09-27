@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, useRef } from 'react'
+import * as d3 from 'd3'
 import { AlertTriangle, ArrowRight, BarChart3, Check, ChevronRight, Circle, Layers3, Menu, MessageSquareText, RefreshCw, Search, ShieldCheck, Sparkles, X, XCircle, Moon, Sun } from 'lucide-react'
 import CopilotAnswer from '@/components/copilot-answer'
 import SimpleHealthMap, { CreditRiskBars } from '@/components/heatmap-grid'
@@ -39,22 +40,116 @@ function DataRow({ label, value }: { label: string; value: unknown }) {
   return <div className="data-row"><span>{label.replaceAll('_', ' ')}</span><strong>{displayValue(value)}</strong></div>
 }
 
-function MetricsPanel({ portfolio }: { portfolio: PortfolioOverview | null }) {
+function MetricsPanel({ portfolio, inline }: { portfolio: PortfolioOverview | null; inline?: boolean }) {
   const metrics = asRecord(portfolio?.metrics)
   const highlights = Array.isArray(metrics.highlights) ? metrics.highlights.map(asRecord) : []
-  return <LedgerCard className="metrics-panel"><div className="ledger-card-title"><div><p className="eyebrow">VALIDATION</p><h3>Model performance</h3></div><p className="body-text">Real evaluation results from the strict out-of-time test window. These are model diagnostics, not loan-level predictions.</p></div><div className="metric-list">{highlights.map((metric, index) => <div className="metric-row" key={index}><div><strong>{displayValue(metric.target)}</strong><span>{displayValue(metric.note)}</span></div><b>{typeof metric.lgbm_test_roc === 'number' ? `ROC-AUC ${(metric.lgbm_test_roc * 100).toFixed(1)}%` : displayValue(metric.lgbm_test_roc)}</b></div>)}</div><div className="metric-row" style={{marginTop: '16px', borderTop: '1px solid var(--line)', paddingTop: '16px'}}><span>Survival model concordance</span><strong>{typeof metrics.cox_concordance === 'number' ? metrics.cox_concordance.toFixed(4) : '—'}</strong></div></LedgerCard>
+  const inner = (
+    <>
+      <div className="metric-list">{highlights.map((metric, index) => <div className="metric-row" key={index}><div><strong>{displayValue(metric.target)}</strong><span>{displayValue(metric.note)}</span></div><b>{typeof metric.lgbm_test_roc === 'number' ? `ROC-AUC ${(metric.lgbm_test_roc * 100).toFixed(1)}%` : displayValue(metric.lgbm_test_roc)}</b></div>)}</div>
+      <div className="metric-row" style={{marginTop: '16px', borderTop: '1px solid var(--line)', paddingTop: '16px'}}><span>Survival model concordance</span><strong>{typeof metrics.cox_concordance === 'number' ? metrics.cox_concordance.toFixed(4) : '—'}</strong></div>
+    </>
+  )
+  if (inline) return inner
+  return <LedgerCard className="metrics-panel"><div className="ledger-card-title"><div><p className="eyebrow">VALIDATION</p><h3>Model performance</h3></div><p className="body-text">Real evaluation results from the strict out-of-time test window. These are model diagnostics, not loan-level predictions.</p></div>{inner}</LedgerCard>
 }
 
 function PortfolioPulse({ portfolio }: { portfolio: PortfolioOverview | null }) {
-  const rows = portfolio?.status_heatmap?.rows || []
-  const cells = portfolio?.status_heatmap?.cells || []
-  const totals = rows.map((label, index) => ({ label, total: (cells[index] || []).reduce((sum, value) => sum + Number(value || 0), 0) })).filter((row) => row.total > 0)
-  const max = Math.max(...totals.map((row) => row.total), 1)
+  const containerRef = useRef<HTMLDivElement>(null)
+  
+  useEffect(() => {
+    if (!containerRef.current || !portfolio?.status_heatmap) return
+    const rows = portfolio.status_heatmap.rows || []
+    const cells = portfolio.status_heatmap.cells || []
+    const data = rows.map((label, index) => ({ 
+      label, 
+      value: (cells[index] || []).reduce((sum, v) => sum + Number(v || 0), 0) 
+    })).filter(d => d.value > 0).reverse()
+    
+    if (data.length === 0) return
+    const container = containerRef.current
+    container.innerHTML = ''
+    
+    const width = container.clientWidth
+    const height = data.length * 32
+    const margin = { top: 0, right: 60, bottom: 0, left: 100 }
+    
+    const svg = d3.select(container).append('svg')
+      .attr('width', '100%')
+      .attr('height', height)
+      .attr('viewBox', `0 0 ${width} ${height}`)
+      .attr('preserveAspectRatio', 'xMinYMin meet')
+      
+    const x = d3.scaleLinear().domain([0, d3.max(data, d => d.value) || 1]).range([margin.left, width - margin.right])
+    const y = d3.scaleBand().domain(data.map(d => d.label)).range([0, height]).padding(0.4)
+      
+    const defs = svg.append("defs")
+    const gradient = defs.append("linearGradient").attr("id", "bar-grad").attr("x1", "0%").attr("y1", "0%").attr("x2", "100%").attr("y2", "0%")
+    gradient.append("stop").attr("offset", "0%").attr("stop-color", "var(--border-line-subtle)")
+    gradient.append("stop").attr("offset", "100%").attr("stop-color", "var(--teal)")
+
+    svg.selectAll('.bg-bar').data(data).enter().append('rect').attr('class', 'bg-bar')
+      .attr('x', margin.left).attr('y', d => y(d.label) || 0)
+      .attr('width', width - margin.left - margin.right).attr('height', y.bandwidth())
+      .attr('fill', 'var(--border-line-subtle)').attr('rx', 4)
+
+    svg.selectAll('.bar').data(data).enter().append('rect').attr('class', 'bar')
+      .attr('x', margin.left).attr('y', d => y(d.label) || 0)
+      .attr('width', d => Math.max(x(d.value) - margin.left, 4)).attr('height', y.bandwidth())
+      .attr('fill', 'url(#bar-grad)').attr('rx', 4)
+      
+    svg.selectAll('.label').data(data).enter().append('text').attr('class', 'label')
+      .attr('x', margin.left - 12).attr('y', d => (y(d.label) || 0) + y.bandwidth() / 2)
+      .attr('dy', '0.35em').attr('text-anchor', 'end')
+      .attr('fill', 'var(--text-primary)').attr('font-size', '12px').text(d => d.label)
+      
+    svg.selectAll('.val').data(data).enter().append('text').attr('class', 'val')
+      .attr('x', width).attr('y', d => (y(d.label) || 0) + y.bandwidth() / 2)
+      .attr('dy', '0.35em').attr('text-anchor', 'end')
+      .attr('fill', 'var(--teal)').attr('font-size', '12px')
+      .attr('font-family', 'var(--mono)').attr('font-weight', '500')
+      .text(d => d.value.toLocaleString())
+  }, [portfolio])
+  
+  if (!portfolio?.status_heatmap?.rows?.length) return <div className="empty-data">Portfolio distribution is loading.</div>
+  
   return <div className="portfolio-pulse" aria-label="Portfolio distribution by credit band">
     <div className="pulse-head"><span>CREDIT BAND</span><span /><span>LOAN COUNT</span></div>
-    {totals.slice().reverse().map((row) => <div className="pulse-row" key={row.label}><span>{row.label}</span><div className="pulse-bar-bg"><i className="pulse-bar-fill" style={{ width: `${Math.max((row.total / max) * 100, 3)}%` }} /></div><b>{row.total.toLocaleString()}</b></div>)}
-    {!totals.length && <div className="empty-data">Portfolio distribution is loading.</div>}
+    <div ref={containerRef} style={{ width: '100%', minHeight: '128px' }} />
   </div>
+}
+
+function MiniD3Bar({ value }: { value: number | null }) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  
+  useEffect(() => {
+    if (!containerRef.current) return
+    const container = containerRef.current
+    container.innerHTML = ''
+    
+    const width = container.clientWidth
+    const height = 6
+    const svg = d3.select(container).append('svg')
+      .attr('width', '100%')
+      .attr('height', height)
+      .attr('viewBox', `0 0 ${width} ${height}`)
+      .attr('preserveAspectRatio', 'none')
+      
+    svg.append('rect')
+      .attr('width', '100%')
+      .attr('height', height)
+      .attr('fill', 'var(--border-line-subtle)')
+      .attr('rx', 3)
+      
+    if (value !== null && value !== undefined) {
+      svg.append('rect')
+        .attr('width', `${Math.max(value * 100, 2)}%`)
+        .attr('height', height)
+        .attr('fill', 'var(--teal)')
+        .attr('rx', 3)
+    }
+  }, [value])
+  
+  return <div ref={containerRef} style={{ width: '100%', marginTop: '12px', opacity: value !== null ? 1 : 0.2 }} />
 }
 
 function PredictionCards({ output }: { output: unknown }) {
@@ -66,13 +161,19 @@ function PredictionCards({ output }: { output: unknown }) {
     if (typeof prob === 'number') return `${(prob * 100).toFixed(1)}%`
     return prob
   }
+  const getRawProb = (key: string) => {
+    const modelOut = asRecord(valueAt(preds, key))
+    const prob = valueAt(modelOut, 'probability')
+    if (typeof prob === 'number') return prob
+    return null
+  }
   const cards = [
     ['3M DELINQUENCY', 'next_3m_delinquency_flag'],
     ['6M DELINQUENCY', 'next_6m_delinquency_flag'],
     ['12M DEFAULT', 'next_12m_default_flag'],
     ['12M PREPAYMENT', 'next_12m_prepayment_flag'],
   ]
-  return <div className="prediction-grid">{cards.map(([label, key]) => <div className="prediction-card" key={label}><span>{label}</span><strong>{displayValue(getProb(key))}</strong></div>)}</div>
+  return <div className="prediction-grid">{cards.map(([label, key]) => <div className="prediction-card" key={label}><span>{label}</span><strong>{displayValue(getProb(key))}</strong><MiniD3Bar value={getRawProb(key)} /></div>)}</div>
 }
 
 function Explainability({ output }: { output: unknown }) {
@@ -132,6 +233,62 @@ function DetailDrawer({ stage, loanId, onClose, onRetry }: DetailDrawerProps) {
   )
 }
 
+function TierBarsD3({ tiers }: { tiers: Record<string, number> }) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const data = [
+    { key: 'high', label: 'High Risk', color: 'var(--orange)' },
+    { key: 'elevated', label: 'Elevated', color: '#e8a040' },
+    { key: 'moderate', label: 'Moderate', color: 'var(--teal)' },
+    { key: 'low', label: 'Healthy', color: '#0d8b76' },
+  ].map(d => ({ ...d, value: tiers[d.key] ?? 0 })).filter(d => d.value > 0)
+
+  useEffect(() => {
+    if (!containerRef.current || !data.length) return
+    const container = containerRef.current
+    container.innerHTML = ''
+    const width = container.clientWidth || 500
+    const height = data.length * 54
+    const margin = { top: 0, right: 80, bottom: 0, left: 110 }
+
+    const svg = d3.select(container).append('svg')
+      .attr('width', '100%').attr('height', height)
+      .attr('viewBox', `0 0 ${width} ${height}`)
+      .attr('preserveAspectRatio', 'xMinYMin meet')
+
+    const max = Math.max(...data.map(d => d.value), 1)
+    const x = d3.scaleLinear().domain([0, max]).range([margin.left, width - margin.right])
+    const y = d3.scaleBand().domain(data.map(d => d.key)).range([0, height]).padding(0.35)
+
+    // BG track
+    svg.selectAll('.bg').data(data).enter().append('rect').attr('class', 'bg')
+      .attr('x', margin.left).attr('y', d => y(d.key) || 0)
+      .attr('width', width - margin.left - margin.right).attr('height', y.bandwidth())
+      .attr('fill', 'var(--border-line-subtle)').attr('rx', 6)
+
+    // Value bar
+    svg.selectAll('.bar').data(data).enter().append('rect').attr('class', 'bar')
+      .attr('x', margin.left).attr('y', d => y(d.key) || 0)
+      .attr('width', d => Math.max(x(d.value) - margin.left, 6)).attr('height', y.bandwidth())
+      .attr('fill', d => d.color).attr('rx', 6)
+
+    // Label left
+    svg.selectAll('.lbl').data(data).enter().append('text').attr('class', 'lbl')
+      .attr('x', margin.left - 10).attr('y', d => (y(d.key) || 0) + y.bandwidth() / 2)
+      .attr('dy', '0.35em').attr('text-anchor', 'end')
+      .attr('fill', 'var(--text-primary)').attr('font-size', '13px')
+      .attr('font-family', 'var(--sans)').text(d => d.label)
+
+    // Count right
+    svg.selectAll('.val').data(data).enter().append('text').attr('class', 'val')
+      .attr('x', width - 4).attr('y', d => (y(d.key) || 0) + y.bandwidth() / 2)
+      .attr('dy', '0.35em').attr('text-anchor', 'end')
+      .attr('fill', 'var(--text-primary)').attr('font-size', '15px')
+      .attr('font-family', 'var(--mono)').attr('font-weight', '600').text(d => d.value.toLocaleString())
+  }, [tiers])
+
+  return <div ref={containerRef} style={{ width: '100%' }} />
+}
+
 function OverviewView({ portfolio, loading, onOpenLoan }: { portfolio: PortfolioOverview | null; loading: boolean; onOpenLoan: (id: string) => void }) {
   const tiers = portfolio?.tier_summary || {}
   return (
@@ -140,32 +297,26 @@ function OverviewView({ portfolio, loading, onOpenLoan }: { portfolio: Portfolio
         <p className="eyebrow">PORTFOLIO SNAPSHOT</p>
       </div>
       {loading && <div className="loading-state"><RefreshCw className="spin" /> Loading the book…</div>}
-      <div className="grid-asymmetric">
-        {[['high', 'Needs attention', 'Immediate review']].map(([key, label, description]) => (
-          <LedgerCard key={label} className={`signal-card signal-${key}`} as="article">
-            <span className="eyebrow">PORTFOLIO SIGNAL</span>
-            <h3>{label}</h3>
-            <strong className="signal-value">{tiers[key] ?? 0}</strong>
-            <p className="body-text">{description}</p>
-            <a href="#portfolio-signals" className="text-button" style={{marginTop: 'auto', paddingTop: '16px'}}>Inspect signal <ArrowRight /></a>
-          </LedgerCard>
-        ))}
-        <div className="grid-3">
-          {[['elevated', 'Watch closely', 'Elevated signals'], ['moderate', 'Keep an eye', 'Monitor the book'], ['low', 'Healthy', 'No urgent signal']].map(([key, label, description]) => (
-            <LedgerCard key={label} className={`signal-card signal-${key}`} as="article">
-              <span className="eyebrow">PORTFOLIO SIGNAL</span>
-              <h3 style={{fontSize: '15px'}}>{label}</h3>
-              <strong className="signal-value" style={{fontSize: '24px'}}>{tiers[key] ?? 0}</strong>
-              <p className="body-text" style={{fontSize: '13px'}}>{description}</p>
-            </LedgerCard>
-          ))}
-        </div>
-      </div>
-      <div className="health-grid-section">
-        <SimpleHealthMap matrix={portfolio?.status_heatmap} />
-      </div>
-      <div className="grid-2 section-spacing">
-        <CreditRiskBars matrix={portfolio?.scenario_heatmap} />
+
+      {/* Signal summary row — full width bar chart + loans side by side */}
+      <div className="grid-2" style={{ alignItems: 'stretch' }}>
+        <LedgerCard as="article" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+          <div>
+            <span className="eyebrow" style={{ marginBottom: '4px' }}>RISK TIER DISTRIBUTION</span>
+            <h3>Portfolio signal breakdown</h3>
+            <p className="body-text" style={{ marginTop: '6px' }}>Count of loans per risk band. High risk loans need immediate review.</p>
+          </div>
+          <TierBarsD3 tiers={tiers} />
+          <div style={{ display: 'flex', gap: '24px', borderTop: '1px solid var(--line)', paddingTop: '16px' }}>
+            {[['high', 'High', 'var(--orange)'], ['elevated', 'Elevated', '#e8a040'], ['moderate', 'Moderate', 'var(--teal)'], ['low', 'Healthy', '#0d8b76']].map(([key, label, color]) => (
+              <div key={key} style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                <span style={{ fontFamily: 'var(--mono)', fontSize: '20px', fontWeight: 600, color }}>{tiers[key] ?? 0}</span>
+                <span style={{ fontSize: '11px', color: 'var(--muted-ink)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{label}</span>
+              </div>
+            ))}
+          </div>
+        </LedgerCard>
+
         <LedgerCard>
           <div className="ledger-card-title">
             <h3>Loans to open first</h3>
@@ -187,11 +338,90 @@ function OverviewView({ portfolio, loading, onOpenLoan }: { portfolio: Portfolio
           </div>
         </LedgerCard>
       </div>
-      <div className="section-spacing">
+
+      <div className="health-grid-section" style={{ marginTop: '32px' }}>
+        <SimpleHealthMap matrix={portfolio?.status_heatmap} />
+      </div>
+      <div className="grid-2 section-spacing" style={{ alignItems: 'stretch' }}>
+        <CreditRiskBars matrix={portfolio?.scenario_heatmap} />
         <MetricsPanel portfolio={portfolio} />
       </div>
     </section>
   )
+}
+function ComparisonBenchmarkD3({ modelComparison }: { modelComparison: ModelComparison }) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  
+  useEffect(() => {
+    if (!containerRef.current || !modelComparison) return
+    const container = containerRef.current
+    container.innerHTML = ''
+    
+    const targets = Object.keys(modelComparison.results)
+    const margin = { top: 0, right: 40, bottom: 0, left: 60 }
+    
+    let yOffset = 0
+    const totalHeight = targets.length * 120
+    
+    const width = container.clientWidth
+    const svg = d3.select(container).append('svg')
+      .attr('width', '100%')
+      .attr('height', totalHeight)
+      .attr('viewBox', `0 0 ${width} ${totalHeight}`)
+      .attr('preserveAspectRatio', 'xMinYMin meet')
+      
+    const x = d3.scaleLinear().domain([0, 1]).range([margin.left, width - margin.right])
+    
+    targets.forEach((target) => {
+      const winner = modelComparison.winners[target]
+      const modelsData = Object.entries(modelComparison.results[target])
+        .filter(([key]) => key.endsWith('_test'))
+        .map(([key, metric]) => ({ model: key.replace('_test', ''), metric: metric as any }))
+      
+      const groupHeight = modelsData.length * 28 + 32
+      const group = svg.append('g').attr('transform', `translate(0, ${yOffset})`)
+      
+      group.append('text').attr('x', 0).attr('y', 16)
+        .attr('fill', 'var(--text-primary)').attr('font-size', '14px').attr('font-weight', '600')
+        .text(target.replaceAll('_', ' ').toUpperCase())
+      
+      group.append('text').attr('x', width).attr('y', 16)
+        .attr('text-anchor', 'end')
+        .attr('fill', 'var(--teal)').attr('font-size', '11px').attr('font-family', 'var(--mono)')
+        .text(`Best: ${winner.model} · ${winner.test_roc_auc.toFixed(4)}`)
+        
+      const y = d3.scaleBand().domain(modelsData.map(d => d.model)).range([30, groupHeight - 10]).padding(0.5)
+      
+      group.selectAll('.bg-bar').data(modelsData).enter().append('rect').attr('class', 'bg-bar')
+        .attr('x', margin.left).attr('y', d => y(d.model) || 0)
+        .attr('width', width - margin.left - margin.right).attr('height', y.bandwidth())
+        .attr('fill', 'var(--border-line-subtle)').attr('rx', 3)
+        
+      group.selectAll('.bar').data(modelsData).enter().append('rect').attr('class', 'bar')
+        .attr('x', margin.left).attr('y', d => y(d.model) || 0)
+        .attr('width', d => Math.max(x(d.metric.roc_auc) - margin.left, 4)).attr('height', y.bandwidth())
+        .attr('fill', d => d.model === winner.model ? 'var(--teal)' : 'var(--mint)')
+        .attr('rx', 3)
+        
+      group.selectAll('.label').data(modelsData).enter().append('text').attr('class', 'label')
+        .attr('x', margin.left - 12).attr('y', d => (y(d.model) || 0) + y.bandwidth() / 2)
+        .attr('dy', '0.35em').attr('text-anchor', 'end')
+        .attr('fill', 'var(--muted-ink)').attr('font-size', '11px').text(d => d.model)
+        
+      group.selectAll('.val').data(modelsData).enter().append('text').attr('class', 'val')
+        .attr('x', width).attr('y', d => (y(d.model) || 0) + y.bandwidth() / 2)
+        .attr('dy', '0.35em').attr('text-anchor', 'end')
+        .attr('fill', 'var(--text-primary)').attr('font-size', '11px').attr('font-family', 'var(--mono)')
+        .text(d => d.metric.roc_auc.toFixed(4))
+        
+      yOffset += groupHeight + 20
+    })
+    
+    svg.attr('height', yOffset)
+    svg.attr('viewBox', `0 0 ${width} ${yOffset}`)
+  }, [modelComparison])
+
+  return <div ref={containerRef} style={{ width: '100%', minHeight: '300px' }} />
 }
 
 export default function LoanIntelligenceDashboard() {
@@ -211,6 +441,10 @@ export default function LoanIntelligenceDashboard() {
   const [portfolioLoading, setPortfolioLoading] = useState(true)
   const [modelComparison, setModelComparison] = useState<ModelComparison | null>(null)
   const [expandedModelCard, setExpandedModelCard] = useState<ModelCardKey | null>(null)
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+  }, [theme])
 
   const completed = stages.filter((stage) => stage.status === 'completed').length
   const prediction = useMemo(() => asRecord(stages.find((stage) => stage.key === 'prediction')?.output), [stages])
@@ -326,11 +560,11 @@ export default function LoanIntelligenceDashboard() {
   )
 
   return (
-    <main className="app-shell" data-theme={theme}>
+    <main className="app-shell">
       <header className="topbar">
         <div className="topbar-inner">
           <a href="#" className="brand">
-            <div className="brand-text"><strong>INTAIN</strong><span>LOAN INTELLIGENCE</span></div>
+            <div className="brand-text"><strong>INTAIN</strong></div>
           </a>
           <nav>
             {navItems.map((item) => (
@@ -381,7 +615,7 @@ export default function LoanIntelligenceDashboard() {
                 <button className="run-button" onClick={run} disabled={loading}>{loading ? <RefreshCw className="spin" /> : <ArrowRight />} {loading ? 'Running pipeline' : 'Run full analysis'}</button>
               </section>
             </div>
-            <div className="pipeline-column">
+            <div className="pipeline-centered">
               <div className="section-heading">
                 <div><p className="eyebrow">ORCHESTRATION</p><h2>Live pipeline</h2></div>
                 <div className="pipeline-count"><strong>{completed.toString().padStart(2, '0')}</strong><span>/ 08 stages complete</span></div>
@@ -394,7 +628,10 @@ export default function LoanIntelligenceDashboard() {
                       <button className={`stage-card ${stage.status}`} onClick={() => stage.status !== 'waiting' && setSelected(stage)}>
                         <div className="stage-index">{stageNumbers[index]}</div>
                         <StatusIcon status={stage.status} />
-                        <div className="stage-copy"><strong>{stage.label}</strong><span>{statusLabel(stage.status)}{stage.executionMs !== undefined ? ` · ${stage.executionMs} ms` : ''}</span></div>
+                        <div className="stage-copy">
+                          <strong>{stage.label}</strong>
+                          <span>{statusLabel(stage.status)}{stage.executionMs !== undefined ? ` · ${stage.executionMs} ms` : ''}</span>
+                        </div>
                         <ChevronRight className="stage-chevron" />
                       </button>
                       {index < 7 && <div className={`connector ${stage.status === 'completed' ? 'complete' : ''}`}><span /></div>}
@@ -402,29 +639,29 @@ export default function LoanIntelligenceDashboard() {
                   )
                 })}
               </div>
-            </div>
-            <aside className="summary-column">
-              <div className="section-heading">
-                <p className="eyebrow">OUTPUT</p>
-                <h2>Analysis summary</h2>
+              <div className="pipeline-summary-row">
+                <div className="section-heading" style={{ marginBottom: 0 }}>
+                  <p className="eyebrow">OUTPUT</p>
+                  <h2>Analysis summary</h2>
+                </div>
+                <LedgerCard className="summary-card" style={{padding: 0}}>
+                  {result ? (
+                    <>
+                      <div className="summary-top"><span>ANALYSIS COMPLETE</span><ShieldCheck /><small>{loanId}</small></div>
+                      <div className="summary-risk"><span>MODEL OUTPUT</span><strong>{displayValue((prediction?.next_state as { predicted_state?: string } | undefined)?.predicted_state)}</strong></div>
+                      <PredictionCards output={prediction} />
+                      <div className="summary-foot">
+                        <span>Every value is returned by the inference API</span>
+                        <button className="text-button" onClick={() => stages.find((stage) => stage.key === 'prediction') && setSelected(stages.find((stage) => stage.key === 'prediction')!)}>View full analysis <ArrowRight /></button>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="summary-empty"><Layers3 /><strong>Awaiting loan analysis</strong><p className="body-text">Select a loan and run the pipeline to populate model outputs.</p></div>
+                  )}
+                </LedgerCard>
+                {reviewerCard}
               </div>
-              <LedgerCard className="summary-card" style={{padding: 0}}>
-                {result ? (
-                  <>
-                    <div className="summary-top"><span>ANALYSIS COMPLETE</span><ShieldCheck /><small>{loanId}</small></div>
-                    <div className="summary-risk"><span>MODEL OUTPUT</span><strong>{displayValue((prediction?.next_state as { predicted_state?: string } | undefined)?.predicted_state)}</strong></div>
-                    <PredictionCards output={prediction} />
-                    <div className="summary-foot">
-                      <span>Every value is returned by the inference API</span>
-                      <button className="text-button" onClick={() => stages.find((stage) => stage.key === 'prediction') && setSelected(stages.find((stage) => stage.key === 'prediction')!)}>View full analysis <ArrowRight /></button>
-                    </div>
-                  </>
-                ) : (
-                  <div className="summary-empty"><Layers3 /><strong>Awaiting loan analysis</strong><p className="body-text">Select a loan and run the pipeline to populate model outputs.</p></div>
-                )}
-              </LedgerCard>
-              {reviewerCard}
-            </aside>
+            </div>
           </section>
         )}
 
@@ -511,28 +748,15 @@ export default function LoanIntelligenceDashboard() {
               {modelComparison && <LedgerCard className="comparison-panel">
                 <div className="comparison-heading"><div><p className="eyebrow">HELD-OUT TEST BENCHMARK</p><h3>Four models, target by target</h3></div><span className="mono-numeral">ROC-AUC · higher is better</span></div>
                 <div className="comparison-list">
-                  {Object.entries(modelComparison.results).map(([target, models]) => {
-                    const winner = modelComparison.winners[target]
-                    return <div className="comparison-target" key={target}>
-                      <div className="comparison-target-head"><strong>{target.replaceAll('_', ' ')}</strong><b>Best: {winner.model} · {winner.test_roc_auc.toFixed(4)}</b></div>
-                      {Object.entries(models).filter(([key]) => key.endsWith('_test')).map(([key, metric]) => {
-                        const model = key.replace('_test', '')
-                        return <div className="comparison-model" key={key}>
-                          <span>{model}</span>
-                          <div className="comparison-track"><i className={model === winner.model ? 'winner' : ''} style={{ width: `${Math.max(metric.roc_auc * 100, 2)}%` }} /></div>
-                          <b>{metric.roc_auc.toFixed(4)}</b>
-                        </div>
-                      })}
-                    </div>
-                  })}
+                  <ComparisonBenchmarkD3 modelComparison={modelComparison} />
                 </div>
                 <p className="comparison-note">Models use the same time-aware train, validation, and test split. Winners are selected by held-out test ROC-AUC.</p>
               </LedgerCard>}
               <div className="model-cards-grid">
                 <LedgerCard className="model-card-item" as="div" role="button" tabIndex={0} onClick={() => toggleModelCard('next_3m_delinquency_lgbm')} onKeyDown={(event) => activateModelCard(event, 'next_3m_delinquency_lgbm')}>
                   <div className="model-card-header">
-                    <strong>3-Month Delinquency (LightGBM)</strong>
-                    <span className="model-card-metric">ROC-AUC: 0.7129</span>
+                    <strong>3-Month Delinquency (XGBoost)</strong>
+                    <span className="model-card-metric">ROC-AUC: 0.7206</span>
                   </div>
                   <p>Predicts 3-month delinquency probability using gradient boosting. Strong performance with comprehensive feature engineering.</p>
                   <button className="text-button" onClick={(event) => { event.stopPropagation(); toggleModelCard('next_3m_delinquency_lgbm') }}>
@@ -543,7 +767,7 @@ export default function LoanIntelligenceDashboard() {
                       <div className="model-card-section">
                         <h4>Performance Metrics</h4>
                         <ul>
-                          <li>Test ROC-AUC: 0.7129</li>
+                          <li>Test ROC-AUC: 0.7206</li>
                           <li>Test PR-AUC: 0.5732</li>
                           <li>Test F1: 0.4604</li>
                           <li>Brier Score: 0.1973</li>
@@ -571,8 +795,8 @@ export default function LoanIntelligenceDashboard() {
                 </LedgerCard>
                 <LedgerCard className="model-card-item" as="div" role="button" tabIndex={0} onClick={() => toggleModelCard('next_6m_delinquency_lgbm')} onKeyDown={(event) => activateModelCard(event, 'next_6m_delinquency_lgbm')}>
                   <div className="model-card-header">
-                    <strong>6-Month Delinquency (LightGBM)</strong>
-                    <span className="model-card-metric">ROC-AUC: 0.7098</span>
+                    <strong>6-Month Delinquency (XGBoost)</strong>
+                    <span className="model-card-metric">ROC-AUC: 0.7263</span>
                   </div>
                   <p>Extended horizon delinquency prediction with excellent precision-recall tradeoff. Best performing model in the system.</p>
                   <button className="text-button" onClick={(event) => { event.stopPropagation(); toggleModelCard('next_6m_delinquency_lgbm') }}>
@@ -583,7 +807,7 @@ export default function LoanIntelligenceDashboard() {
                       <div className="model-card-section">
                         <h4>Performance Metrics</h4>
                         <ul>
-                          <li>Test ROC-AUC: 0.7098</li>
+                          <li>Test ROC-AUC: 0.7263</li>
                           <li>Test PR-AUC: 0.6873</li>
                           <li>Test F1: 0.6801</li>
                           <li>Brier Score: 0.2161</li>
@@ -611,8 +835,8 @@ export default function LoanIntelligenceDashboard() {
                 </LedgerCard>
                 <LedgerCard className="model-card-item" as="div" role="button" tabIndex={0} onClick={() => toggleModelCard('next_12m_default_lr')} onKeyDown={(event) => activateModelCard(event, 'next_12m_default_lr')}>
                   <div className="model-card-header">
-                    <strong>12-Month Default (Logistic Regression)</strong>
-                    <span className="model-card-metric">ROC-AUC: 0.6966</span>
+                    <strong>12-Month Default (LightGBM)</strong>
+                    <span className="model-card-metric">ROC-AUC: 0.7968</span>
                   </div>
                   <p>Baseline model for default prediction. Limited signal in target; used as fallback. Requires feature engineering improvements.</p>
                   <button className="text-button" onClick={(event) => { event.stopPropagation(); toggleModelCard('next_12m_default_lr') }}>
@@ -623,7 +847,7 @@ export default function LoanIntelligenceDashboard() {
                       <div className="model-card-section">
                         <h4>Performance Metrics</h4>
                         <ul>
-                          <li>Test ROC-AUC: 0.6966</li>
+                          <li>Test ROC-AUC: 0.7968</li>
                           <li>Test PR-AUC: 0.2743</li>
                           <li>Test F1: 0.1665</li>
                           <li>Brier Score: 0.1222</li>
@@ -650,8 +874,8 @@ export default function LoanIntelligenceDashboard() {
                 </LedgerCard>
                 <LedgerCard className="model-card-item" as="div" role="button" tabIndex={0} onClick={() => toggleModelCard('next_12m_prepayment_lr')} onKeyDown={(event) => activateModelCard(event, 'next_12m_prepayment_lr')}>
                   <div className="model-card-header">
-                    <strong>12-Month Prepayment (Logistic Regression)</strong>
-                    <span className="model-card-metric">ROC-AUC: 0.5652</span>
+                    <strong>12-Month Prepayment (Random Forest)</strong>
+                    <span className="model-card-metric">ROC-AUC: 0.7364</span>
                   </div>
                   <p>Weak performance on prepayment prediction. Requires interest rate forecasts and economic indicators for improvement.</p>
                   <button className="text-button" onClick={(event) => { event.stopPropagation(); toggleModelCard('next_12m_prepayment_lr') }}>
@@ -662,7 +886,7 @@ export default function LoanIntelligenceDashboard() {
                       <div className="model-card-section">
                         <h4>Performance Metrics</h4>
                         <ul>
-                          <li>Test ROC-AUC: 0.5652 (barely above random)</li>
+                          <li>Test ROC-AUC: 0.7364</li>
                           <li>Test PR-AUC: 0.315</li>
                           <li>Test F1: 0.4377</li>
                           <li>Brier Score: 0.2459</li>

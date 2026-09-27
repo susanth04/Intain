@@ -1,5 +1,7 @@
 'use client'
 
+import { useEffect, useRef } from 'react'
+import * as d3 from 'd3'
 import type { HeatmapMatrix } from '@/lib/api'
 
 const BAND_LABELS: Record<string, string> = {
@@ -63,7 +65,7 @@ export default function SimpleHealthMap({ matrix }: { matrix?: HeatmapMatrix }) 
   const rows = toSimpleHealth(matrix)
   if (!rows.length) {
     return (
-      <div className="heatmap-card">
+      <div className="ledger-card">
         <h3>Who is paying, and who is not?</h3>
         <div className="empty-data">Portfolio data is still loading.</div>
       </div>
@@ -76,8 +78,8 @@ export default function SimpleHealthMap({ matrix }: { matrix?: HeatmapMatrix }) 
     : ''
 
   return (
-    <div className="heatmap-card simple-map">
-      <div className="heatmap-head">
+    <div className="ledger-card simple-map">
+      <div className="ledger-card-title">
         <h3>Who is paying, and who is not?</h3>
         <p>Each row is one credit group. Read left to right: on time, late, defaulted. Darker = a bigger share of that group.</p>
       </div>
@@ -112,30 +114,65 @@ export default function SimpleHealthMap({ matrix }: { matrix?: HeatmapMatrix }) 
 }
 
 export function CreditRiskBars({ matrix }: { matrix?: HeatmapMatrix }) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  
   const rows = matrix?.rows?.map((band, i) => ({
     band,
     label: BAND_LABELS[band] || band,
     rate: Number(matrix.cells[i]?.[0] || 0),
   })).filter((row) => row.rate > 0) || []
 
+  useEffect(() => {
+    if (!containerRef.current || !rows.length) return
+    const container = containerRef.current
+    container.innerHTML = ''
+    
+    const width = container.clientWidth
+    const height = rows.length * 36
+    const margin = { top: 0, right: 60, bottom: 0, left: 140 }
+    
+    const svg = d3.select(container).append('svg')
+      .attr('width', '100%')
+      .attr('height', height)
+      .attr('viewBox', `0 0 ${width} ${height}`)
+      .attr('preserveAspectRatio', 'xMinYMin meet')
+      
+    const max = Math.max(...rows.map((row) => row.rate), 0.01)
+    const x = d3.scaleLinear().domain([0, max]).range([margin.left, width - margin.right])
+    const y = d3.scaleBand().domain(rows.map(d => d.band)).range([0, height]).padding(0.4)
+    
+    svg.selectAll('.bg-bar').data(rows).enter().append('rect').attr('class', 'bg-bar')
+      .attr('x', margin.left).attr('y', d => y(d.band) || 0)
+      .attr('width', width - margin.left - margin.right).attr('height', y.bandwidth())
+      .attr('fill', 'var(--border-line-subtle)').attr('rx', 5)
+
+    svg.selectAll('.bar').data(rows).enter().append('rect').attr('class', 'bar')
+      .attr('x', margin.left).attr('y', d => y(d.band) || 0)
+      .attr('width', d => Math.max(x(d.rate) - margin.left, 4)).attr('height', y.bandwidth())
+      .attr('fill', 'var(--orange)').attr('rx', 5)
+      
+    svg.selectAll('.label').data(rows).enter().append('text').attr('class', 'label')
+      .attr('x', margin.left - 12).attr('y', d => (y(d.band) || 0) + y.bandwidth() / 2)
+      .attr('dy', '0.35em').attr('text-anchor', 'end')
+      .attr('fill', 'var(--text-primary)').attr('font-size', '13px').text(d => d.label)
+      
+    svg.selectAll('.val').data(rows).enter().append('text').attr('class', 'val')
+      .attr('x', width).attr('y', d => (y(d.band) || 0) + y.bandwidth() / 2)
+      .attr('dy', '0.35em').attr('text-anchor', 'end')
+      .attr('fill', 'var(--text-primary)').attr('font-size', '16px')
+      .attr('font-family', 'var(--mono)').attr('font-weight', '500')
+      .text(d => (d.rate * 100).toFixed(0) + '%')
+  }, [matrix, rows])
+
   if (!rows.length) return null
-  const max = Math.max(...rows.map((row) => row.rate), 0.01)
 
   return (
-    <div className="heatmap-card">
-      <div className="heatmap-head">
+    <div className="ledger-card" style={{ height: '100%' }}>
+      <div className="ledger-card-title">
         <h3>If nothing changes, who is most likely to default?</h3>
-        <p>Simple read: poorer credit → higher default chance. One number per group.</p>
+        <p className="body-text">Simple read: poorer credit → higher default chance. One number per group.</p>
       </div>
-      <div className="bar-list">
-        {rows.map((row) => (
-          <div className="bar-row" key={row.band}>
-            <span>{row.label}</span>
-            <div className="bar-track"><i style={{ width: `${(row.rate / max) * 100}%` }} /></div>
-            <b>{(row.rate * 100).toFixed(0)}%</b>
-          </div>
-        ))}
-      </div>
+      <div ref={containerRef} style={{ width: '100%', minHeight: '144px', flex: 1 }} />
     </div>
   )
 }
