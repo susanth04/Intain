@@ -279,6 +279,7 @@ nav button.active, nav button:hover { color: var(--teal); border-bottom-color: v
   .hero { grid-template-columns: 1fr; gap: var(--sp-6); }
   .grid-4 { grid-template-columns: repeat(2, 1fr); }
   .grid-asymmetric { grid-template-columns: 1fr; }
+  .tier-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 768px) {
   .topbar { height: 64px; }
@@ -301,11 +302,17 @@ nav button.active, nav button:hover { color: var(--teal); border-bottom-color: v
 @keyframes spin { to { transform: rotate(360deg); } }
 .text-button { background: transparent; border: 0; color: var(--teal); font-size: 12px; font-weight: 600; padding: 0; display: inline-flex; align-items: center; gap: var(--sp-1); }
 
-.bar-row { display: grid; grid-template-columns: 140px 1fr 60px; gap: var(--sp-3); align-items: center; padding: var(--sp-2) 0; }
+.bar-row { display: grid; grid-template-columns: 88px minmax(0, 1fr) 72px; gap: var(--sp-3); align-items: center; padding: var(--sp-2) 0; min-width: 0; }
 .bar-row span { font-size: 13px; color: var(--text-primary); }
 .bar-row b { font-family: var(--mono); font-size: 16px; color: var(--text-primary); text-align: right; }
-.bar-track { height: 10px; background: var(--border-line-subtle); border-radius: 5px; overflow: hidden; }
+.bar-track { height: 10px; background: var(--border-line-subtle); border-radius: 5px; overflow: hidden; min-width: 0; }
 .bar-track i { display: block; height: 100%; background: var(--orange); border-radius: 5px; }
+.tier-card { min-width: 0; overflow: visible; }
+.tier-bars { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
+.tier-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--sp-3); border-top: 1px solid var(--line); padding-top: var(--sp-4); margin-top: var(--sp-4); }
+.tier-stat { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.tier-stat strong { font-family: var(--mono); font-size: 20px; font-weight: 600; line-height: 1.2; }
+.tier-stat span { font-size: 11px; color: var(--muted-ink); text-transform: uppercase; letter-spacing: 0.08em; }
 
 .pipeline-column, .summary-column { display: flex; flex-direction: column; gap: var(--sp-5); }
 .pipeline-centered {

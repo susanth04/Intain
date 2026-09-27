@@ -233,60 +233,32 @@ function DetailDrawer({ stage, loanId, onClose, onRetry }: DetailDrawerProps) {
   )
 }
 
-function TierBarsD3({ tiers }: { tiers: Record<string, number> }) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const data = [
-    { key: 'high', label: 'High Risk', color: 'var(--orange)' },
-    { key: 'elevated', label: 'Elevated', color: '#e8a040' },
-    { key: 'moderate', label: 'Moderate', color: 'var(--teal)' },
-    { key: 'low', label: 'Healthy', color: '#0d8b76' },
-  ].map(d => ({ ...d, value: tiers[d.key] ?? 0 })).filter(d => d.value > 0)
+const TIER_ROWS = [
+  { key: 'high', label: 'High', color: 'var(--orange)' },
+  { key: 'elevated', label: 'Elevated', color: '#e8a040' },
+  { key: 'moderate', label: 'Moderate', color: 'var(--teal)' },
+  { key: 'low', label: 'Healthy', color: '#0d8b76' },
+] as const
 
-  useEffect(() => {
-    if (!containerRef.current || !data.length) return
-    const container = containerRef.current
-    container.innerHTML = ''
-    const width = container.clientWidth || 500
-    const height = data.length * 54
-    const margin = { top: 0, right: 80, bottom: 0, left: 110 }
-
-    const svg = d3.select(container).append('svg')
-      .attr('width', '100%').attr('height', height)
-      .attr('viewBox', `0 0 ${width} ${height}`)
-      .attr('preserveAspectRatio', 'xMinYMin meet')
-
-    const max = Math.max(...data.map(d => d.value), 1)
-    const x = d3.scaleLinear().domain([0, max]).range([margin.left, width - margin.right])
-    const y = d3.scaleBand().domain(data.map(d => d.key)).range([0, height]).padding(0.35)
-
-    // BG track
-    svg.selectAll('.bg').data(data).enter().append('rect').attr('class', 'bg')
-      .attr('x', margin.left).attr('y', d => y(d.key) || 0)
-      .attr('width', width - margin.left - margin.right).attr('height', y.bandwidth())
-      .attr('fill', 'var(--border-line-subtle)').attr('rx', 6)
-
-    // Value bar
-    svg.selectAll('.bar').data(data).enter().append('rect').attr('class', 'bar')
-      .attr('x', margin.left).attr('y', d => y(d.key) || 0)
-      .attr('width', d => Math.max(x(d.value) - margin.left, 6)).attr('height', y.bandwidth())
-      .attr('fill', d => d.color).attr('rx', 6)
-
-    // Label left
-    svg.selectAll('.lbl').data(data).enter().append('text').attr('class', 'lbl')
-      .attr('x', margin.left - 10).attr('y', d => (y(d.key) || 0) + y.bandwidth() / 2)
-      .attr('dy', '0.35em').attr('text-anchor', 'end')
-      .attr('fill', 'var(--text-primary)').attr('font-size', '13px')
-      .attr('font-family', 'var(--sans)').text(d => d.label)
-
-    // Count right
-    svg.selectAll('.val').data(data).enter().append('text').attr('class', 'val')
-      .attr('x', width - 4).attr('y', d => (y(d.key) || 0) + y.bandwidth() / 2)
-      .attr('dy', '0.35em').attr('text-anchor', 'end')
-      .attr('fill', 'var(--text-primary)').attr('font-size', '15px')
-      .attr('font-family', 'var(--mono)').attr('font-weight', '600').text(d => d.value.toLocaleString())
-  }, [tiers])
-
-  return <div ref={containerRef} style={{ width: '100%' }} />
+function TierBars({ tiers }: { tiers: Record<string, number> }) {
+  const max = Math.max(...TIER_ROWS.map((row) => Number(tiers[row.key] || 0)), 1)
+  return (
+    <div className="tier-bars">
+      {TIER_ROWS.map((row) => {
+        const value = Number(tiers[row.key] || 0)
+        const width = Math.max((value / max) * 100, value > 0 ? 3 : 0)
+        return (
+          <div className="bar-row" key={row.key}>
+            <span>{row.label}</span>
+            <div className="bar-track">
+              <i style={{ width: `${width}%`, background: row.color }} />
+            </div>
+            <b>{value.toLocaleString()}</b>
+          </div>
+        )
+      })}
+    </div>
+  )
 }
 
 function OverviewView({ portfolio, loading, onOpenLoan }: { portfolio: PortfolioOverview | null; loading: boolean; onOpenLoan: (id: string) => void }) {
@@ -299,19 +271,19 @@ function OverviewView({ portfolio, loading, onOpenLoan }: { portfolio: Portfolio
       {loading && <div className="loading-state"><RefreshCw className="spin" /> Loading the book…</div>}
 
       {/* Signal summary row — full width bar chart + loans side by side */}
-      <div className="grid-2" style={{ alignItems: 'stretch' }}>
-        <LedgerCard as="article" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          <div>
-            <span className="eyebrow" style={{ marginBottom: '4px' }}>RISK TIER DISTRIBUTION</span>
+      <div className="grid-2">
+        <LedgerCard as="article" className="tier-card">
+          <div className="ledger-card-title">
+            <span className="eyebrow">RISK TIER DISTRIBUTION</span>
             <h3>Portfolio signal breakdown</h3>
-            <p className="body-text" style={{ marginTop: '6px' }}>Count of loans per risk band. High risk loans need immediate review.</p>
+            <p className="body-text">Count of loans per risk band. High risk loans need immediate review.</p>
           </div>
-          <TierBarsD3 tiers={tiers} />
-          <div style={{ display: 'flex', gap: '24px', borderTop: '1px solid var(--line)', paddingTop: '16px' }}>
-            {[['high', 'High', 'var(--orange)'], ['elevated', 'Elevated', '#e8a040'], ['moderate', 'Moderate', 'var(--teal)'], ['low', 'Healthy', '#0d8b76']].map(([key, label, color]) => (
-              <div key={key} style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                <span style={{ fontFamily: 'var(--mono)', fontSize: '20px', fontWeight: 600, color }}>{tiers[key] ?? 0}</span>
-                <span style={{ fontSize: '11px', color: 'var(--muted-ink)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{label}</span>
+          <TierBars tiers={tiers} />
+          <div className="tier-stats">
+            {TIER_ROWS.map((row) => (
+              <div key={row.key} className="tier-stat">
+                <strong style={{ color: row.color }}>{Number(tiers[row.key] || 0).toLocaleString()}</strong>
+                <span>{row.label}</span>
               </div>
             ))}
           </div>

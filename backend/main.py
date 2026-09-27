@@ -66,7 +66,7 @@ def health_check():
         "models_loaded": len(MODELS),
         "data_panel_rows": len(_DATA.get("panel", [])),
         "llm_configured": bool(api_key),
-        "llm_model": os.environ.get("OPENAI_MODEL", "gemini-2.5-flash"),
+        "llm_model": os.environ.get("OPENAI_MODEL", "gemini-3.8-flash"),
     }
 
 

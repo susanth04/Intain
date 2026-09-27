@@ -59,7 +59,7 @@ SCENARIOS:
 
 # ── LLM copilot ──────────────────────────────────────────────
 COPILOT:
-  model: "gemini-2.5-flash"      # set to "none" to use offline stub
+  model: "gemini-3.8-flash"      # set to "none" to use offline stub
   max_tokens: 512
   temperature: 0.0
   log_file: "ai_dev_log/copilot_prompt_log.jsonl"

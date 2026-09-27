@@ -130,7 +130,57 @@ Write a natural analyst note in markdown with:
 Keep it under 220 words. Every claim must be traceable to the JSON."""
 
 
+def _is_gemini(api_key: str, base_url: str) -> bool:
+    key = (api_key or "").strip()
+    url = (base_url or "").lower()
+    return (
+        key.startswith("AQ.")
+        or key.startswith("AIza")
+        or "generativelanguage.googleapis.com" in url
+    )
+
+
+def _call_gemini(api_key: str, model_name: str, user_message: str) -> str:
+    """Native Gemini generateContent. AQ. keys fail on the OpenAI-compat URL."""
+    import urllib.error
+    import urllib.request
+
+    model = (model_name or "gemini-3.8-flash").strip() or "gemini-3.8-flash"
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+    payload = {
+        "system_instruction": {"parts": [{"text": SYSTEM_PROMPT}]},
+        "contents": [{"role": "user", "parts": [{"text": user_message}]}],
+        "generationConfig": {"temperature": 0.3, "maxOutputTokens": 900},
+    }
+    req = urllib.request.Request(
+        url,
+        data=json.dumps(payload).encode("utf-8"),
+        headers={
+            "Content-Type": "application/json",
+            "x-goog-api-key": api_key,
+        },
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=45) as resp:
+            body = json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        detail = e.read().decode("utf-8", errors="replace")
+        raise RuntimeError(f"Gemini HTTP {e.code}: {detail}") from e
+
+    parts = (
+        body.get("candidates") or [{}]
+    )[0].get("content", {}).get("parts") or []
+    content = "".join(p.get("text") or "" for p in parts).strip()
+    if content:
+        return content
+    raise RuntimeError("LLM returned an empty response. Check model name and API key.")
+
+
 def _call_llm(api_key: str, base_url: str, model_name: str, user_message: str) -> str:
+    if _is_gemini(api_key, base_url):
+        return _call_gemini(api_key, model_name, user_message)
+
     from openai import OpenAI
     client = OpenAI(
         api_key=api_key,
@@ -169,7 +219,7 @@ def run(loan_id, question=None):
     load_env()
     api_key = os.environ.get("OPENAI_API_KEY", "").strip()
     base_url = os.environ.get("OPENAI_BASE_URL", "").strip()
-    model_name = os.environ.get("OPENAI_MODEL", "gemini-2.5-flash").strip() or "gemini-2.5-flash"
+    model_name = os.environ.get("OPENAI_MODEL", "gemini-3.8-flash").strip() or "gemini-3.8-flash"
 
     if not api_key:
         return {
