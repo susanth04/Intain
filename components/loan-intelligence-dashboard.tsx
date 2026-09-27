@@ -327,16 +327,18 @@ export default function LoanIntelligenceDashboard() {
   return (
     <main className="app-shell">
       <header className="topbar">
-        <a href="#" className="brand">
-          <div className="brand-mark" aria-hidden="true">i</div>
-          <div className="brand-text"><strong>INTAIN</strong><span>LOAN INTELLIGENCE</span></div>
-        </a>
-        <nav>
-          {navItems.map((item) => (
-            <button key={item} className={activeNav === item ? 'active' : ''} onClick={() => setActiveNav(item)}>{item}</button>
-          ))}
-        </nav>
-        <button className="mobile-menu" aria-label="Open navigation" onClick={() => setMobileOpen(!mobileOpen)}><Menu /></button>
+        <div className="topbar-inner">
+          <a href="#" className="brand">
+            <div className="brand-mark" aria-hidden="true">i</div>
+            <div className="brand-text"><strong>INTAIN</strong><span>LOAN INTELLIGENCE</span></div>
+          </a>
+          <nav>
+            {navItems.map((item) => (
+              <button key={item} className={activeNav === item ? 'active' : ''} onClick={() => setActiveNav(item)}>{item}</button>
+            ))}
+          </nav>
+          <button className="mobile-menu" aria-label="Open navigation" onClick={() => setMobileOpen(!mobileOpen)}><Menu /></button>
+        </div>
       </header>
       {mobileOpen && (
         <div className="mobile-nav">

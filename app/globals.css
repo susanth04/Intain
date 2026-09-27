@@ -73,10 +73,14 @@ p, .body-text { font-size: 15px; line-height: 1.5; color: var(--muted-ink); marg
 }
 
 .topbar {
-  display: flex; align-items: center; justify-content: flex-start; gap: var(--sp-7);
-  height: 72px; padding: 0 var(--page-gutter);
+  height: 72px;
   background: rgba(5, 24, 34, .8); border-bottom: 1px solid rgba(183, 224, 205, .24);
   position: sticky; top: 0; z-index: 10; backdrop-filter: blur(12px);
+}
+.topbar-inner {
+  display: flex; align-items: center; justify-content: flex-start; gap: var(--sp-7);
+  width: 100%; max-width: var(--container); margin: 0 auto;
+  height: 100%; padding: 0 var(--page-gutter);
 }
 
 .brand { display: flex; align-items: center; gap: var(--sp-3); flex: 0 0 auto; text-decoration: none; }
@@ -197,7 +201,8 @@ nav button.active, nav button:hover { color: var(--teal); border-bottom-color: v
   .grid-asymmetric { grid-template-columns: 1fr; }
 }
 @media (max-width: 768px) {
-  .topbar { padding: 0 var(--sp-4); height: 64px; }
+  .topbar { height: 64px; }
+  .topbar-inner { padding: 0 var(--sp-4); }
   .brand-text span { display: none; }
   nav { display: none; }
   .mobile-menu { display: block; margin-left: auto; }
