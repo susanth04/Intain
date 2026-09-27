@@ -407,7 +407,8 @@ nav button.active, nav button:hover { color: var(--teal); border-bottom-color: v
 .chat-input input { flex: 1; background: transparent; border: 0; color: var(--text-primary); font-size: 13px; outline: none; }
 .chat-input button { width: 32px; height: 32px; background: var(--teal); color: var(--navy); border: 0; border-radius: 4px; display: grid; place-items: center; }
 .copilot-answer { margin-top: var(--sp-4); padding-top: var(--sp-4); border-top: 1px solid var(--line); }
-.copilot-answer span { font-size: 10px; font-weight: 600; color: var(--teal); letter-spacing: 0.1em; }
+.copilot-answer > span { font-size: 10px; font-weight: 600; color: var(--teal); letter-spacing: 0.1em; }
+.copilot-prose { min-width: 0; overflow-wrap: anywhere; }
 .model-card-item { gap: var(--sp-3); }
 .model-card-header { display: flex; justify-content: space-between; align-items: flex-start; }
 .model-card-metric { font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--teal); background: var(--mint); padding: 4px 8px; border-radius: 4px; }

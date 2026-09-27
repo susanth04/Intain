@@ -147,33 +147,38 @@ def _call_gemini(api_key: str, model_name: str, user_message: str) -> str:
 
     model = (model_name or "gemini-3.8-flash").strip() or "gemini-3.8-flash"
     url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
-    payload = {
-        "system_instruction": {"parts": [{"text": SYSTEM_PROMPT}]},
-        "contents": [{"role": "user", "parts": [{"text": user_message}]}],
-        "generationConfig": {"temperature": 0.3, "maxOutputTokens": 900},
-    }
-    req = urllib.request.Request(
-        url,
-        data=json.dumps(payload).encode("utf-8"),
-        headers={
-            "Content-Type": "application/json",
-            "x-goog-api-key": api_key,
-        },
-        method="POST",
-    )
-    try:
-        with urllib.request.urlopen(req, timeout=45) as resp:
-            body = json.loads(resp.read().decode("utf-8"))
-    except urllib.error.HTTPError as e:
-        detail = e.read().decode("utf-8", errors="replace")
-        raise RuntimeError(f"Gemini HTTP {e.code}: {detail}") from e
+    for max_output_tokens in (2048, 4096):
+        payload = {
+            "system_instruction": {"parts": [{"text": SYSTEM_PROMPT}]},
+            "contents": [{"role": "user", "parts": [{"text": user_message}]}],
+            "generationConfig": {"temperature": 0.3, "maxOutputTokens": max_output_tokens},
+        }
+        req = urllib.request.Request(
+            url,
+            data=json.dumps(payload).encode("utf-8"),
+            headers={
+                "Content-Type": "application/json",
+                "x-goog-api-key": api_key,
+            },
+            method="POST",
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=45) as resp:
+                body = json.loads(resp.read().decode("utf-8"))
+        except urllib.error.HTTPError as e:
+            detail = e.read().decode("utf-8", errors="replace")
+            raise RuntimeError(f"Gemini HTTP {e.code}: {detail}") from e
 
-    parts = (
-        body.get("candidates") or [{}]
-    )[0].get("content", {}).get("parts") or []
-    content = "".join(p.get("text") or "" for p in parts).strip()
-    if content:
-        return content
+        candidate = (body.get("candidates") or [{}])[0]
+        if candidate.get("finishReason") == "MAX_TOKENS":
+            continue
+        parts = candidate.get("content", {}).get("parts") or []
+        content = "".join(p.get("text") or "" for p in parts).strip()
+        if content:
+            return content
+        break
+    else:
+        raise RuntimeError("Gemini response exceeded the output token limit after retrying.")
     raise RuntimeError("LLM returned an empty response. Check model name and API key.")
 
 
@@ -187,19 +192,25 @@ def _call_llm(api_key: str, base_url: str, model_name: str, user_message: str) -
         base_url=base_url or None,
         timeout=45.0,
     )
-    llm_resp = client.chat.completions.create(
-        model=model_name,
-        messages=[
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": user_message},
-        ],
-        temperature=0.3,
-        max_tokens=900,
-    )
-    choice = llm_resp.choices[0].message
-    content = (choice.content or "").strip()
-    if content:
-        return content
+    for max_tokens in (2048, 4096):
+        llm_resp = client.chat.completions.create(
+            model=model_name,
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": user_message},
+            ],
+            temperature=0.3,
+            max_tokens=max_tokens,
+        )
+        choice = llm_resp.choices[0]
+        if choice.finish_reason == "length":
+            continue
+        content = (choice.message.content or "").strip()
+        if content:
+            return content
+        break
+    else:
+        raise RuntimeError("LLM response exceeded the output token limit after retrying.")
     raise RuntimeError("LLM returned an empty response. Check model name and API key.")
 
 
