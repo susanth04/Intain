@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
-import { motion } from "framer-motion"
+import { motion, type HTMLMotionProps } from "framer-motion"
 import { ArrowRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -21,8 +21,7 @@ const cardVariants = cva(
   },
 )
 
-export interface ServiceCardProps
-  extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof cardVariants> {
+export type ServiceCardProps = HTMLMotionProps<"div"> & VariantProps<typeof cardVariants> & {
   title: string
   href: string
   imgSrc?: string

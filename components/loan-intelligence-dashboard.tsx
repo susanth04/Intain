@@ -6,7 +6,7 @@ import { AlertTriangle, ArrowRight, BarChart3, Check, ChevronRight, Circle, Laye
 import CopilotAnswer from '@/components/copilot-answer'
 import SimpleHealthMap, { CreditRiskBars } from '@/components/heatmap-grid'
 import { LedgerCard } from '@/components/ui/ledger-card'
-import { askCopilot, asRecord, displayValue, entries, errorText, fetchModelComparison, fetchPortfolio, normalizeStages, retryStage, runScenario, stageLabels, stageOrder, type ModelComparison, type PipelineResponse, type PipelineStage, type PortfolioOverview, type StageKey, type StageStatus, valueAt } from '@/lib/api'
+import { askCopilot, asRecord, displayValue, entries, errorText, fetchModelComparison, fetchPortfolio, fetchSurvival, normalizeStages, retryStage, runScenario, stageLabels, stageOrder, type ModelComparison, type PipelineResponse, type PipelineStage, type PortfolioOverview, type StageKey, type StageStatus, type SurvivalResponse, valueAt } from '@/lib/api'
 
 type DetailDrawerProps = { stage: PipelineStage; loanId: string; onClose: () => void; onRetry: () => void }
 type NavKey = 'Overview' | 'Loan Intelligence' | 'Anomaly Detection' | 'Scenario Analysis' | 'AI Reviewer' | 'Model Cards'
@@ -150,6 +150,35 @@ function MiniD3Bar({ value }: { value: number | null }) {
   }, [value])
   
   return <div ref={containerRef} style={{ width: '100%', marginTop: '12px', opacity: value !== null ? 1 : 0.2 }} />
+}
+
+function SurvivalCard({ data, loading, error }: { data: SurvivalResponse | null; loading: boolean; error: string }) {
+  const hazardRatio = data?.cox_hazard_ratio
+  const hazardLevel = typeof hazardRatio !== 'number' ? '' : hazardRatio < 1 ? 'low' : hazardRatio <= 1.5 ? 'moderate' : 'high'
+  const ageProgress = data && data.km_median_survival_months > 0
+    ? Math.min(data.loan_age_months / data.km_median_survival_months, 1)
+    : null
+
+  return <LedgerCard>
+    <div className="ledger-card-title">
+      <div><p className="eyebrow">TIME TO EXIT</p><h3>Survival outlook</h3></div>
+      <p className="body-text">Kaplan-Meier median and Cox relative hazard for this loan.</p>
+    </div>
+    {loading ? <div className="loading-state"><RefreshCw className="spin" /> Loading survival estimate…</div> : error ? <div className="error-box"><AlertTriangle />{error}</div> : data ? <>
+      <div className="survival-metrics">
+        <div className="survival-metric"><span>KM MEDIAN SURVIVAL</span><strong>{displayValue(data.km_median_survival_months)} months</strong></div>
+        <div className="survival-metric"><span>CREDIT BAND</span><strong>{data.credit_band}</strong></div>
+      </div>
+      <div className="survival-age">
+        <div><span>Loan age</span><strong>{displayValue(data.loan_age_months)} / {displayValue(data.km_median_survival_months)} months</strong></div>
+        <MiniD3Bar value={ageProgress} />
+      </div>
+      <div className="survival-remaining"><span>ESTIMATED MONTHS REMAINING</span><strong>{displayValue(data.estimated_months_remaining)} months</strong></div>
+      <div className="survival-hazard-row"><span>Cox hazard ratio</span>{typeof hazardRatio === 'number' ? <span className={`survival-hazard ${hazardLevel}`}>{hazardRatio.toFixed(2)} · {displayValue(data.cox_interpretation)}</span> : <strong>Unavailable</strong>}</div>
+      <p className="survival-concordance">Cox concordance {typeof data.cox_concordance === 'number' ? data.cox_concordance.toFixed(2) : 'unavailable'} - modest ranking power</p>
+      <p className="body-text survival-label">{data.survival_label}</p>
+    </> : <div className="empty-data">Run loan analysis to see its survival outlook.</div>}
+  </LedgerCard>
 }
 
 function PredictionCards({ output }: { output: unknown }) {
@@ -399,6 +428,9 @@ function ComparisonBenchmarkD3({ modelComparison }: { modelComparison: ModelComp
 export default function LoanIntelligenceDashboard() {
   const [loanId, setLoanId] = useState('LN0000298')
   const [result, setResult] = useState<PipelineResponse | null>(null)
+  const [survival, setSurvival] = useState<SurvivalResponse | null>(null)
+  const [survivalLoading, setSurvivalLoading] = useState(false)
+  const [survivalError, setSurvivalError] = useState('')
   const [stages, setStages] = useState<PipelineStage[]>([])
   const [selected, setSelected] = useState<PipelineStage | null>(null)
   const [loading, setLoading] = useState(false)
@@ -436,20 +468,34 @@ export default function LoanIntelligenceDashboard() {
 
   async function run() {
     if (!loanId.trim()) return
+    const requestedLoanId = loanId.trim()
     setLoading(true)
     setError('')
     setSelected(null)
     setResult(null)
+    setSurvival(null)
+    setSurvivalError('')
+    setSurvivalLoading(true)
     setActiveNav('Loan Intelligence')
     let currentStages = stageOrder.map((key) => ({ key, label: stageLabels[key], status: 'waiting' as StageStatus }))
     setStages([...currentStages])
-    const cumulativeResult: PipelineResponse = { loan_id: loanId.trim(), stages: [] }
+    const cumulativeResult: PipelineResponse = { loan_id: requestedLoanId, stages: [] }
+    void fetchSurvival(requestedLoanId)
+      .then((data) => {
+        if (data.status === 'error') {
+          setSurvivalError(data.error || 'Survival estimate unavailable')
+          return
+        }
+        setSurvival(data)
+      })
+      .catch((e) => setSurvivalError(errorText(e)))
+      .finally(() => setSurvivalLoading(false))
     try {
       for (let i = 0; i < stageOrder.length; i++) {
         const key = stageOrder[i]
         currentStages[i] = { ...currentStages[i], status: 'running' }
         setStages([...currentStages])
-        const data = await retryStage(loanId.trim(), key)
+        const data = await retryStage(requestedLoanId, key)
         const stageData = data.stages?.[0]
         if (stageData) {
           currentStages[i] = stageData
@@ -631,6 +677,7 @@ export default function LoanIntelligenceDashboard() {
                     <div className="summary-empty"><Layers3 /><strong>Awaiting loan analysis</strong><p className="body-text">Select a loan and run the pipeline to populate model outputs.</p></div>
                   )}
                 </LedgerCard>
+                <SurvivalCard data={survival} loading={survivalLoading} error={survivalError} />
                 {reviewerCard}
               </div>
             </div>

@@ -1,18 +1,28 @@
 """
 survival.py - Survival time estimate for a single loan using Cox PH + KM models.
 """
+import json
 import time
-from models.loader import MODELS, _DATA, PROJECT_ROOT
+from models.loader import MODELS, _DATA, PROC_DIR, PROJECT_ROOT
 import sys
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-CREDIT_BAND_MEDIANS = {
+_FALLBACK_CREDIT_BAND_MEDIANS = {
     "Excellent": 16.0,
     "Good":      16.0,
     "Fair":      13.0,
     "Poor":      10.0,
 }
+try:
+    with (PROC_DIR / "survival_metrics.json").open(encoding="utf-8") as metrics_file:
+        _SURVIVAL_METRICS = json.load(metrics_file)
+except FileNotFoundError:
+    _SURVIVAL_METRICS = {}
+    CREDIT_BAND_MEDIANS = _FALLBACK_CREDIT_BAND_MEDIANS
+else:
+    CREDIT_BAND_MEDIANS = _SURVIVAL_METRICS.get("km_median_survival", {})
+COX_CONCORDANCE = _SURVIVAL_METRICS.get("cox_concordance")
 
 def run(loan_id: str) -> dict:
     t0 = time.perf_counter()
@@ -43,8 +53,11 @@ def run(loan_id: str) -> dict:
         if cox is not None:
             try:
                 import pandas as pd
-                credit_enc = float(row.get("credit_score_band_enc", 2) or 2)
-                ltv_enc    = float(row.get("ltv_band_enc", 2) or 2)
+                credit_map = {"Excellent": 0, "Good": 1, "Fair": 2, "Poor": 3}
+                ltv_map = {"<=60": 0, "60-75": 1, "75-90": 2, ">90": 3}
+                credit_enc = float(credit_map.get(credit_band, 1.5))
+                ltv_band = str(row.get("ltv_band", ""))
+                ltv_enc = float(ltv_map.get(ltv_band, 1.5))
                 cox_df = pd.DataFrame([{"credit_enc": credit_enc, "ltv_enc": ltv_enc}])
                 hr = cox.predict_partial_hazard(cox_df).iloc[0]
                 cox_hazard_ratio = round(float(hr), 4)
@@ -69,6 +82,7 @@ def run(loan_id: str) -> dict:
                 f"KM median for '{credit_band}' credit band: {km_median:.0f} months. "
                 f"Loan is {loan_age:.0f} months old — ~{months_remaining:.0f} months to expected exit."
             ),
+            "cox_concordance": COX_CONCORDANCE,
             "cox_hazard_ratio": cox_hazard_ratio,
             "cox_interpretation": cox_interpretation,
             "execution_ms": elapsed_ms,

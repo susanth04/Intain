@@ -1,12 +1,11 @@
-import type { ReactNode } from 'react'
+import type { HTMLAttributes, ReactNode } from 'react'
 
-type LedgerCardProps = {
+type LedgerCardProps = HTMLAttributes<HTMLDivElement> & {
   children: ReactNode
-  className?: string
   as?: 'div' | 'section' | 'article'
 }
 
-export function LedgerCard({ children, className = '', as = 'div' }: LedgerCardProps) {
+export function LedgerCard({ children, className = '', as = 'div', ...props }: LedgerCardProps) {
   const Card = as
-  return <Card className={`ledger-card ${className}`}>{children}</Card>
+  return <Card {...props} className={`ledger-card ${className}`}>{children}</Card>
 }

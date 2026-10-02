@@ -21,6 +21,9 @@
   --surface-raised: rgba(13, 48, 56, .9);
   --mint: rgba(120, 224, 201, .14);
   --orange: #e8a36b;
+  --hazard-low: #69cf9b;
+  --hazard-moderate: #efb34f;
+  --hazard-high: #ff7b72;
 
   --bg-base: #061820;
   --bg-gradient-start: rgba(3, 17, 27, .24);
@@ -82,6 +85,9 @@
     --surface-raised: #f7fafa;
     --mint: rgba(13, 139, 118, .08);
     --orange: #b35515;
+    --hazard-low: #167344;
+    --hazard-moderate: #9a5b00;
+    --hazard-high: #b42318;
 
     --bg-base: #f4f8f4;
     --bg-gradient-start: rgba(244, 248, 244, .9);
@@ -376,6 +382,23 @@ nav button.active, nav button:hover { color: var(--teal); border-bottom-color: v
 .prediction-card { background: var(--bg-surface-hover); border: 1px solid var(--line); padding: var(--sp-3); border-radius: 6px; }
 .prediction-card span { display: block; color: var(--muted-ink); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; }
 .prediction-card strong { display: block; font-family: var(--mono); font-size: 20px; color: var(--teal); margin-top: var(--sp-2); }
+.survival-metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-4); }
+.survival-metric { display: flex; flex-direction: column; gap: var(--sp-2); min-width: 0; }
+.survival-metric span, .survival-remaining > span { color: var(--muted-ink); font-size: 10px; text-transform: uppercase; }
+.survival-metric strong, .survival-remaining strong { color: var(--text-primary); font-family: var(--mono); font-size: 16px; }
+.survival-age { margin-top: var(--sp-5); }
+.survival-age > div, .survival-hazard-row { display: flex; justify-content: space-between; align-items: center; gap: var(--sp-3); font-size: 12px; }
+.survival-age > div > span, .survival-hazard-row > span:first-child { color: var(--muted-ink); }
+.survival-age strong { color: var(--text-primary); font-family: var(--mono); font-size: 11px; }
+.survival-remaining { display: flex; flex-direction: column; gap: var(--sp-2); border-top: 1px solid var(--line); margin-top: var(--sp-4); padding-top: var(--sp-4); }
+.survival-remaining strong { color: var(--teal); font-size: 20px; }
+.survival-hazard-row { border-top: 1px solid var(--line); margin-top: var(--sp-4); padding-top: var(--sp-4); }
+.survival-hazard { border: 1px solid currentColor; border-radius: 4px; padding: 4px 8px; font-size: 11px; text-align: right; }
+.survival-hazard.low { color: var(--hazard-low); }
+.survival-hazard.moderate { color: var(--hazard-moderate); }
+.survival-hazard.high { color: var(--hazard-high); }
+.survival-concordance { margin-top: var(--sp-3); font-family: var(--mono); font-size: 11px; }
+.survival-label { border-top: 1px solid var(--line); margin-top: var(--sp-4); padding-top: var(--sp-4); }
 .empty-data { padding: var(--sp-6); text-align: center; color: var(--muted-ink); border: 1px dashed var(--line); border-radius: var(--radius); background: var(--bg-surface-hover); }
 .global-error, .error-box { padding: var(--sp-4); background: var(--bg-error); border: 1px solid var(--border-error); color: var(--orange); border-radius: var(--radius); display: flex; gap: var(--sp-3); align-items: flex-start; font-size: 13px; }
 .drawer-backdrop { position: fixed; inset: 0; background: rgba(6, 24, 32, .8); backdrop-filter: blur(4px); z-index: 50; display: flex; justify-content: flex-end; }

@@ -34,6 +34,26 @@ export function runPipeline(loanId: string) {
   return request<PipelineResponse>('/api/pipeline/run', { method: 'POST', body: JSON.stringify({ loan_id: loanId }) })
 }
 
+export type SurvivalResponse = {
+  status?: string
+  error?: string
+  loan_id: string
+  loan_age_months: number
+  credit_band: string
+  current_status: string
+  km_median_survival_months: number
+  estimated_months_remaining: number
+  survival_label: string
+  cox_concordance: number | null
+  cox_hazard_ratio: number | null
+  cox_interpretation: string | null
+  execution_ms: number
+}
+
+export function fetchSurvival(loanId: string) {
+  return request<SurvivalResponse>(`/api/survival/${encodeURIComponent(loanId)}`)
+}
+
 export function runScenario(loanId: string, scenario: string) {
   return request<unknown>('/api/scenario', { method: 'POST', body: JSON.stringify({ loan_id: loanId, scenario }) })
 }
