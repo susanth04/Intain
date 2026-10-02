@@ -645,9 +645,11 @@ export default function LoanIntelligenceDashboard() {
                     <div className="stage-wrap" key={key}>
                       <button className={`stage-card ${stage.status}`} onClick={() => stage.status !== 'waiting' && setSelected(stage)}>
                         <div className="stage-index">{stageNumbers[index]}</div>
-                        <StatusIcon status={stage.status} />
-                        <div className="stage-copy">
-                          <strong>{stage.label}</strong>
+                        <div className="stage-name-block">
+                          <div className="stage-title-row">
+                            <strong>{stage.label}</strong>
+                            <StatusIcon status={stage.status} />
+                          </div>
                           <span>{statusLabel(stage.status)}{stage.executionMs !== undefined ? ` · ${stage.executionMs} ms` : ''}</span>
                         </div>
                         <ChevronRight className="stage-chevron" />
